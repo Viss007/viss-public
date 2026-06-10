@@ -1,29 +1,41 @@
-# Invoice to Excel (demo)
+# Documentation agent — cloud video studio
 
-PDF invoices → vision extraction → editable grid → **.xlsx** download. **English UI** (employer demos). Portfolio: **Automations → Invoice to Excel**. Product lane: **`/docs-agent`**.
+Minimal slice for **Cursor cloud agent** screen recording. Not the full hire-me portfolio on port 3333.
 
-## Run in under ~2 minutes
+## Start (Linux VM)
 
-Prerequisites: **Node 20+**, an **OpenAI API key** with vision-capable model access.
-
-**Windows (PowerShell):**
-
-```powershell
-cd demos\invoices_to_excel
-copy .env.example .env
-notepad .env   # set OPENAI_API_KEY=...
+```bash
+cp .env.example .env    # set OPENAI_API_KEY=
 npm install
-npm start
+chmod +x start.sh
+./start.sh
 ```
 
-Open **http://127.0.0.1:3000/** in Chrome, Brave, or Edge.
+Open **http://127.0.0.1:3000/** — one app, one URL.
 
-**Smoke:** `GET http://127.0.0.1:3000/health` should return JSON with `ok` / feature flags.
+Health: `curl -s http://127.0.0.1:3000/health`
 
-## Config
+## Record this flow
 
-All variables are documented in **`.env.example`**. Minimum: **`OPENAI_API_KEY`**. Optional: rate limits, Gmail notify, Railway **`INVOICE_TRUST_PROXY=1`** behind a proxy.
+1. Open the app in the browser.
+2. Click a **sample invoice** button (fixtures on disk).
+3. Run **process** — wait for the table.
+4. **Download Excel** — show the file landed.
 
-## Agent / lane detail
+Optional: drag-drop a PDF instead of the sample.
 
-See **`README.lane.md`** — routes, files, and boundaries vs other demos.
+## Env (minimum)
+
+| Variable | Required |
+|----------|----------|
+| `OPENAI_API_KEY` | Yes |
+
+For recording without per-IP caps: `INVOICE_DEMO_MAX_PROCESSES_PER_IP=0` (set in `start.sh`).
+
+## Push target
+
+Sync this folder to **`viss-public`** → `agents/docs_agent/` on GitHub. Portfolio embeds the finished mp4 at `/videos/demos/docs-agent.mp4`.
+
+## Refresh from full portfolio
+
+On your PC (full `Public` tree): `pwsh Public/scripts/package-docs-agent-video.ps1`
