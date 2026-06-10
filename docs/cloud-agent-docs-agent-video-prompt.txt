@@ -1,0 +1,18 @@
+You are on Cursor Cloud VM. Repo: Viss007/viss-public. App lives in agents/docs_agent (not a separate repo).
+
+Before start: Dashboard → Cloud Agents → Secrets → set OPENAI_API_KEY (install reads it via start.sh).
+
+Phase A — run the app:
+1) Wait for environment install (npm ci in agents/docs_agent).
+2) Start docs-agent terminal or run: cd agents/docs_agent && ./start.sh
+3) curl -s http://127.0.0.1:3000/health — must return OK.
+
+Phase B — record demo (~60–90s) with embedded browser + screen capture:
+1) Open http://127.0.0.1:3000/
+2) Click a sample invoice button (fixtures on disk).
+3) Run process — wait for the table.
+4) Download Excel — show the file landed.
+
+Save screen recording as docs-agent-demo.mp4 artifact. Operator will place it at videos/demos/docs-agent.mp4 on the portfolio.
+
+Rules: No secrets in chat. No Gmail OAuth unless operator asks. Demo only — no mass send.
