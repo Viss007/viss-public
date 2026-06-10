@@ -33,6 +33,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portfolio-exit-fs.css" />
   <style>
     .drop-active {
       border-color: #2563eb !important;
@@ -129,6 +130,8 @@
           <p class="text-xs sm:text-sm text-slate-500">PDF invoices to review table and spreadsheet</p>
         </div>
       </div>
+      <button type="button" id="portfolio-exit-fs" class="portfolio-exit-fs" hidden
+        aria-label="Exit full screen" title="Exit full screen">×</button>
     </div>
   </header>
 
@@ -295,7 +298,8 @@
     </section>
   </main>
 
-  <script src="/app.js" type="module"></script>
+  <script src="/js/portfolio-fs-bridge.js" defer></script>
+  <script src="app.js" type="module"></script>
 </body>
 
 </html>
