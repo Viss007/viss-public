@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookies — VissAI portfolio hub</title>
+  <meta name="description" content="VissAI portfolio hub — cookies page.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/hub-footer.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#050508",
+            panel: "#0c0e12",
+            line: "rgba(255,255,255,0.06)",
+          },
+          fontFamily: {
+            sans: ["DM Sans", "system-ui", "sans-serif"],
+            mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+          },
+          boxShadow: {
+            glow: "0 0 80px -20px rgba(239,68,68,0.25)",
+          },
+          gridTemplateColumns: {
+            "portfolio-nav": "minmax(0, 1fr) auto minmax(0, 1fr)",
+          },
+        },
+      },
+    };
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-balance { text-wrap: balance; }
+    }
+    .vissai-shell-brand-ai {
+      display: inline-block;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      vertical-align: baseline;
+      color: #dc2626;
+      -webkit-text-fill-color: #dc2626;
+    }
+    .media-loading-dots span {
+      display: inline-block;
+      animation: media-loading-dot-pulse 1.05s ease-in-out infinite;
+    }
+    .media-loading-dots span:nth-child(2) {
+      animation-delay: 0.18s;
+    }
+    .media-loading-dots span:nth-child(3) {
+      animation-delay: 0.36s;
+    }
+    @keyframes media-loading-dot-pulse {
+      0%,
+      70%,
+      100% {
+        opacity: 0.2;
+        transform: translateY(0);
+      }
+      35% {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+  </style>
+</head>
+<body class="flex min-h-screen flex-col bg-ink text-zinc-100 antialiased selection:bg-red-500/30 selection:text-red-50">
+  <a href="#cookies-main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-red-500 focus:px-4 focus:py-2 focus:text-ink focus:outline-none">Skip to content</a>
+
+  <header class="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-xl">
+    <nav class="mx-auto grid max-w-6xl grid-cols-1 gap-y-3 px-5 py-4 text-sm font-medium text-zinc-400 md:grid-cols-portfolio-nav md:items-center md:gap-x-6 md:gap-y-0" aria-label="Primary">
+      <div class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 uppercase md:justify-end">
+        <a href="/about" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">About</a>
+        <a href="contact.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Contact</a>
+        <a href="/media" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Coaching</a>
+      </div>
+      <a href="hub.html" class="group justify-self-center whitespace-nowrap font-mono text-sm tracking-tight text-zinc-100">
+        <span class="font-semibold vissai-shell-brand-ai">VissAI</span>
+      </a>
+      <div class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 uppercase md:justify-start">
+        <a href="websites.html" data-nav-template-playground class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Websites</a>
+        <a href="live-projects.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Automations</a>
+        <a href="agents.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Agents</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="cookies-main" class="flex flex-1 flex-col items-center justify-center border-b border-line px-5 py-24 text-center">
+    <p class="font-mono text-xs font-medium tracking-[0.25em] text-red-500/90" aria-label="Also loading">
+      <span class="uppercase">Also Loading</span><span class="media-loading-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span>
+    </p>
+    <p class="mt-6 text-4xl font-semibold tracking-tight text-white md:text-5xl">4 Ever</p>
+  </main>
+
+  <footer id="vissai-hub-footer-stripe" class="border-t border-line vissai-hub-footer--collapsible is-collapsed">
+    <div class="vissai-hub-footer-shell mx-auto max-w-6xl px-5">
+      <button type="button" class="vissai-hub-footer-toggle" aria-expanded="false" aria-controls="hub-footer-panel" aria-label="Expand footer">
+        <svg class="vissai-hub-footer-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div id="hub-footer-panel" class="vissai-hub-footer-panel flex flex-col items-center justify-center gap-2 pb-4 pt-6 text-center text-sm text-zinc-500">
+      <p class="font-mono text-xs vissai-platform-footer-line">© <span id="y"></span> VissAI</p>
+      <nav class="vissai-platform-footer-legal" aria-label="Legal">
+        <a href="privacy.html">Privacy</a>
+        <span class="vissai-platform-footer-legal-sep" aria-hidden="true">·</span>
+        <a href="terms.html">Terms</a>
+        <span class="vissai-platform-footer-legal-sep" aria-hidden="true">·</span>
+        <a href="cookies.html" aria-current="page">Cookies</a>
+      </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/__dev/client.js" defer onerror="void 0"></script>
+  <script src="js/nav-template-playground.js" defer></script>
+  <script src="js/hub-footer-collapse.js" defer></script>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

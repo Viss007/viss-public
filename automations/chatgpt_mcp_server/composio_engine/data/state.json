@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "users": {
+    "client1": {
+      "providers": {
+        "google_sheets": {
+          "connected": true,
+          "updatedAtIso": "2026-04-21T09:30:56.904Z"
+        }
+      }
+    },
+    "clientA": {
+      "providers": {
+        "google_sheets": {
+          "connected": true,
+          "updatedAtIso": "2026-04-21T09:34:06.563Z"
+        }
+      }
+    }
+  }
+}

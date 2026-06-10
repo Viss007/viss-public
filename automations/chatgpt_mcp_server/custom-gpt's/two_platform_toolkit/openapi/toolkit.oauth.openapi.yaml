@@ -1,0 +1,317 @@
+openapi: 3.1.0
+info:
+  title: LeadFlow toolkit — OAuth & connections (your backend)
+  version: 0.4.13
+  description: |
+    **Custom GPT Actions — OAuth slice.** Operations: **`healthCheck`**, **`listConnections`**, **`getOAuthConnectUrls`**.
+
+    **Tunnel:** `npm run tunnel` from `agent_arena/two_platform_toolkit`. The real origin is **`TOOLKIT_PUBLIC_URL`** in `.env` (HTTPS, no trailing slash).
+
+    **One domain = one Action set (ChatGPT):** You cannot attach the same public host (e.g. your ngrok URL) to **two** Custom GPT Action configurations. Use **`toolkit.openapi.yaml`** (**`npm run openapi:bundle`**) in **one** GPT for OAuth + tools together. These split files are for editing in-repo, not for registering the same **`TOOLKIT_PUBLIC_URL`** twice.
+
+    **Auth:** **`ApiKeyAuth`** only (`X-API-Key` = **`INTERNAL_API_KEY`**). Do not add **`oauth2`** schemes (GPT import error).
+    Security is global in this file; **`/v1/health`** explicitly opts out with `security: []`.
+
+    **OAuth links:** Call **`getOAuthConnectUrls`** with the human's **`user_ref`** and optional **`tenant`** / **`client`** hint; emit **`google.connectUrl`** and **`instagram.connectUrl`** in chat for browser login. Then **`listConnections`**. Tool POSTs live in **`toolkit.tools.openapi.yaml`** (or bundled **`toolkit.openapi.yaml`**).
+    If provider credentials are missing, OAuth flags return false and browser login cannot complete.
+
+    **user_ref:** Opaque string from the human only — same for OAuth, connections, and tool bodies. If missing, **`healthCheck`** then ask; never invent **`default`** / **`test`**.
+
+servers:
+  - url: https://example.com
+    description: >-
+      Placeholder. In Actions, set the server URL to your real TOOLKIT_PUBLIC_URL (match .env). Do not reuse that host on a second GPT.
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: System
+    description: Health and connectivity
+  - name: OAuth
+    description: >-
+      Generate Google / Instagram login URLs; emit **connectUrl** in chat.
+
+paths:
+  /v1/health:
+    get:
+      security: []
+      tags: [System]
+      operationId: healthCheck
+      summary: Health check
+      description: Returns service metadata. **No API key.**
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /v1/connections:
+    get:
+      tags: [System]
+      operationId: listConnections
+      summary: List connected providers (masked)
+      description: >-
+        Metadata only (no tokens). Requires real **user_ref** from chat. If unknown, skip; ask after health.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: user_ref
+          in: query
+          required: true
+          description: Exact opaque id — same as OAuth links and tool bodies.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListConnectionsResponse'
+        '400':
+          description: Missing user_ref
+        '401':
+          description: Invalid API key
+
+  /v1/oauth/connect_urls:
+    get:
+      tags: [OAuth]
+      operationId: getOAuthConnectUrls
+      summary: Generate Google & Instagram OAuth links for the human
+      description: >-
+        Returns **google.connectUrl** & **instagram.connectUrl** — paste for browser (**user_ref**). Optional **tenant** / **client** select tenant credentials. If **configured** is false, **connectUrl** returns `null` (fail-fast; no doomed redirect link). See **OAuthConnectUrlsResponse**.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: user_ref
+          in: query
+          required: true
+          description: Opaque id — same for **listConnections** and tool bodies.
+          schema:
+            type: string
+        - name: tenant
+          in: query
+          required: false
+          description: Optional tenant/workspace hint for runtime OAuth app credential selection.
+          schema:
+            type: string
+        - name: client
+          in: query
+          required: false
+          description: Optional client/account hint for runtime OAuth app credential selection.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthConnectUrlsResponse'
+        '400':
+          description: Missing user_ref
+        '401':
+          description: Invalid API key
+        '503':
+          description: TOOLKIT_PUBLIC_URL not configured on server
+
+  /v1/debug/config:
+    get:
+      tags: [System]
+      operationId: debugConfig
+      summary: Server config diagnostics (API key required)
+      description: Returns non-secret booleans for API key/public URL/OAuth env setup to debug failing Actions quickly.
+      parameters:
+        - name: user_ref
+          in: query
+          required: false
+          description: Optional opaque user id to resolve tenant/client-aware OAuth configuration.
+          schema:
+            type: string
+        - name: tenant
+          in: query
+          required: false
+          description: Optional tenant/workspace hint for runtime OAuth app credential resolution.
+          schema:
+            type: string
+        - name: client
+          in: query
+          required: false
+          description: Optional client/account hint for runtime OAuth app credential resolution.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebugConfigResponse'
+        '401':
+          description: Invalid API key
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Same as **`INTERNAL_API_KEY`**. Only scheme in this file.
+
+  schemas:
+    HealthResponse:
+      type: object
+      description: Matches `GET /v1/health` JSON from `server.ts`.
+      required: [ok, service, publicUrlConfigured, publicBase, oauth, tools]
+      properties:
+        ok:
+          type: boolean
+        service:
+          type: string
+          example: two_platform_toolkit
+        publicUrlConfigured:
+          type: boolean
+        publicBase:
+          nullable: true
+          type: string
+          description: >-
+            **`TOOLKIT_PUBLIC_URL`** (no trailing slash). OAuth links built at request time.
+        oauth:
+          type: object
+          required: [note, google, instagram, connections]
+          properties:
+            note:
+              type: string
+            google:
+              type: object
+              required: [configured, connectUrlTemplate]
+              properties:
+                configured:
+                  type: boolean
+                  description: False means GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET are missing on server.
+                connectUrlTemplate:
+                  nullable: true
+                  type: string
+            instagram:
+              type: object
+              required: [configured, connectUrlTemplate]
+              properties:
+                configured:
+                  type: boolean
+                  description: False means META_APP_ID / META_APP_SECRET are missing on server.
+                connectUrlTemplate:
+                  nullable: true
+                  type: string
+            callbackPattern:
+              nullable: true
+              type: string
+            connections:
+              type: string
+        tools:
+          type: object
+          required:
+            - note
+            - oauth_connect_urls
+            - googlesheets_append_row
+            - instagram_send_reply
+            - instagram_list_recent_conversations
+          properties:
+            note:
+              type: string
+            oauth_connect_urls:
+              type: string
+            googlesheets_append_row:
+              type: string
+            instagram_send_reply:
+              type: string
+            instagram_list_recent_conversations:
+              type: string
+
+    ListConnectionsResponse:
+      type: object
+      required: [ok, user_ref, connections]
+      properties:
+        ok:
+          type: boolean
+        user_ref:
+          type: string
+        connections:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    OAuthConnectUrlsResponse:
+      type: object
+      description: >-
+        Emit **google.connectUrl** and **instagram.connectUrl** in the reply. No secrets. Built from **TOOLKIT_PUBLIC_URL**.
+      required: [ok, user_ref, publicBase, note, google, instagram]
+      properties:
+        ok:
+          type: boolean
+          description: When true, **connectUrl** values are valid HTTPS URLs.
+        user_ref:
+          type: string
+        publicBase:
+          type: string
+        note:
+          type: string
+        google:
+          type: object
+          required: [configured, connectUrl]
+          description: Google OAuth start for this **user_ref**.
+          properties:
+            configured:
+              type: boolean
+              description: False means GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET are missing on server.
+            connectUrl:
+              nullable: true
+              type: string
+              description: Paste for human — Google login for this toolkit. Null when configuration is invalid/missing.
+        instagram:
+          type: object
+          required: [configured, connectUrl]
+          description: Instagram OAuth start for this **user_ref**.
+          properties:
+            configured:
+              type: boolean
+              description: False means META_APP_ID / META_APP_SECRET are missing on server.
+            connectUrl:
+              nullable: true
+              type: string
+              description: Paste for human — Instagram login for this toolkit. Null when configuration is invalid/missing.
+
+    DebugConfigResponse:
+      type: object
+      required: [ok, service, checks]
+      properties:
+        ok:
+          type: boolean
+        service:
+          type: string
+        checks:
+          type: object
+          required:
+            - apiKeyConfigured
+            - toolkitPublicUrlConfigured
+            - googleOAuthConfigured
+            - instagramOAuthConfigured
+          properties:
+            apiKeyConfigured:
+              type: boolean
+            toolkitPublicUrlConfigured:
+              type: boolean
+            googleOAuthConfigured:
+              type: boolean
+            instagramOAuthConfigured:
+              type: boolean
+        publicBase:
+          nullable: true
+          type: string
+        next:
+          type: array
+          items:
+            type: string

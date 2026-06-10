@@ -1,0 +1,148 @@
+/* Document processing demo — embedded in index */
+
+.demo-doc {
+  margin-top: 0.5rem;
+}
+
+.demo-doc__lede {
+  font-family: var(--font-story);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #e8dedc;
+  margin: 0 0 1rem;
+}
+
+.demo-doc__lede--editable {
+  outline: none;
+  cursor: text;
+  background: transparent;
+  min-height: 4rem;
+}
+
+.demo-doc__lede--editable p {
+  margin: 0 0 1em;
+}
+
+.demo-doc__lede--editable p:last-child {
+  margin-bottom: 0;
+}
+
+.demo-doc__lede--editable:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.demo-doc__lede--editable:focus-visible {
+  outline: 2px solid var(--accent-dim);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+.demo-doc__lede--editable:empty::before {
+  content: "Edit this description…";
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.demo-doc__label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.demo-doc__input {
+  width: 100%;
+  min-height: 11rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.demo-doc__input:focus-visible {
+  outline: 2px solid var(--accent-dim);
+  outline-offset: 2px;
+}
+
+.demo-doc__actions {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.demo-doc__hint {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.demo-doc__result {
+  margin-top: 1.25rem;
+}
+
+.demo-doc__result h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.demo-doc__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.demo-doc__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.demo-doc__table th,
+.demo-doc__table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-doc__table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.demo-doc__table tr:last-child td {
+  border-bottom: none;
+}
+
+.demo-doc__flag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, #c9a227 35%, transparent);
+  color: #f5e6b8;
+}
+
+.demo-doc__empty {
+  padding: 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}

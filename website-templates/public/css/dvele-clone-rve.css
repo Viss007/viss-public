@@ -1,0 +1,4020 @@
+/* Modulus marketing layout — brand navy (#0A2540). */
+
+:root {
+  --mod-brand: #0a2540;
+  --mod-brand-soft: #b9c9dc;
+  --mod-bg: #2f3848;
+  --dvele-light: #ededed;
+  --dvele-white: #f7f7f7;
+  --dvele-dark-footer: rgba(10, 37, 64, 0.94);
+  --dvele-text-on-light: #0a2540;
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --nav-pad: clamp(1rem, 3vw, 2.25rem);
+  --container: min(90rem, 100% - 2 * var(--nav-pad));
+  /* @keyframes names + offsets match preset_libraries/animations/fade-rise-from-* (previews use 800ms). */
+  --dvele-fade-rise-duration: 1.85s;
+  --dvele-fade-rise-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  /* prefers-reduced-motion: gentle fade only (see @media block below) */
+  --dvele-fade-in-reduce-duration: 0.85s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1600px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body.dvele-clone {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--mod-bg);
+  color: var(--dvele-light);
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+/* —— Nav —— */
+.dvele-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem var(--nav-pad) 0.75rem;
+  pointer-events: none;
+}
+
+.dvele-nav>* {
+  pointer-events: auto;
+}
+
+.dvele-nav a:hover {
+  opacity: 1;
+}
+
+.dvele-nav__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.dvele-nav__lang {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dvele-nav__lang-sep {
+  color: rgba(255, 255, 255, 0.4);
+  user-select: none;
+}
+
+.dvele-nav__lang-link {
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.dvele-nav__lang-link:hover {
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 1;
+}
+
+.dvele-nav__lang-link--current {
+  color: #fff;
+}
+
+.dvele-nav__brand {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: none;
+}
+
+.dvele-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.dvele-nav__links {
+  display: none;
+  gap: 1.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+@media (min-width: 900px) {
+  .dvele-nav__links {
+    display: flex;
+  }
+}
+
+.dvele-nav__links a {
+  position: relative;
+  padding-bottom: 0.2rem;
+  color: #fff;
+  text-shadow: none;
+}
+
+.dvele-nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.dvele-nav__links a:hover::after {
+  transform: scaleX(1);
+}
+
+.dvele-nav__links a[aria-current="page"]::after {
+  transform: scaleX(1);
+  opacity: 0.9;
+}
+
+.dvele-menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: -0.5rem;
+  filter: none;
+}
+
+.dvele-menu-btn span {
+  display: block;
+  height: 3px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.dvele-menu-btn span:nth-child(1) {
+  width: 2.4rem;
+}
+
+.dvele-menu-btn span:nth-child(2) {
+  width: 2.4rem;
+}
+
+.dvele-menu-btn span:nth-child(3) {
+  width: 1.65rem;
+}
+
+.dvele-nav__underline {
+  position: fixed;
+  top: calc(1.25rem + 1.5rem);
+  left: var(--nav-pad);
+  right: var(--nav-pad);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.38);
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* Mobile drawer */
+.dvele-drawer {
+  display: none !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 37, 64, 0.97);
+  z-index: 2000;
+  flex-direction: column;
+  padding: 5rem var(--nav-pad) 2rem;
+  gap: 1.25rem;
+}
+
+.dvele-drawer.is-open {
+  display: flex !important;
+}
+
+.dvele-drawer a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.dvele-drawer__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  min-height: 0;
+}
+
+.dvele-drawer__big {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 9vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--dvele-light);
+  margin: 0;
+  max-width: 14ch;
+}
+
+.dvele-drawer__big em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.dvele-drawer__close {
+  position: absolute;
+  top: 1.5rem;
+  right: var(--nav-pad);
+  background: none;
+  border: none;
+  color: var(--dvele-light);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* —— Hero —— */
+.dvele-hero {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 5rem;
+}
+
+.dvele-hero__bg-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Let hero chrome (auth / contact) receive clicks; .dvele-hero__inner sits above with z-index:2 */
+  pointer-events: none;
+}
+
+.dvele-hero__bg-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.dvele-hero__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(10, 37, 64, 0.42) 0%,
+      rgba(10, 37, 64, 0.58) 45%,
+      rgba(10, 37, 64, 0.88) 100%);
+  pointer-events: none;
+}
+
+/* Home hero — login / register launch control, top-left on hero image (below fixed .dvele-nav) */
+.dvele-hero__auth-launch {
+  position: absolute;
+  top: max(5rem, calc(env(safe-area-inset-top, 0px) + 4.35rem));
+  left: var(--nav-pad);
+  bottom: auto;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.dvele-hero__auth-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.78rem 1.4rem;
+  border-radius: 999px;
+  background: rgba(10, 37, 64, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
+}
+
+.dvele-hero__auth-link {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.22em;
+  color: #fff;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
+  text-decoration-color: transparent;
+}
+
+.dvele-hero__auth-link:hover {
+  opacity: 0.92;
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.92);
+}
+
+.dvele-hero__auth-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 2px;
+  text-decoration: underline;
+  text-decoration-color: #fff;
+}
+
+a.dvele-hero__auth-link--admin {
+  color: #22c55e;
+  text-decoration-color: rgba(34, 197, 94, 0.45);
+}
+
+a.dvele-hero__auth-link--admin:hover {
+  color: #4ade80;
+  opacity: 1;
+  text-decoration-color: rgba(74, 222, 128, 0.9);
+}
+
+a.dvele-hero__auth-link--admin:focus-visible {
+  outline-color: #4ade80;
+  text-decoration-color: #86efac;
+}
+
+.dvele-hero__auth-sep {
+  font-size: 0.88rem;
+  font-weight: 400;
+  opacity: 0.45;
+  color: #fff;
+  user-select: none;
+}
+
+/* Reach-out–style quick contact + booking, top-right on hero image (below fixed .dvele-nav) */
+.dvele-hero__contact-overlay {
+  position: absolute;
+  top: max(5rem, calc(env(safe-area-inset-top, 0px) + 4.35rem));
+  right: var(--nav-pad);
+  bottom: auto;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  max-width: min(100vw - 2 * var(--nav-pad), 22rem);
+  pointer-events: auto;
+}
+
+.dvele-hero__contact-overlay .mod-contact-hero__icon-row {
+  margin-top: 0;
+  justify-content: center;
+}
+
+.dvele-hero__contact-overlay .mod-contact-hero__booking {
+  margin: 0;
+  justify-content: center;
+}
+
+.dvele-hero__inner {
+  position: relative;
+  z-index: 2;
+  width: var(--container);
+  margin: 0 auto;
+  padding: clamp(3rem, 12vh, 8rem) 0 clamp(4rem, 15vh, 10rem);
+  /* Pass clicks through to bg-frame overlays (Login/Register pill was under this layer) */
+  pointer-events: none;
+}
+
+.dvele-hero__inner .dvele-hero__grid {
+  pointer-events: auto;
+}
+
+.dvele-hero__tagline {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  opacity: 0.92;
+  color: var(--mod-brand-soft);
+}
+
+.dvele-display-h {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 8vw, 6.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  max-width: 14ch;
+}
+
+.dvele-display-h em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Hero title — preset_libraries/animations/fade-rise-from-up (CSS-only: no JS / no html class) */
+@keyframes fade-rise-from-up {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* preset_libraries/animations/fade-rise-from-left */
+@keyframes fade-rise-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-rise-from-left-subtle {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 0.88;
+    transform: translateX(0);
+  }
+}
+
+/* preset_libraries/animations/fade-rise-from-right */
+@keyframes fade-rise-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* preset_libraries/animations/fade-rise-from-down */
+@keyframes fade-rise-from-down {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dvele-fade-in-only {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero title: hidden until #top scrolls into view (.dvele-inview from IntersectionObserver) */
+#top .dvele-hero__inner>.dvele-display-h {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+#top.dvele-inview .dvele-hero__inner>.dvele-display-h {
+  animation: fade-rise-from-up var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+.dvele-display-h__chose {
+  display: block;
+  text-align: center;
+  margin-top: 0.08em;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+
+.dvele-hero__grid {
+  display: grid;
+  gap: 2rem;
+  align-items: end;
+}
+
+@media (min-width: 900px) {
+  .dvele-hero__grid {
+    grid-template-columns: minmax(12rem, 22%) 1fr;
+    gap: 3rem;
+  }
+
+  .dvele-hero__grid:has(> .dvele-hero__vid-frame:only-child) {
+    grid-template-columns: auto;
+  }
+}
+
+.dvele-hero__vid-frame {
+  border-radius: 2px;
+  overflow: hidden;
+  aspect-ratio: 9 / 14;
+  max-height: 52vh;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+}
+
+.dvele-hero__vid-frame video,
+.dvele-hero__vid-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dvele-txt-small {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 28rem;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* —— Problem —— */
+.dvele-section {
+  position: relative;
+}
+
+.dvele-section-pad {
+  padding: clamp(4rem, 12vw, 9rem) var(--nav-pad);
+}
+
+.dvele-container {
+  width: var(--container);
+  margin: 0 auto;
+}
+
+.dvele-txt-x-small {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin: 0 0 1rem;
+  opacity: 0.85;
+}
+
+.dvele-txt-xx-large {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3.2vw, 2.35rem);
+  line-height: 1.25;
+  font-weight: 400;
+  margin: 0;
+  max-width: 50rem;
+}
+
+/* —— Big centered brand headline —— */
+.dvele-sticky-headline {
+  text-align: center;
+  padding: clamp(3rem, 10vw, 8rem) var(--nav-pad);
+  background: linear-gradient(180deg, rgba(232, 238, 245, 0.06) 0%, transparent 100%);
+}
+
+.dvele-display-h--brand {
+  color: var(--mod-brand-soft);
+  max-width: none;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+}
+
+.dvele-sticky-headline.dvele-sticky-headline--on-light {
+  background: #e8eef5;
+}
+
+.dvele-sticky-headline.dvele-sticky-headline--on-light .dvele-display-h--brand {
+  color: var(--mod-brand);
+}
+
+.dvele-band-light .dvele-display-h--brand {
+  color: var(--mod-brand);
+}
+
+/* —— Light band + split —— */
+.dvele-band-light {
+  background: var(--dvele-light);
+  color: var(--dvele-text-on-light);
+}
+
+/* #process: same navy wash + light type as .dvele-footer */
+#process.dvele-band-light {
+  background: var(--dvele-dark-footer);
+  color: var(--dvele-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#process.dvele-band-light .dvele-display-h--brand {
+  color: var(--dvele-light);
+}
+
+#process.dvele-band-light .dvele-display-h__chose {
+  color: var(--mod-brand-soft);
+}
+
+#process.dvele-band-light .dvele-h-large {
+  color: var(--dvele-light);
+}
+
+#process.dvele-band-light .dvele-txt-small {
+  color: rgba(237, 237, 237, 0.9);
+  opacity: 1;
+}
+
+/* Match #care benefit body copy scale (see .dvele-benefit .dvele-txt-small) */
+#process .dvele-split>div:first-child>.dvele-txt-small--split-center {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  max-width: 32rem;
+}
+
+.dvele-band-light .dvele-txt-x-small {
+  color: var(--dvele-text-on-light);
+  opacity: 0.65;
+}
+
+.dvele-split {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .dvele-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.dvele-h-large {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 0 0 1.5rem;
+}
+
+.dvele-h-large--split-center {
+  text-align: center;
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.dvele-band-light .dvele-txt-small {
+  color: var(--dvele-text-on-light);
+  opacity: 0.88;
+}
+
+.dvele-txt-small--split-center {
+  text-align: center;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+/* #process copy: hidden until section scrolls into view */
+#process .dvele-split>div:first-child>.dvele-display-h {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#process .dvele-split>div:first-child>.dvele-h-large--split-center {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#process .dvele-split>div:first-child>.dvele-txt-small--split-center {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#process.dvele-inview .dvele-split>div:first-child>.dvele-display-h {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#process.dvele-inview .dvele-split>div:first-child>.dvele-h-large--split-center {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.22s forwards;
+}
+
+#process.dvele-inview .dvele-split>div:first-child>.dvele-txt-small--split-center {
+  animation: fade-rise-from-left-subtle var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.44s forwards;
+}
+
+/* #process image — preset_libraries/animations/fade-rise-from-right (right column) */
+#process .dvele-img-btn-wrap img {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+#process.dvele-inview .dvele-img-btn-wrap img {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.22s forwards;
+}
+
+/* Process nav-style link under body copy: same measure as centered paragraph, CTA centered, visually secondary */
+#process .dvele-process-copy-cta,
+section.dvele-stat .dvele-process-copy-cta {
+  max-width: 28rem;
+  margin-inline: auto;
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#process.dvele-inview .dvele-process-copy-cta,
+section.dvele-stat.dvele-inview .dvele-process-copy-cta {
+  animation: fade-rise-from-left-subtle var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.52s forwards;
+}
+
+#process .dvele-process-copy-cta__link,
+section.dvele-stat .dvele-process-copy-cta__link,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__link,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  color: rgba(237, 237, 237, 0.88);
+  text-decoration: none;
+  font-size: clamp(0.9rem, 1.35vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  text-shadow: none;
+  transition: color 0.2s ease;
+}
+
+#process .dvele-process-copy-cta__read,
+section.dvele-stat .dvele-process-copy-cta__read,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__read,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__read {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+@keyframes dvele-process-arrow-tick {
+
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translateX(0.3em);
+    opacity: 0.88;
+  }
+}
+
+#process .dvele-process-copy-cta__sep,
+section.dvele-stat .dvele-process-copy-cta__sep,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__sep,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__sep {
+  display: inline-block;
+  font-weight: 400;
+  letter-spacing: 0;
+  opacity: 0.55;
+  vertical-align: -0.05em;
+  animation: dvele-process-arrow-tick 1.65s ease-in-out infinite;
+}
+
+#process .dvele-process-copy-cta__dest,
+section.dvele-stat .dvele-process-copy-cta__dest,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__dest,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__dest {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+#process .dvele-process-copy-cta__link:hover,
+section.dvele-stat .dvele-process-copy-cta__link:hover,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__link:hover,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__link:hover {
+  color: #fff;
+}
+
+#process .dvele-process-copy-cta__link::after,
+section.dvele-stat .dvele-process-copy-cta__link::after,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__link::after,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+#process .dvele-process-copy-cta__link:hover::after,
+section.dvele-stat .dvele-process-copy-cta__link:hover::after,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__link:hover::after,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__link:hover::after {
+  transform: scaleX(1);
+}
+
+#process .dvele-process-copy-cta__link[aria-current="page"]::after,
+section.dvele-stat .dvele-process-copy-cta__link[aria-current="page"]::after,
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__link[aria-current="page"]::after,
+#care .dvele-process-copy-cta .dvele-process-copy-cta__link[aria-current="page"]::after {
+  transform: scaleX(1);
+  opacity: 0.85;
+}
+
+/* #care (3rd benefit): same CTA pattern as #process; aligns with benefit copy column */
+#care .dvele-benefit>div:not(.dvele-benefit__visual)>.dvele-process-copy-cta {
+  max-width: 28rem;
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  text-align: left;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+#care .dvele-benefit.dvele-inview>div:not(.dvele-benefit__visual)>.dvele-process-copy-cta {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.44s forwards;
+}
+
+.dvele-img-btn-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.dvele-img-btn-wrap img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.dvele-img-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+}
+
+.dvele-button {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  background: var(--mod-brand);
+  color: var(--dvele-light);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.dvele-button:hover {
+  opacity: 0.92;
+}
+
+/* —— Benefit rows —— */
+.dvele-benefit {
+  display: grid;
+  gap: 2rem;
+  padding: 4rem var(--nav-pad);
+  background: var(--mod-bg);
+  border-top: 1px solid rgba(237, 237, 237, 0.08);
+}
+
+@media (min-width: 900px) {
+  .dvele-benefit {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    padding: 5rem var(--nav-pad);
+  }
+
+  .dvele-benefit:nth-child(even) .dvele-benefit__visual {
+    order: 2;
+  }
+}
+
+.dvele-benefit__visual img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* #care benefit photos — fade-rise-from-left (1st & 3rd) / fade-rise-from-right (2nd, visual on right ≥900px) */
+#care .dvele-benefit:nth-child(1) .dvele-benefit__visual img,
+#care .dvele-benefit:nth-child(3) .dvele-benefit__visual img {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#care .dvele-benefit:nth-child(2) .dvele-benefit__visual img {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+#care .dvele-benefit:nth-child(1).dvele-inview .dvele-benefit__visual img,
+#care .dvele-benefit:nth-child(3).dvele-inview .dvele-benefit__visual img {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#care .dvele-benefit:nth-child(2).dvele-inview .dvele-benefit__visual img {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  #process .dvele-process-copy-cta__sep,
+  section.dvele-stat .dvele-process-copy-cta__sep,
+  #design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__sep,
+  #care .dvele-process-copy-cta .dvele-process-copy-cta__sep {
+    animation: none !important;
+    transform: none !important;
+    opacity: 0.55 !important;
+  }
+
+  #process .dvele-img-btn-wrap img,
+  #process .dvele-process-copy-cta,
+  section.dvele-stat .dvele-process-copy-cta,
+  #care .dvele-benefit>div:not(.dvele-benefit__visual)>.dvele-process-copy-cta,
+  #care .dvele-benefit:nth-child(1) .dvele-benefit__visual img,
+  #care .dvele-benefit:nth-child(2) .dvele-benefit__visual img,
+  #care .dvele-benefit:nth-child(3) .dvele-benefit__visual img {
+    transform: none !important;
+  }
+
+  #process.dvele-inview .dvele-img-btn-wrap img,
+  #process.dvele-inview .dvele-process-copy-cta,
+  section.dvele-stat.dvele-inview .dvele-process-copy-cta,
+  #care .dvele-benefit.dvele-inview>div:not(.dvele-benefit__visual)>.dvele-process-copy-cta,
+  #care .dvele-benefit:nth-child(1).dvele-inview .dvele-benefit__visual img,
+  #care .dvele-benefit:nth-child(2).dvele-inview .dvele-benefit__visual img,
+  #care .dvele-benefit:nth-child(3).dvele-inview .dvele-benefit__visual img {
+    animation: dvele-fade-in-only var(--dvele-fade-in-reduce-duration) ease-out forwards !important;
+  }
+}
+
+.dvele-benefit .dvele-display-h {
+  font-size: clamp(2.35rem, 4.8vw, 4.25rem);
+  /* Same primary line color as #process .dvele-display-h--brand (“Live in what you”) */
+  color: var(--dvele-light);
+  max-width: 14ch;
+  margin-bottom: 1.75rem;
+}
+
+.dvele-benefit .dvele-txt-small {
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  max-width: 32rem;
+}
+
+/* #care benefit copy column: scroll-in fade-rise-from-right (per article .dvele-inview) */
+#care .dvele-benefit>div:not(.dvele-benefit__visual)>.dvele-display-h {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+#care .dvele-benefit>div:not(.dvele-benefit__visual)>.dvele-txt-small {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+#care .dvele-benefit.dvele-inview>div:not(.dvele-benefit__visual)>.dvele-display-h {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#care .dvele-benefit.dvele-inview>div:not(.dvele-benefit__visual)>.dvele-txt-small {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.22s forwards;
+}
+
+/* 2nd benefit only (“Craft you can see”) — preset_libraries/animations/fade-rise-from-left */
+#care .dvele-benefit:nth-child(2)>div:not(.dvele-benefit__visual)>.dvele-display-h,
+#care .dvele-benefit:nth-child(2)>div:not(.dvele-benefit__visual)>.dvele-txt-small {
+  transform: translateX(-30px);
+}
+
+#care .dvele-benefit:nth-child(2).dvele-inview>div:not(.dvele-benefit__visual)>.dvele-display-h {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#care .dvele-benefit:nth-child(2).dvele-inview>div:not(.dvele-benefit__visual)>.dvele-txt-small {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.22s forwards;
+}
+
+/* 2nd row: tiny indent toward center — not a full reflow toward the photo */
+@media (min-width: 900px) {
+  #care .dvele-benefit:nth-child(2)>div:not(.dvele-benefit__visual) {
+    padding-inline-start: 0.55rem;
+  }
+}
+
+.dvele-tertiary {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.2rem;
+  display: inline-block;
+}
+
+/* —— Stat —— */
+.dvele-stat {
+  text-align: center;
+  padding: clamp(4rem, 12vw, 8rem) var(--nav-pad);
+}
+
+.dvele-stat .dvele-display-h--brand {
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  color: var(--dvele-light);
+}
+
+.dvele-stat .dvele-display-h--brand em {
+  color: var(--mod-brand-soft);
+}
+
+/* Stat headline only — scroll-in fade-rise-from-down */
+section.dvele-stat>.dvele-display-h.dvele-display-h--brand {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+section.dvele-stat.dvele-inview>.dvele-display-h.dvele-display-h--brand {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+/* —— Gallery —— infinite row: each __group is a 2/4-col grid exactly like the old static section.
+   Global `img { max-width: 100% }` + flex `max-content` was shrinking flex children — gallery imgs use max-width: none. */
+/* Full-bleed strip: breakout from main so tiles use viewport width (not container padding). */
+.dvele-gallery {
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  max-width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+}
+
+.dvele-gallery__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Track = 200% of viewport width, two equal columns. Use minmax(0,1fr) so columns cannot
+   take min-content from img[ width=600 ] — otherwise cells stay narrow and tiles look small. */
+.dvele-gallery__track {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 200%;
+  gap: 0;
+  will-change: transform;
+  animation: dvele-gallery-marquee 22s linear infinite;
+}
+
+@keyframes dvele-gallery-marquee {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.dvele-gallery__group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+  min-width: 0;
+  width: 100%;
+  align-self: stretch;
+}
+
+@media (min-width: 768px) {
+  .dvele-gallery__group {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.dvele-gallery__group img {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  filter: saturate(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dvele-gallery__track {
+    animation-duration: 76s;
+  }
+
+  /* Reduce-motion: keep a gentle fade-in, drop the slide/rise.
+     Previously used opacity:1 !important + animation:none !important which
+     left everything visible but killed the reveal; clients with OS-level
+     Reduce motion saw a static page. Fade alone respects the preference
+     without looking broken. */
+  #top.mod-contact-hero .mod-contact-eyebrow,
+  #top.mod-contact-hero .mod-contact-hero__icon-row,
+  #top.mod-contact-hero .mod-contact-hero__booking,
+  #top.dvele-hero .dvele-hero__contact-overlay .mod-contact-hero__icon-row,
+  #top.dvele-hero .dvele-hero__contact-overlay .mod-contact-hero__booking,
+  #top.dvele-hero .dvele-hero__auth-launch,
+  #mod-contact-map .mod-contact-map-shell,
+  #mod-contact-reviews .mod-contact-reviews__heading,
+  #mod-contact-reviews .mod-contact-review-card,
+  #mod-contact-split .mod-contact-split__aside,
+  #mod-contact-split .mod-contact-split__form-col {
+    transform: none !important;
+  }
+
+  #top.mod-contact-hero.dvele-inview .mod-contact-eyebrow,
+  #top.mod-contact-hero.dvele-inview .mod-contact-hero__icon-row,
+  #top.mod-contact-hero.dvele-inview .mod-contact-hero__booking,
+  #top.dvele-hero.dvele-inview .dvele-hero__contact-overlay .mod-contact-hero__icon-row,
+  #top.dvele-hero.dvele-inview .dvele-hero__contact-overlay .mod-contact-hero__booking,
+  #top.dvele-hero.dvele-inview .dvele-hero__auth-launch,
+  #mod-contact-map.dvele-inview .mod-contact-map-shell,
+  #mod-contact-reviews.dvele-inview .mod-contact-reviews__heading,
+  #mod-contact-reviews.dvele-inview .mod-contact-review-grid>li.mod-contact-review-card,
+  #mod-contact-split.dvele-inview .mod-contact-split__aside,
+  #mod-contact-split.dvele-inview .mod-contact-split__form-col {
+    animation: dvele-fade-in var(--dvele-fade-in-reduce-duration) ease-out forwards !important;
+  }
+
+  @keyframes dvele-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* —— /process page shell: same navy wash as .dvele-footer, centered drawer-style headline —— */
+body.dvele-clone.mod-process-body {
+  background-color: var(--dvele-dark-footer);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body.dvele-clone.mod-process-body>main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+body.dvele-clone.mod-process-body>footer.dvele-footer {
+  flex-shrink: 0;
+}
+
+.mod-process-page {
+  background: var(--dvele-dark-footer);
+  color: var(--dvele-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(4rem, 12vw, 9rem) var(--nav-pad);
+}
+
+body.dvele-clone.mod-process-body>main>.mod-process-page {
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+/* /gallery only: same gray band as #care .dvele-benefit (--mod-bg); /process stays navy */
+body.dvele-clone.mod-process-body.mod-gallery-shell {
+  background-color: var(--mod-bg);
+}
+
+#gallery-page.mod-process-page {
+  background: var(--mod-bg);
+}
+
+#about-page.mod-process-page {
+  background: var(--mod-bg);
+}
+
+#privacy-page.mod-process-page,
+#terms-page.mod-process-page,
+#cookies-page.mod-process-page {
+  background: var(--mod-bg);
+}
+
+.mod-process-page__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.mod-process-page .dvele-drawer__big {
+  margin-inline: auto;
+}
+
+/* —— Footer —— */
+.dvele-footer {
+  background: var(--dvele-dark-footer);
+  color: var(--dvele-light);
+  padding: 1.75rem var(--nav-pad) 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.dvele-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  margin: 0 auto 1rem;
+  padding: 0;
+  max-width: 42rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+
+.dvele-footer__legal a {
+  color: rgba(237, 237, 237, 0.88);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.dvele-footer__legal a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.dvele-footer__legal a:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.55);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.dvele-footer__legal-sep {
+  color: rgba(237, 237, 237, 0.78);
+  user-select: none;
+}
+
+.dvele-footer__fine {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  color: rgba(237, 237, 237, 0.82);
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  max-width: 42rem;
+}
+
+/* Same gradient brand as admin “Powered by VissAI”; em size is for tiny .mod-sim__ai-note — normalize in footer */
+.dvele-footer__fine .mod-sim__ai-note-highlight {
+  font-size: inherit;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: inherit;
+  vertical-align: baseline;
+}
+
+/* VissAI wordmark + back-to-top sit on one visual cluster in the copyright line */
+.dvele-footer__fine-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  vertical-align: middle;
+  margin-inline-start: 0.12rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* —— Back to top (in footer — avoids overlap with playground RETURN / iframe chrome) —— */
+.dvele-footer .mod-scroll-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.35rem;
+  height: 2.35rem;
+  margin: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--mod-brand);
+  box-shadow: 0 0.25rem 1rem rgba(10, 37, 64, 0.22);
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.dvele-footer .mod-scroll-top svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke: #1e3a8a;
+  color: #1e3a8a;
+  /* Tight core + heavy bloom; downward offsets read as “glow below” */
+  filter:
+    drop-shadow(0 0 1px rgba(30, 58, 138, 1)) drop-shadow(0 0 4px rgba(29, 78, 216, 0.95)) drop-shadow(0 3px 8px rgba(37, 99, 235, 0.9)) drop-shadow(0 6px 18px rgba(29, 78, 216, 0.85)) drop-shadow(0 10px 28px rgba(30, 64, 175, 0.7)) drop-shadow(0 14px 42px rgba(23, 37, 84, 0.55)) drop-shadow(0 0 22px rgba(59, 130, 246, 0.5));
+  transition: filter 0.2s ease, stroke 0.2s ease;
+}
+
+.dvele-footer .mod-scroll-top:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 0.4rem 1.25rem rgba(10, 37, 64, 0.28);
+}
+
+.dvele-footer .mod-scroll-top:hover svg {
+  stroke: #172554;
+  filter:
+    drop-shadow(0 0 2px rgba(23, 37, 84, 1)) drop-shadow(0 0 6px rgba(29, 78, 216, 1)) drop-shadow(0 4px 12px rgba(37, 99, 235, 0.95)) drop-shadow(0 8px 24px rgba(29, 78, 216, 0.9)) drop-shadow(0 12px 36px rgba(30, 58, 138, 0.8)) drop-shadow(0 18px 52px rgba(23, 37, 84, 0.65)) drop-shadow(0 0 32px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 48px rgba(96, 165, 250, 0.35));
+}
+
+.dvele-footer .mod-scroll-top:focus-visible {
+  outline: 2px solid var(--mod-brand);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .dvele-footer .mod-scroll-top svg {
+    filter:
+      drop-shadow(0 0 2px rgba(30, 58, 138, 0.85)) drop-shadow(0 4px 12px rgba(29, 78, 216, 0.5));
+  }
+
+  .dvele-footer .mod-scroll-top:hover svg {
+    filter:
+      drop-shadow(0 0 3px rgba(23, 37, 84, 0.9)) drop-shadow(0 6px 16px rgba(29, 78, 216, 0.55));
+  }
+}
+
+/* —— Modulus floor simulator —— (same band as #care .dvele-benefit: --mod-bg) */
+.mod-sim-section {
+  background: var(--mod-bg);
+  border-top: 1px solid rgba(237, 237, 237, 0.08);
+  color: var(--dvele-light);
+}
+
+.mod-sim-section .dvele-txt-x-small {
+  color: var(--dvele-light);
+  opacity: 0.65;
+}
+
+.mod-sim-section .mod-sim-section__title,
+.mod-sim-section .dvele-h-large {
+  color: var(--mod-brand-soft);
+}
+
+.mod-sim-section__title {
+  margin-bottom: 0.75rem;
+}
+
+/*
+  Title row is *outside* .dvele-section-pad so it is not pushed down by the pad’s
+  clamp(4rem, 12vw, 9rem) top padding. Pad keeps sides + bottom; small top gap under title.
+  Two spacers flex equally so the heading stays centered; PDF moved to palette header actions.
+*/
+#design-your-home>.mod-sim-section__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: var(--container);
+  max-width: calc(100% - 2 * var(--nav-pad));
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+  padding-top: clamp(2.5rem, 7vw, 5rem);
+  box-sizing: border-box;
+}
+
+#design-your-home>.mod-sim-section__title-row .mod-sim-section__title {
+  flex: 0 1 auto;
+  margin: 0;
+  text-align: center;
+  color: var(--dvele-light);
+}
+
+.mod-sim-section__title-row-spacer {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  #design-your-home>.mod-sim-section__title-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .mod-sim-section__title-row-spacer {
+    display: none;
+  }
+
+  #design-your-home>.mod-sim-section__title-row .mod-sim-section__title {
+    flex: 0 1 auto;
+  }
+}
+
+#design-your-home .dvele-section-pad {
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: clamp(4rem, 12vw, 9rem);
+  padding-left: var(--nav-pad);
+  padding-right: var(--nav-pad);
+}
+
+.mod-sim-section__lede {
+  max-width: 40rem;
+  margin-bottom: 2.5rem;
+}
+
+.mod-sim-section .mod-sim__palette-label {
+  color: var(--dvele-light);
+  opacity: 0.65;
+}
+
+.mod-sim-section .mod-sim__palette-sub {
+  color: rgba(237, 237, 237, 0.85);
+  opacity: 1;
+}
+
+.mod-sim__chips-hint {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 1.1vw + 0.65rem, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.mod-sim-section .mod-sim__chips-hint {
+  color: rgba(237, 237, 237, 0.78);
+}
+
+.mod-sim-section .mod-sim__plate-label {
+  color: var(--dvele-light);
+  opacity: 0.75;
+}
+
+.mod-sim-section .mod-sim__disclaimer {
+  color: rgba(237, 237, 237, 0.55);
+}
+
+.mod-sim-section .mod-sim-clear {
+  color: var(--mod-brand-soft);
+}
+
+/* Palette: full-width toolbar above the canvas (chips wrap; actions on wide screens top-right) */
+.mod-sim__palette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.mod-sim {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.mod-sim__palette--toolbar {
+  position: relative;
+  align-items: stretch;
+  text-align: left;
+  padding: 0.85rem 1.15rem 1.15rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.mod-sim__palette--toolbar.mod-sim__palette--collapsed {
+  padding-bottom: 0.85rem;
+}
+
+.mod-sim__palette-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.65rem 1rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.mod-sim__palette-header-start {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.mod-sim__palette-header .mod-sim__actions--palette-header {
+  margin-left: auto;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* Match .mod-scroll-top: white circle, brand shadow, glowing stroke icon */
+.mod-sim__palette-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--mod-brand);
+  box-shadow: 0 0.25rem 1rem rgba(10, 37, 64, 0.22);
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.mod-sim__palette-toggle:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 0.4rem 1.25rem rgba(10, 37, 64, 0.28);
+}
+
+.mod-sim__palette-toggle:focus-visible {
+  outline: 2px solid var(--mod-brand);
+  outline-offset: 3px;
+}
+
+.mod-sim__palette-toggle-chevron {
+  flex-shrink: 0;
+  stroke: #1e3a8a;
+  color: #1e3a8a;
+  filter:
+    drop-shadow(0 0 1px rgba(30, 58, 138, 1)) drop-shadow(0 0 4px rgba(29, 78, 216, 0.95)) drop-shadow(0 3px 8px rgba(37, 99, 235, 0.9)) drop-shadow(0 6px 18px rgba(29, 78, 216, 0.85)) drop-shadow(0 10px 28px rgba(30, 64, 175, 0.7)) drop-shadow(0 14px 42px rgba(23, 37, 84, 0.55)) drop-shadow(0 0 22px rgba(59, 130, 246, 0.5));
+  transition: transform 0.2s ease, filter 0.2s ease, stroke 0.2s ease;
+}
+
+.mod-sim__palette-toggle:hover .mod-sim__palette-toggle-chevron {
+  stroke: #172554;
+  filter:
+    drop-shadow(0 0 2px rgba(23, 37, 84, 1)) drop-shadow(0 0 6px rgba(29, 78, 216, 1)) drop-shadow(0 4px 12px rgba(37, 99, 235, 0.95)) drop-shadow(0 8px 24px rgba(29, 78, 216, 0.9)) drop-shadow(0 12px 36px rgba(30, 58, 138, 0.8)) drop-shadow(0 18px 52px rgba(23, 37, 84, 0.65)) drop-shadow(0 0 32px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 48px rgba(96, 165, 250, 0.35));
+}
+
+.mod-sim__palette--collapsed .mod-sim__palette-toggle-chevron {
+  transform: rotate(-90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mod-sim__palette-toggle {
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .mod-sim__palette-toggle:hover {
+    transform: none;
+  }
+
+  .mod-sim__palette-toggle-chevron {
+    transition: none;
+    filter:
+      drop-shadow(0 0 2px rgba(30, 58, 138, 0.85)) drop-shadow(0 4px 12px rgba(29, 78, 216, 0.5));
+  }
+
+  .mod-sim__palette-toggle:hover .mod-sim__palette-toggle-chevron {
+    filter:
+      drop-shadow(0 0 3px rgba(23, 37, 84, 0.9)) drop-shadow(0 6px 16px rgba(29, 78, 216, 0.55));
+  }
+}
+
+.mod-sim__palette-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  padding-bottom: 1rem;
+}
+
+.mod-sim__palette--collapsed .mod-sim__palette-panel {
+  display: none;
+}
+
+/* Sits directly above .mod-sim__chips — same width, tight vertical rhythm */
+.mod-sim__palette-panel .mod-sim__chips-hint--with-chips {
+  margin: 0;
+  padding: 0 0 0.05rem;
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: clamp(0.6rem, 0.45vw + 0.48rem, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(237, 237, 237, 0.68);
+}
+
+.mod-sim__palette-panel .mod-sim__chips {
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .mod-sim__palette--toolbar {
+    padding: 1rem 1.35rem 1.2rem;
+    gap: 0.75rem;
+  }
+
+  .mod-sim__palette--toolbar.mod-sim__palette--collapsed {
+    padding-bottom: 1rem;
+  }
+
+  .mod-sim__palette-panel .mod-sim__chips {
+    margin-bottom: 0;
+  }
+}
+
+.mod-sim__palette-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 0.35rem;
+  opacity: 0.65;
+}
+
+.mod-sim__palette-sub {
+  font-size: 0.78rem;
+  margin: 0 0 0.85rem;
+  opacity: 0.72;
+  line-height: 1.4;
+}
+
+.mod-sim__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+.mod-sim-chip {
+  cursor: grab;
+  border: 1px solid rgba(10, 37, 64, 0.2);
+  border-left: 4px solid var(--chip, var(--mod-brand));
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--dvele-text-on-light);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.85rem;
+  border-radius: 2px;
+  touch-action: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.mod-sim-chip:hover {
+  background: #fff;
+}
+
+.mod-sim-chip:active {
+  cursor: grabbing;
+}
+
+.mod-sim__palette--grabbing .mod-sim__chips {
+  outline: 2px dashed rgba(61, 110, 159, 0.55);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.mod-sim-chip--dragging {
+  cursor: grabbing !important;
+  position: relative;
+  z-index: 6;
+  transition: none;
+  opacity: 1 !important;
+  background: #fff !important;
+  border: 1px solid rgba(61, 110, 159, 0.85) !important;
+  border-left-width: 4px !important;
+  border-left-color: var(--chip, var(--mod-brand)) !important;
+  box-shadow:
+    0 10px 32px rgba(10, 37, 64, 0.35),
+    0 0 0 4px rgba(61, 110, 159, 0.45) !important;
+  animation: mod-sim-chip-grab-nudge 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes mod-sim-chip-grab-nudge {
+  0% {
+    transform: scale(0.88) translateY(0);
+  }
+
+  100% {
+    transform: scale(0.93) translateY(-1px);
+  }
+}
+
+.mod-sim-chip--dragging::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+  animation: mod-sim-chip-ring 0.6s ease-out infinite;
+}
+
+@keyframes mod-sim-chip-ring {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+.mod-sim-chip__ico {
+  margin-right: 0.35rem;
+  font-size: 1rem;
+  line-height: 1;
+  vertical-align: -0.1em;
+}
+
+.mod-sim__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  width: fit-content;
+  max-width: 100%;
+  gap: 0.5rem;
+}
+
+.mod-sim__ai-note {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dvele-light);
+}
+
+.mod-sim__ai-note-highlight {
+  display: inline-block;
+  font-size: 1.55em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  vertical-align: 0.05em;
+  background: linear-gradient(95deg,
+      #9f1239 0%,
+      #be123c 14%,
+      #dc2626 28%,
+      #e11d48 42%,
+      #f43f5e 54%,
+      #fb7185 66%,
+      #f472b6 78%,
+      #ec4899 88%,
+      #fda4af 96%,
+      #9f1239 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: mod-sim-ai-rainbow 7s linear infinite;
+}
+
+@keyframes mod-sim-ai-rainbow {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mod-sim__ai-note-highlight {
+    animation: none;
+    background-position: 50% center;
+  }
+}
+
+.mod-sim-clear {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mod-brand);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.mod-sim__stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Canvas + corner caption share one column so “View from above” sits tight under the plate */
+.mod-sim__canvas-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 0.35rem;
+}
+
+.mod-sim__submit-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-sim-submit-design.dvele-button {
+  min-width: min(100%, 22rem);
+  min-height: 3.25rem;
+  padding: 1.1rem 2.5rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+}
+
+.mod-sim__canvas-note {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+.mod-sim-section .mod-sim__canvas-note {
+  color: rgba(237, 237, 237, 0.72);
+}
+
+/* Directly under #mod-floor-canvas, bottom-right of the canvas column */
+.mod-sim-section .mod-sim__canvas-note.mod-sim__canvas-note--below-canvas {
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  align-self: flex-end;
+  width: 100%;
+  font-size: clamp(0.62rem, 0.5vw + 0.52rem, 0.74rem);
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+}
+
+/* Caption inside summary card (on white) */
+.mod-sim-section .mod-sim__sidebar .mod-sim__canvas-note--in-card {
+  color: rgba(10, 37, 64, 0.58);
+  text-align: left;
+  margin: 0 0 0.4rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(10, 37, 64, 0.1);
+  max-width: none;
+  letter-spacing: 0.14em;
+}
+
+.mod-sim__plate-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin: 0;
+  color: var(--dvele-text-on-light);
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mod-sim__plate-scale {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+}
+
+.mod-sim__sidebar {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  border-radius: 4px;
+  padding: 1.15rem 1rem 1.1rem;
+  box-shadow: 0 12px 40px rgba(10, 37, 64, 0.07);
+}
+
+/* In header: compact inline strip (must follow .mod-sim__sidebar so resets win) */
+.mod-sim__palette-header .mod-sim__sidebar--palette-header {
+  position: static;
+  align-self: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem 0.5rem;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  pointer-events: auto;
+}
+
+.mod-sim__palette-header .mod-sim__sidebar--palette-header .mod-sim-stats--horizontal {
+  flex: 0 1 auto;
+  min-width: 0;
+  justify-content: flex-start;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__row {
+  padding: 0 0.45rem;
+  gap: 0.08rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: none;
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__row:first-child {
+  padding-left: 0;
+  padding-top: 0;
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__row:last-of-type {
+  padding-right: 0;
+  padding-bottom: 0;
+  border-right: none;
+}
+
+/* Separator between estimate column and “Go → PRICING” link */
+.mod-sim__palette-header .mod-sim__sidebar--palette-header .mod-sim-stats--horizontal .mod-sim-stats__row--price {
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  padding-right: 0.45rem;
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__row dt {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: rgba(237, 237, 237, 0.52);
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__row dd {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(237, 237, 237, 0.95);
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__row--price dd {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.mod-sim__palette-header .mod-sim-stats--horizontal .mod-sim-stats__note {
+  color: rgba(237, 237, 237, 0.42);
+  font-size: 0.52rem;
+}
+
+.mod-sim__palette-header .mod-sim__palette-pricing-cta {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  white-space: nowrap;
+}
+
+#design-your-home .mod-sim__palette-pricing-cta .dvele-process-copy-cta__link {
+  font-size: clamp(0.82rem, 1.1vw, 0.95rem);
+}
+
+.mod-sim-stats {
+  margin: 0;
+  padding: 0 0 0.25rem;
+}
+
+.mod-sim-stats__row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(10, 37, 64, 0.08);
+}
+
+.mod-sim-stats__row:first-child {
+  padding-top: 0;
+}
+
+.mod-sim-stats__row:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0.35rem;
+}
+
+.mod-sim-stats__row dt {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0a0a0a;
+  flex: 0 0 auto;
+}
+
+.mod-sim-stats__row dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.78rem;
+  font-weight: 400;
+  color: var(--mod-brand);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.mod-sim-stats__row--price {
+  align-items: center;
+}
+
+.mod-sim-stats__row--price dd {
+  font-size: 1.98rem;
+  font-weight: 500;
+}
+
+.mod-sim-stats__note {
+  display: block;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: inherit;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  text-transform: none;
+}
+
+.mod-sim-stats--horizontal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__row {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-bottom: none;
+  border-right: 1px solid rgba(10, 37, 64, 0.1);
+  padding: 0.2rem 0.65rem;
+  gap: 0.12rem;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__row:first-child {
+  padding-top: 0.2rem;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__row:last-of-type {
+  border-right: none;
+  padding-bottom: 0.2rem;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__row dt {
+  font-size: 0.68rem;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__row dd {
+  font-size: 1.05rem;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__row--price dd {
+  font-size: 1.12rem;
+}
+
+.mod-sim-stats--horizontal .mod-sim-stats__note {
+  display: inline;
+  margin-top: 0;
+  margin-left: 0.25rem;
+  font-size: 0.58rem;
+}
+
+.mod-sim__disclaimer {
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--dvele-text-on-light);
+  opacity: 0.5;
+  margin: 1.15rem 0 1rem;
+}
+
+.mod-sim-pdf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.mod-sim-pdf__inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mod-sim-pdf__ico {
+  flex-shrink: 0;
+  display: block;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.05em;
+}
+
+/* Start New Design confirmation */
+.mod-sim-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.mod-sim-modal[hidden] {
+  display: none !important;
+}
+
+.mod-sim-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 37, 64, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.mod-sim-modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 22rem;
+  padding: 1.75rem 1.6rem 1.5rem;
+  background: #f8fafc;
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 24px 48px rgba(10, 37, 64, 0.2);
+}
+
+.mod-sim-modal__title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin: 0 0 0.65rem;
+  color: var(--mod-brand);
+  line-height: 1.2;
+}
+
+.mod-sim-modal__body {
+  margin: 0 0 1.35rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--dvele-text-on-light);
+  opacity: 0.88;
+}
+
+.mod-sim-modal__actions {
+  display: flex;
+  gap: 0.65rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.mod-sim-modal__cancel {
+  padding: 0.65rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mod-brand);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.mod-sim-modal__cancel:hover {
+  opacity: 1;
+}
+
+.mod-sim-modal__confirm {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+/* Submit design — contact form overlay (same page as floor planner) */
+.mod-sim-submit-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 4100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.mod-sim-submit-overlay[hidden] {
+  display: none !important;
+}
+
+.mod-sim-submit-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 37, 64, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.mod-sim-submit-overlay__panel {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  max-height: min(90vh, 44rem);
+  overflow: auto;
+  padding: 1.85rem 1.75rem 1.65rem;
+  margin: 0;
+  background: #f8fafc;
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 24px 48px rgba(10, 37, 64, 0.22);
+}
+
+.mod-sim-submit-overlay__close {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  line-height: 1;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--mod-brand);
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.mod-sim-submit-overlay__close:hover {
+  opacity: 1;
+  background: rgba(10, 37, 64, 0.06);
+}
+
+.mod-sim-submit-overlay__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin: 0 2.5rem 0.5rem;
+  text-align: center;
+  color: rgb(21 128 61);
+  line-height: 1.2;
+}
+
+.mod-sim-submit-overlay__title-loaded {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mod-sim-submit-overlay__check {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  color: rgb(34 197 94);
+}
+
+.mod-sim-submit-overlay__lead {
+  margin: 0 2.5rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+  color: rgb(200 90 90);
+}
+
+.mod-sim-submit-overlay__success-view {
+  padding: 1.25rem 2.5rem 1.75rem;
+  text-align: center;
+}
+
+.mod-sim-submit-overlay__success-text {
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: rgb(21 128 61);
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.mod-sim-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  /* Full width of the stage; shorter than a square (was 1:1, same as width in px). */
+  aspect-ratio: 2.2 / 1;
+  height: auto;
+  margin: 0 auto;
+  background: #f4f6f9;
+  border: 2px solid rgba(10, 37, 64, 0.35);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 12px 40px rgba(10, 37, 64, 0.12);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.mod-sim-canvas--dragging,
+.mod-sim-canvas--resizing {
+  border-color: rgba(61, 110, 159, 0.55);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.65),
+    0 12px 40px rgba(10, 37, 64, 0.16);
+}
+
+.mod-sim-canvas--dragging .mod-sim-canvas__grid,
+.mod-sim-canvas--resizing .mod-sim-canvas__grid {
+  opacity: 1;
+  background-image:
+    linear-gradient(to right, rgba(10, 37, 64, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 37, 64, 0.1) 1px, transparent 1px);
+}
+
+.mod-sim-canvas--palette-drag {
+  border-color: rgba(61, 110, 159, 0.75);
+  background: #eef3f8;
+  box-shadow:
+    0 0 0 3px rgba(61, 110, 159, 0.22),
+    0 12px 40px rgba(10, 37, 64, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  animation: mod-sim-canvas-drop-hint 1.1s ease-in-out infinite;
+}
+
+@keyframes mod-sim-canvas-drop-hint {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgba(61, 110, 159, 0.18),
+      0 12px 40px rgba(10, 37, 64, 0.14),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 5px rgba(61, 110, 159, 0.12),
+      0 14px 44px rgba(10, 37, 64, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+  }
+}
+
+.mod-sim-canvas__axis {
+  position: absolute;
+  background: rgba(10, 37, 64, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mod-sim-canvas__axis--h {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+}
+
+.mod-sim-canvas__axis--v {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  margin-left: -0.5px;
+}
+
+.mod-sim-canvas__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(10, 37, 64, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 37, 64, 0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+.mod-sim-modules {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.mod-sim-module {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px solid rgba(10, 37, 64, 0.5);
+  border-radius: 3px;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  touch-action: none;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.12) inset,
+    0 6px 18px rgba(10, 37, 64, 0.18);
+  overflow: hidden;
+}
+
+.mod-sim-module:focus-visible {
+  outline: 2px solid rgba(61, 110, 159, 0.95);
+  outline-offset: 2px;
+  z-index: 12;
+}
+
+.mod-sim-module__remove {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 4;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 2px;
+  background: rgba(10, 37, 64, 0.5);
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: background 0.15s ease, transform 0.12s ease;
+  touch-action: manipulation;
+}
+
+.mod-sim-module__remove:hover {
+  background: rgba(179, 48, 48, 0.95);
+}
+
+.mod-sim-module__remove:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+.mod-sim-module__remove:active {
+  transform: scale(0.94);
+}
+
+.mod-sim-module__bottom-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: 0.2rem 0 0.2rem 0.35rem;
+  background: rgba(10, 37, 64, 0.88);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.mod-sim-module__resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 1;
+  width: 22px;
+  height: auto;
+  min-height: 22px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0 0 3px 0;
+  background: rgba(10, 37, 64, 0.5);
+  color: rgba(255, 255, 255, 0.95);
+  cursor: nwse-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  touch-action: none;
+  pointer-events: auto;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.mod-sim-module__resize:hover {
+  background: rgba(232, 109, 45, 0.95);
+}
+
+.mod-sim-module__resize:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+.mod-sim-module__resize:active {
+  transform: scale(0.94);
+  transform-origin: center;
+}
+
+.mod-sim-module__inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.35rem 0.25rem 1.15rem;
+  position: relative;
+  background-image: repeating-linear-gradient(90deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.04) 3px,
+      rgba(255, 255, 255, 0.04) 4px);
+}
+
+.mod-sim-module__floor {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background: repeating-linear-gradient(-12deg,
+      transparent,
+      transparent 7px,
+      rgba(0, 0, 0, 0.12) 7px,
+      rgba(0, 0, 0, 0.12) 8px);
+  pointer-events: none;
+}
+
+.mod-sim-module--living {
+  background: linear-gradient(155deg, #5a8eb8 0%, #3d6e9f 45%, #254a6e 100%);
+}
+
+.mod-sim-module--kitchen {
+  background: linear-gradient(155deg, #e0a066 0%, #b8652e 50%, #8a4818 100%);
+}
+
+.mod-sim-module--bedroom {
+  background: linear-gradient(155deg, #6bad7c 0%, #3d7a52 50%, #2a5a3c 100%);
+}
+
+.mod-sim-module--bathroom {
+  background: linear-gradient(155deg, #9ebecf 0%, #5e7d92 55%, #3d5668 100%);
+}
+
+.mod-sim-module--toilet {
+  background: linear-gradient(155deg, #8eb4c4 0%, #5a7d8c 52%, #3d5a66 100%);
+}
+
+.mod-sim-module--bath_toilet {
+  background: linear-gradient(155deg, #a8c4d8 0%, #5f86a0 50%, #3d5f78 100%);
+}
+
+.mod-sim-module--office {
+  background: linear-gradient(155deg, #8f7eb8 0%, #5d4d82 50%, #3d325c 100%);
+}
+
+.mod-sim-module--hallway {
+  background: linear-gradient(155deg, #c5d8ea 0%, #7a9ab8 45%, #4a6a82 100%);
+}
+
+.mod-sim-module--garage {
+  background: linear-gradient(155deg, #8f96a8 0%, #5c6478 48%, #3a4154 100%);
+}
+
+.mod-sim-module--garden {
+  background: linear-gradient(155deg, #5a9e72 0%, #2f6f4e 48%, #1b4332 100%);
+}
+
+.mod-sim-module--front_yard {
+  background: linear-gradient(155deg, #6bc4a8 0%, #3d8b6e 48%, #235a47 100%);
+}
+
+.mod-sim-module--back_yard {
+  background: linear-gradient(155deg, #4a9a62 0%, #256340 50%, #143d28 100%);
+}
+
+.mod-sim-module--storage {
+  background: linear-gradient(155deg, #b8a898 0%, #8b7355 50%, #5c4d3a 100%);
+}
+
+.mod-sim-module--balcony {
+  background: linear-gradient(155deg, #8ec5eb 0%, #4a90c2 52%, #2d6a9e 100%);
+}
+
+.mod-sim-module--boiler {
+  background: linear-gradient(155deg, #d4785c 0%, #a0523d 50%, #6b3428 100%);
+}
+
+.mod-sim-module--hallway .mod-sim-module__label {
+  color: #0a2540;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.mod-sim-module--hallway .mod-sim-module__icon {
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.5));
+}
+
+.mod-sim-module__icon {
+  font-size: clamp(1.1rem, 4vw, 1.75rem);
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(10, 37, 64, 0.35));
+  pointer-events: none;
+}
+
+.mod-sim-module__label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 1px 3px rgba(10, 37, 64, 0.45);
+  pointer-events: none;
+  line-height: 1.2;
+}
+
+.mod-sim-module__dim-hint {
+  display: block;
+  width: 100%;
+  padding: 0 calc(22px + 0.15rem) 0 0;
+  box-sizing: border-box;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #fff;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.mod-sim-module--resizing {
+  cursor: nwse-resize;
+  z-index: 10;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.12) inset,
+    0 12px 28px rgba(10, 37, 64, 0.32);
+}
+
+.mod-sim-module--lift {
+  cursor: grabbing;
+  z-index: 10;
+  will-change: left, top;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.15) inset,
+    0 16px 36px rgba(10, 37, 64, 0.35);
+}
+
+@media (pointer: coarse) {
+  .mod-sim-module__resize {
+    width: min(32px, 18%);
+    min-width: 28px;
+  }
+}
+
+.mod-sim__hint {
+  font-size: 0.78rem;
+  opacity: 0.72;
+  margin: 0;
+  max-width: 36rem;
+}
+
+/* —— Contact (/kontaktai) — Dantiteta-aligned flow, Modulus palette —— */
+.mod-contact-hero {
+  padding: clamp(5.25rem, 12vw, 6.5rem) var(--nav-pad) clamp(2.75rem, 7vw, 4rem);
+  background: var(--dvele-dark-footer);
+  color: var(--dvele-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: center;
+}
+
+.mod-contact-hero__inner {
+  width: var(--container);
+  margin: 0 auto;
+  max-width: 48rem;
+}
+
+.mod-contact-eyebrow {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3.8vw, 2.15rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  text-transform: none;
+  color: #fff;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.18);
+  text-wrap: balance;
+}
+
+.mod-booking-hero .mod-booking-hero__lead {
+  margin: 1rem auto 0;
+  max-width: 38rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.88rem, 2vw, 0.95rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* Full-page booking iframe: source = Next app root (same UI as browser tab). */
+body.dvele-clone:has(.mod-booking-page) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Integrated booking (Laravel + React): sticky shell + navy page bg (not body --mod-bg grey). */
+html:has(.mod-booking-integrated) {
+  background-color: var(--dvele-dark-footer);
+}
+
+body.dvele-clone:has(.mod-booking-integrated) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--dvele-dark-footer);
+}
+
+body.dvele-clone:has(.mod-booking-page) main,
+body.dvele-clone:has(.mod-booking-integrated) main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Integrated booking: paint full <main>; avoids --mod-bg seam between content and footer. */
+body.dvele-clone:has(.mod-booking-integrated) main {
+  background-color: var(--dvele-dark-footer);
+}
+
+body.dvele-clone:has(.mod-booking-integrated)>footer.dvele-footer {
+  flex-shrink: 0;
+}
+
+.mod-booking-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.mod-booking-shell {
+  width: var(--container);
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--nav-pad) clamp(3rem, 8vw, 5rem);
+  background: var(--dvele-white);
+}
+
+.mod-booking-shell--full {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: min(85vh, 56rem);
+  background: var(--dvele-white);
+}
+
+.mod-booking-embed {
+  display: block;
+  width: 100%;
+  min-height: min(75vh, 52rem);
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 2px 24px rgba(10, 37, 64, 0.08);
+  background: #fff;
+}
+
+.mod-booking-embed--full {
+  flex: 1;
+  min-height: min(85vh, 56rem);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.mod-booking-embed__fallback {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+}
+
+.mod-booking-embed__fallback-link {
+  color: var(--mod-brand);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.mod-booking-embed__fallback-link:hover {
+  opacity: 0.9;
+}
+
+.mod-booking-placeholder {
+  width: var(--container);
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--nav-pad);
+  font-family: var(--font-body);
+  text-align: center;
+}
+
+.mod-booking-placeholder__text {
+  margin: 0;
+  color: rgba(237, 237, 237, 0.92);
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
+.mod-booking-placeholder__code {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+.mod-booking-placeholder__sub {
+  margin: 1.25rem 0 0;
+  font-size: 0.9rem;
+}
+
+.mod-booking-placeholder__sub a {
+  color: var(--mod-brand-soft);
+}
+
+.mod-booking-placeholder__sub a:hover {
+  color: #fff;
+}
+
+/* Dental header cluster: flex + items-center + gap-1.5 (0.375rem), h-8 w-8 pills */
+.mod-contact-hero__icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  margin-top: 1.25rem;
+}
+
+.mod-contact-hero__booking {
+  margin: 1.5rem 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mod-contact-hero__booking-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.95rem 2.35rem;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+  background: #fff;
+  color: var(--mod-brand);
+  border: 1px solid rgba(10, 37, 64, 0.14);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 6px 20px rgba(0, 0, 0, 0.14);
+  transition:
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.28s ease,
+    transform 0.22s ease;
+}
+
+.mod-contact-hero__booking-btn:hover {
+  opacity: 1;
+  background: #fafcfd;
+  color: var(--mod-brand);
+  border-color: rgba(10, 37, 64, 0.22);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.18);
+  transform: translateY(-2px);
+}
+
+.mod-contact-hero__booking-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.mod-contact-hero__booking-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .mod-contact-hero__booking-btn:hover,
+  .mod-contact-hero__booking-btn:active {
+    transform: none;
+  }
+}
+
+.mod-contact-hero__icon-btn {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mod-contact-hero__icon-btn:hover {
+  transform: scale(1.06);
+}
+
+.mod-contact-hero__icon-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.mod-contact-hero__icon-svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Slightly larger optical size so filled handset matches WhatsApp / Meta marks */
+.mod-contact-hero__icon-svg--phone {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.mod-contact-hero__icon-btn--phone {
+  background: #000;
+  color: #fff;
+}
+
+.mod-contact-hero__icon-btn--phone:hover {
+  background: #1a1a1a;
+}
+
+.mod-contact-hero__icon-btn--wa {
+  background: #25d366;
+}
+
+.mod-contact-hero__icon-btn--wa:hover {
+  background: #20b958;
+}
+
+.mod-contact-hero__icon-btn--fb {
+  background: #1877f2;
+}
+
+.mod-contact-hero__icon-btn--fb:hover {
+  background: #1464d8;
+}
+
+.mod-contact-hero__icon-btn--ig {
+  background: #e1306c;
+}
+
+.mod-contact-hero__icon-btn--ig:hover {
+  background: #c9275f;
+}
+
+.mod-contact-title {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--dvele-light);
+  line-height: 1.15;
+}
+
+.mod-contact-sub {
+  margin: 1rem auto 0;
+  max-width: 36rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(237, 237, 237, 0.78);
+}
+
+.mod-contact-map-band {
+  padding: clamp(2.25rem, 5vw, 3rem) var(--nav-pad);
+  background: var(--dvele-white);
+  border-bottom: 1px solid rgba(10, 37, 64, 0.08);
+}
+
+.mod-contact-map-band__inner {
+  width: var(--container);
+  margin: 0 auto;
+}
+
+.mod-contact-map-shell {
+  overflow: hidden;
+  border-radius: 14px;
+  background: #dfe6ee;
+  box-shadow:
+    0 20px 45px -24px rgba(10, 37, 64, 0.35),
+    0 0 0 1px rgba(10, 37, 64, 0.06);
+}
+
+.mod-contact-map-iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 260px;
+  border: 0;
+}
+
+@media (min-width: 768px) {
+  .mod-contact-map-iframe {
+    aspect-ratio: 21 / 9;
+    min-height: 320px;
+  }
+}
+
+.mod-contact-reviews {
+  padding: clamp(3rem, 8vw, 5rem) var(--nav-pad);
+  background: var(--dvele-dark-footer);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.mod-contact-reviews__inner {
+  width: var(--container);
+  margin: 0 auto;
+}
+
+.mod-contact-reviews__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+}
+
+/* Home-hero rating pill (River Valley markup); static here — hero uses position:absolute on image */
+.mod-contact-reviews .rating-wrapper {
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  box-shadow: 0 4px 18px -8px rgba(10, 37, 64, 0.2);
+}
+
+.mod-contact-reviews .rating-wrapper.is--absolute {
+  position: static;
+  inset: auto;
+  align-self: center;
+}
+
+.mod-contact-reviews .rating-wrapper .text-block {
+  line-height: 1;
+  color: #f0c84a;
+  text-shadow: 0 0 1px rgba(255, 252, 230, 0.85), 0 0 5px rgba(212, 165, 55, 0.28);
+}
+
+.mod-contact-reviews .rating-wrapper .icon-embed-small {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.mod-contact-reviews .rating-wrapper .icon-embed-small svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Warm gold score + star — light halo so shapes stay sharp */
+.mod-contact-reviews .rating-wrapper .icon-embed-small svg path {
+  fill: #f0c84a;
+  filter: drop-shadow(0 0 1px rgba(255, 252, 230, 0.8)) drop-shadow(0 0 5px rgba(200, 155, 50, 0.28));
+}
+
+.mod-contact-section-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--mod-brand);
+}
+
+.mod-contact-review-grid {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .mod-contact-review-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.mod-contact-review-card {
+  margin: 0;
+  padding: 1.65rem 1.35rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(10, 37, 64, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 4px 28px -6px rgba(10, 37, 64, 0.1);
+  /* no transition on transform — it fights keyframe fade-rise animations */
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.mod-contact-review-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(10, 37, 64, 0.16);
+  box-shadow: 0 12px 40px -16px rgba(10, 37, 64, 0.14);
+}
+
+.mod-contact-review-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.mod-contact-review-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(10, 37, 64, 0.12);
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+
+.mod-contact-review-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--mod-brand);
+}
+
+.mod-contact-review-meta {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  color: rgba(10, 37, 64, 0.5);
+}
+
+.mod-contact-review-quote {
+  margin: 1.1rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(10, 37, 64, 0.72);
+  text-align: center;
+}
+
+.mod-contact-split {
+  padding: clamp(3rem, 8vw, 5.5rem) var(--nav-pad);
+  background: var(--dvele-white);
+}
+
+.mod-contact-split__inner {
+  width: var(--container);
+  margin: 0 auto;
+}
+
+.mod-contact-split__grid {
+  display: grid;
+  gap: 2.75rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .mod-contact-split__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4rem;
+  }
+}
+
+.mod-contact-split__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.mod-contact-details p {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(10, 37, 64, 0.72);
+}
+
+.mod-contact-details p:last-child {
+  margin-bottom: 0;
+}
+
+.mod-contact-details__label {
+  font-weight: 600;
+  color: var(--mod-brand);
+}
+
+.mod-contact-details a {
+  color: var(--mod-brand);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.mod-contact-details a:hover {
+  opacity: 0.85;
+}
+
+.mod-contact-hours-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--mod-brand);
+}
+
+.mod-contact-hours-wrap {
+  margin-top: 1rem;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(10, 37, 64, 0.1);
+  background: rgba(237, 237, 237, 0.45);
+  box-shadow: 0 1px 3px rgba(10, 37, 64, 0.06);
+}
+
+.mod-contact-hours-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+  color: rgba(10, 37, 64, 0.75);
+}
+
+.mod-contact-hours-table thead th {
+  padding: 0.65rem 1rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(10, 37, 64, 0.5);
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(10, 37, 64, 0.08);
+}
+
+.mod-contact-hours-table tbody td {
+  padding: 0.65rem 1rem;
+  border-top: 1px solid rgba(10, 37, 64, 0.07);
+}
+
+.mod-contact-hours-table tbody td:first-child {
+  font-weight: 600;
+  color: var(--mod-brand);
+}
+
+.mod-contact-form-intro {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(10, 37, 64, 0.68);
+}
+
+.mod-contact-form--padded {
+  margin-top: 1.5rem;
+}
+
+.mod-contact-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mod-brand);
+  margin-bottom: 0.4rem;
+}
+
+.mod-contact-field {
+  margin-bottom: 1.1rem;
+}
+
+.mod-contact-field input,
+.mod-contact-field textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--mod-brand);
+  background: #fff;
+  border: 1px solid rgba(10, 37, 64, 0.22);
+  border-radius: 2px;
+}
+
+.mod-contact-field input:focus,
+.mod-contact-field textarea:focus {
+  outline: none;
+  border-color: var(--mod-brand);
+  box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.12);
+}
+
+.mod-contact-field textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.mod-contact-submit {
+  display: block;
+  margin: 0.25rem auto 0;
+}
+
+.mod-contact-flash {
+  padding: 0.85rem 1rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  background: rgba(10, 37, 64, 0.06);
+  border: 1px solid rgba(10, 37, 64, 0.12);
+  border-radius: 2px;
+  color: var(--mod-brand);
+}
+
+.mod-contact-errors {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem 0.85rem 1.35rem;
+  font-size: 0.88rem;
+  background: rgba(160, 40, 40, 0.06);
+  border: 1px solid rgba(160, 40, 40, 0.2);
+  border-radius: 2px;
+  color: #6b1c1c;
+}
+
+/* /kontaktai — IntersectionObserver → section.dvele-inview (see public/js/kontaktai-inview.js)
+   Mapping → preset_libraries/animations/…/preview.html:
+   .mod-contact-eyebrow → fade-rise-from-up | .mod-contact-hero__icon-row | .mod-contact-hero__booking → fade-rise-from-down
+   .mod-contact-map-shell → fade-rise-from-down | .mod-contact-reviews__heading → fade-rise-from-up
+   .mod-contact-review-grid li:nth-of-type(1|2|3) → fade-rise-from-left | -down | -right
+   .mod-contact-split__aside | __form-col → fade-rise-from-left | -right */
+#top.mod-contact-hero .mod-contact-eyebrow {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+#top.mod-contact-hero.dvele-inview .mod-contact-eyebrow {
+  animation: fade-rise-from-up var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#top.mod-contact-hero .mod-contact-hero__icon-row {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+#top.mod-contact-hero.dvele-inview .mod-contact-hero__icon-row {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.22s forwards;
+}
+
+#top.mod-contact-hero .mod-contact-hero__booking {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+#top.mod-contact-hero.dvele-inview .mod-contact-hero__booking {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.36s forwards;
+}
+
+/* Home hero — quick contact + booking in .dvele-hero__contact-overlay (welcome.blade.php).
+   Same preset as /kontaktai: preset_libraries/animations/fade-rise-from-down/preview.html */
+#top.dvele-hero .dvele-hero__contact-overlay .mod-contact-hero__icon-row {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+#top.dvele-hero.dvele-inview .dvele-hero__contact-overlay .mod-contact-hero__icon-row {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.22s forwards;
+}
+
+#top.dvele-hero .dvele-hero__contact-overlay .mod-contact-hero__booking {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+#top.dvele-hero.dvele-inview .dvele-hero__contact-overlay .mod-contact-hero__booking {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.36s forwards;
+}
+
+/* Home hero — auth nav (preset_libraries/animations/fade-rise-from-left/preview.html) */
+#top.dvele-hero .dvele-hero__auth-launch {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#top.dvele-hero.dvele-inview .dvele-hero__auth-launch {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.08s forwards;
+}
+
+button.dvele-hero__auth-link {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+}
+
+/* Full-viewport auth — transparent scrim + panel (home only; opened via .dvele-hero__auth-launch) */
+.dvele-auth-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding:
+    max(5rem, calc(env(safe-area-inset-top, 0px) + 4.35rem)) var(--nav-pad) max(2rem, env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.dvele-auth-lightbox[hidden] {
+  display: none !important;
+}
+
+.dvele-auth-lightbox__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(10, 37, 64, 0.42);
+  backdrop-filter: blur(6px);
+}
+
+.dvele-auth-lightbox__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 26rem);
+  margin-bottom: 2rem;
+  padding: 1.35rem 1.5rem 1.5rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(10, 37, 64, 0.1);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    0 24px 48px rgba(10, 37, 64, 0.18);
+  color: var(--mod-brand);
+}
+
+.dvele-auth-lightbox__head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(10, 37, 64, 0.1);
+}
+
+.dvele-auth-lightbox__close {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(10, 37, 64, 0.06);
+  color: var(--mod-brand);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dvele-auth-lightbox__close:hover {
+  background: rgba(10, 37, 64, 0.12);
+}
+
+.dvele-auth-lightbox__close:focus-visible {
+  outline: 2px solid var(--mod-brand);
+  outline-offset: 2px;
+}
+
+.dvele-auth-lightbox__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dvele-auth-lightbox__tabs {
+  display: flex;
+  gap: 0;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(10, 37, 64, 0.06);
+  border: 1px solid rgba(10, 37, 64, 0.1);
+}
+
+.dvele-auth-lightbox__tab {
+  flex: 1 1 50%;
+  min-width: 0;
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(10, 37, 64, 0.55);
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.dvele-auth-lightbox__tab[aria-selected="true"] {
+  z-index: 1;
+  background: #fff;
+  color: var(--mod-brand);
+  box-shadow: 0 1px 4px rgba(10, 37, 64, 0.12);
+}
+
+.dvele-auth-lightbox__tab:hover {
+  color: var(--mod-brand);
+}
+
+.dvele-auth-lightbox__tab:focus-visible {
+  outline: 2px solid var(--mod-brand);
+  outline-offset: 2px;
+}
+
+.dvele-auth-lightbox__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.dvele-auth-lightbox__oauth {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.62rem 1rem;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dvele-auth-lightbox__oauth--google {
+  border: 1px solid rgba(10, 37, 64, 0.2);
+  background: #fff;
+  color: rgba(10, 37, 64, 0.92);
+}
+
+.dvele-auth-lightbox__oauth--google:hover:not(:disabled) {
+  border-color: rgba(10, 37, 64, 0.35);
+  box-shadow: 0 1px 3px rgba(10, 37, 64, 0.08);
+}
+
+.dvele-auth-lightbox__oauth:focus-visible {
+  outline: 2px solid var(--mod-brand);
+  outline-offset: 2px;
+}
+
+.dvele-auth-lightbox__oauth:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.dvele-auth-lightbox__oauth-icon {
+  flex-shrink: 0;
+}
+
+.dvele-auth-lightbox__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.1rem 0 0.15rem;
+}
+
+.dvele-auth-lightbox__divider-line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(10, 37, 64, 0.14);
+}
+
+.dvele-auth-lightbox__divider-text {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(10, 37, 64, 0.45);
+}
+
+.dvele-auth-lightbox__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.dvele-auth-lightbox__label-text {
+  color: rgba(10, 37, 64, 0.78);
+}
+
+.dvele-auth-lightbox__input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(10, 37, 64, 0.18);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--mod-brand);
+}
+
+.dvele-auth-lightbox__input-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+/* Room for suffix slot: ~12px gutter + 27px ghost icon button (Radix TextField-style) */
+.dvele-auth-lightbox__input--password {
+  padding-right: 2.625rem;
+}
+
+/* Single ghost IconButton in the field slot — one hit target; SVGs stack in .pw-toggle-icon */
+.dvele-auth-lightbox__pw-toggle--icon {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(10, 37, 64, 0.55);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.12s ease, background 0.12s ease;
+}
+
+.dvele-auth-lightbox__pw-toggle--icon:hover {
+  color: rgba(10, 37, 64, 0.92);
+  background: rgba(10, 37, 64, 0.06);
+}
+
+.dvele-auth-lightbox__pw-toggle--icon:focus-visible {
+  outline: 2px solid var(--mod-brand);
+  outline-offset: 2px;
+}
+
+.dvele-auth-lightbox__pw-toggle-icon {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.dvele-auth-lightbox__pw-toggle-icon .dvele-auth-lightbox__pw-svg {
+  grid-area: 1 / 1;
+  display: block;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+/* Masked password: eye-off visible; eye-on fades out (crossfade when toggling) */
+.dvele-auth-lightbox__pw-toggle--icon .dvele-auth-lightbox__pw-svg--off {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dvele-auth-lightbox__pw-toggle--icon .dvele-auth-lightbox__pw-svg--on {
+  opacity: 0;
+  transform: scale(0.86);
+}
+
+.dvele-auth-lightbox__pw-toggle--icon.dvele-auth-lightbox__pw-toggle--revealed .dvele-auth-lightbox__pw-svg--off {
+  opacity: 0;
+  transform: scale(0.86);
+}
+
+.dvele-auth-lightbox__pw-toggle--icon.dvele-auth-lightbox__pw-toggle--revealed .dvele-auth-lightbox__pw-svg--on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dvele-auth-lightbox__pw-toggle-icon .dvele-auth-lightbox__pw-svg {
+    transition-duration: 0.01ms;
+    transition-property: opacity;
+  }
+
+  .dvele-auth-lightbox__pw-toggle--icon .dvele-auth-lightbox__pw-svg--on,
+  .dvele-auth-lightbox__pw-toggle--icon .dvele-auth-lightbox__pw-svg--off,
+  .dvele-auth-lightbox__pw-toggle--icon.dvele-auth-lightbox__pw-toggle--revealed .dvele-auth-lightbox__pw-svg--off,
+  .dvele-auth-lightbox__pw-toggle--icon.dvele-auth-lightbox__pw-toggle--revealed .dvele-auth-lightbox__pw-svg--on {
+    transform: none;
+  }
+}
+
+.dvele-auth-lightbox__input:focus {
+  outline: none;
+  border-color: rgba(10, 37, 64, 0.45);
+  box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.12);
+}
+
+.dvele-auth-lightbox__error {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: #b42318;
+}
+
+.dvele-admin-denied-banner {
+  margin: 0;
+  padding: 0.65rem 1.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #3d4d5c;
+  background: rgba(255, 248, 220, 0.95);
+  border-bottom: 1px solid rgba(10, 37, 64, 0.12);
+}
+
+.dvele-auth-lightbox__submit {
+  margin-top: 0.35rem;
+  align-self: center;
+}
+
+.dvele-auth-lightbox__submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+#mod-contact-map .mod-contact-map-shell {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+#mod-contact-map.dvele-inview .mod-contact-map-shell {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#mod-contact-reviews .mod-contact-reviews__heading {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+#mod-contact-reviews.dvele-inview .mod-contact-reviews__heading {
+  animation: fade-rise-from-up var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+/* Use :nth-of-type on <li> — :nth-child breaks when <ul> has a whitespace text node before the first <li>. */
+#mod-contact-reviews .mod-contact-review-grid>li.mod-contact-review-card {
+  opacity: 0;
+}
+
+#mod-contact-reviews .mod-contact-review-grid>li.mod-contact-review-card:nth-of-type(1) {
+  transform: translateX(-30px);
+}
+
+#mod-contact-reviews .mod-contact-review-grid>li.mod-contact-review-card:nth-of-type(2) {
+  transform: translateY(30px);
+}
+
+#mod-contact-reviews .mod-contact-review-grid>li.mod-contact-review-card:nth-of-type(3) {
+  transform: translateX(30px);
+}
+
+#mod-contact-reviews.dvele-inview .mod-contact-review-grid>li.mod-contact-review-card:nth-of-type(1) {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.12s forwards;
+}
+
+#mod-contact-reviews.dvele-inview .mod-contact-review-grid>li.mod-contact-review-card:nth-of-type(2) {
+  animation: fade-rise-from-down var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.24s forwards;
+}
+
+#mod-contact-reviews.dvele-inview .mod-contact-review-grid>li.mod-contact-review-card:nth-of-type(3) {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.36s forwards;
+}
+
+#mod-contact-split .mod-contact-split__aside {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+#mod-contact-split .mod-contact-split__form-col {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+#mod-contact-split.dvele-inview .mod-contact-split__aside {
+  animation: fade-rise-from-left var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) forwards;
+}
+
+#mod-contact-split.dvele-inview .mod-contact-split__form-col {
+  animation: fade-rise-from-right var(--dvele-fade-rise-duration) var(--dvele-fade-rise-ease) 0.18s forwards;
+}

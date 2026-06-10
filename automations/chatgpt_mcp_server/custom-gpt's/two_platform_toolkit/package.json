@@ -1,0 +1,27 @@
+{
+  "name": "two_platform_toolkit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mini toolkit: Google Sheets + Instagram (Meta) OAuth2 and REST tools for Custom GPT",
+  "scripts": {
+    "dev": "tsc && node dist/server.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "tunnel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/tunnel.ps1",
+    "toolkit": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/toolkit.ps1",
+    "openapi:bundle": "node ./scripts/bundle-openapi.mjs",
+    "openapi:bundle:paste": "node ./scripts/bundle-openapi.mjs --paste"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3",
+    "yaml": "^2.8.2"
+  }
+}

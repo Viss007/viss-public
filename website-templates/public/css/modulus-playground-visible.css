@@ -1,0 +1,52 @@
+/* Playground shell: .tpl-modulus wraps nav/main/footer (8124 uses body.dvele-clone > main > footer). */
+.tpl-modulus.dvele-clone {
+  margin: 0;
+  font-family: var(--font-body, "DM Sans", system-ui, sans-serif);
+  background-color: var(--mod-bg, #2f3848);
+  color: var(--dvele-light, #ededed);
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.tpl-modulus.dvele-clone .dvele-display-h,
+.tpl-modulus.dvele-clone .dvele-display-h--brand,
+.tpl-modulus.dvele-clone .dvele-txt-xx-large {
+  font-family: var(--font-display, "Fraunces", "Times New Roman", serif);
+}
+
+.tpl-modulus.dvele-clone > main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.tpl-modulus.dvele-clone > footer.dvele-footer {
+  flex-shrink: 0;
+}
+
+.tpl-modulus.dvele-clone section.dvele-stat .dvele-display-h--brand {
+  color: var(--dvele-light);
+}
+
+.tpl-modulus.dvele-clone section.dvele-stat .dvele-display-h--brand em {
+  color: var(--mod-brand-soft);
+}
+
+/* Mirror body.dvele-clone.mod-process-body rules from dvele-clone-rve.css */
+.tpl-modulus.dvele-clone.mod-process-body {
+  background-color: var(--dvele-dark-footer);
+}
+
+.tpl-modulus.dvele-clone.mod-process-body > main > .mod-process-page {
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+.tpl-modulus.dvele-clone.mod-process-body.mod-gallery-shell {
+  background-color: var(--mod-bg);
+}

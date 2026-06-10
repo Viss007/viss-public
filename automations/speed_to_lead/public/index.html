@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speed Lead</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main class="layout">
+    <details class="card steps" open aria-labelledby="steps-h">
+      <summary class="collapse-summary">
+        <span class="collapse-summary-main">
+          <span class="collapse-chevron" aria-hidden="true"></span>
+          <h2 id="steps-h">Gmail</h2>
+        </span>
+        <a href="auth/google/poll-once" class="summary-test-btn" role="button"
+          title="Check inbox and send auto-replies (JSON)" onclick="event.stopPropagation();">Test</a>
+      </summary>
+      <div class="details-panel gmail-panel">
+        <a href="auth/google" class="btn-connect-gmail" id="btn-connect-gmail"
+          onclick="event.stopPropagation();">Connect to your gmail</a>
+      </div>
+    </details>
+
+    <details class="card endpoints" aria-labelledby="ep-h">
+      <summary class="collapse-summary">
+        <span class="collapse-summary-main">
+          <span class="collapse-chevron" aria-hidden="true"></span>
+          <h2 id="ep-h">SMS / Call</h2>
+        </span>
+        <span class="summary-test-actions" onclick="event.stopPropagation()">
+          <button type="button" class="summary-test-btn" id="btn-sms-test" aria-label="SMS test">SMS test</button>
+          <button type="button" class="summary-test-btn" id="btn-call-test" aria-label="Call test">Call test</button>
+        </span>
+      </summary>
+      <div class="details-panel sms-panel">
+        <input type="tel" id="business-phone" class="input-field input-ghost" name="business_phone"
+          placeholder="Business number" autocomplete="tel" inputmode="tel" aria-label="Business number" />
+      </div>
+    </details>
+
+    <details class="card status" aria-labelledby="st-h">
+      <summary class="collapse-summary">
+        <span class="collapse-summary-main">
+          <span class="collapse-chevron" aria-hidden="true"></span>
+          <h2 id="st-h">Slack</h2>
+        </span>
+        <button type="button" class="summary-test-btn" aria-label="Test Slack"
+          onclick="event.stopPropagation()">Test</button>
+      </summary>
+      <div class="details-panel slack-panel">
+        <button type="button" class="btn-connect-slack" id="btn-connect-slack">
+          Connect to your slack
+        </button>
+      </div>
+    </details>
+  </main>
+</body>
+
+</html>

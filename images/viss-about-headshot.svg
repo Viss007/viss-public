@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="448" height="448" viewBox="0 0 448 448" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="viss-headshot-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1d24"/>
+      <stop offset="100%" stop-color="#0c0e12"/>
+    </linearGradient>
+  </defs>
+  <rect width="448" height="448" rx="32" fill="url(#viss-headshot-bg)"/>
+  <rect x="1" y="1" width="446" height="446" rx="31" fill="none" stroke="rgba(255,255,255,0.08)"/>
+  <text x="224" y="278" text-anchor="middle" font-family="system-ui, sans-serif" font-size="132" font-weight="600" fill="rgba(239,68,68,0.35)">V</text>
+</svg>

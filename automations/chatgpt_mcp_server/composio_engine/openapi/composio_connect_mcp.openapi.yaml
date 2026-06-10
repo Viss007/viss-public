@@ -1,0 +1,365 @@
+openapi: 3.1.0
+info:
+  title: Composio Engine OAuth Router (ngrok)
+  version: 1.2.0
+  description: >
+    GPT Action schema for backend-routed OAuth only.
+    VALIDATED FLOW (REQUIRED ORDER):
+    1) First call registerComposioRuntimeClient.
+    2) Then call startComposioOauth.
+    3) ALWAYS use startComposioOauth.response.authorizeUrl as the default link to show/open.
+    4) Use launchUrl only as fallback when direct authorize cannot be opened.
+    5) After callback succeeds, use COMPOSIO_MANAGE_CONNECTIONS (action=add) from /mcp if toolkit is not active.
+    6) Open returned redirect_url and complete toolkit connection (for example googlesheets) before executing toolkit tools.
+    7) Optionally verify runtime token via /v1/oauth/composio/runtime_token_status.
+servers:
+  - url: https://rundown-baking-chump.ngrok-free.dev
+
+paths:
+  /v1/oauth/composio/register_client:
+    post:
+      operationId: registerComposioRuntimeClient
+      security: []
+      summary: Register runtime OAuth client on backend
+      description: >
+        Registers a fresh runtime Composio OAuth client bound to backend callback URL.
+      responses:
+        "200":
+          description: Runtime client registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  client_id:
+                    type: string
+                  callbackUrl:
+                    type: string
+                  registerUrl:
+                    type: string
+        "401":
+          description: Missing or invalid API key
+        "500":
+          description: Registration failed
+
+  /v1/oauth/composio/start:
+    get:
+      operationId: startComposioOauth
+      security: []
+      summary: Create direct authorize URL (default) and launch fallback
+      description: >
+        Default behavior: use authorizeUrl directly.
+        launchUrl is fallback only.
+      parameters:
+        - name: user_ref
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [google_sheets, instagram]
+      responses:
+        "200":
+          description: OAuth launch + authorize URLs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  user_ref:
+                    type: string
+                  provider:
+                    type: string
+                  authorizeUrl:
+                    type: string
+                    description: Primary URL to use by default.
+                  launchUrl:
+                    type: string
+                    description: Fallback URL only.
+                  callbackUrl:
+                    type: string
+                  state:
+                    type: string
+        "400":
+          description: Missing params or runtime client not registered
+        "401":
+          description: Missing or invalid API key
+
+  /v1/oauth/composio/launch:
+    get:
+      operationId: openComposioLaunchPage
+      security: []
+      summary: Branded launch page with Continue button
+      parameters:
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: HTML launch page
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Invalid or expired state
+
+  /v1/oauth/composio/callback:
+    get:
+      operationId: composioOauthCallback
+      security: []
+      summary: OAuth callback receiver on backend
+      parameters:
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: error
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success or error HTML page
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Invalid callback request
+
+  /v1/oauth/composio/runtime_token_status:
+    get:
+      operationId: getComposioRuntimeTokenStatus
+      summary: Debug runtime MCP auth token status by user_ref
+      description: >
+        API-key protected debug endpoint to verify whether backend has a runtime MCP bearer token
+        available for a specific user_ref after OAuth callback.
+      parameters:
+        - name: X-API-Key
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: user_ref
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Runtime token status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  user_ref:
+                    type: string
+                  has_runtime_mcp_auth:
+                    type: boolean
+                  provider:
+                    type: string
+                    nullable: true
+                  updated_at:
+                    type: integer
+                    nullable: true
+                  expires_at:
+                    type: integer
+                    nullable: true
+                  expires_in_seconds:
+                    type: integer
+                    nullable: true
+        "400":
+          description: Missing user_ref
+        "401":
+          description: Missing or invalid API key
+
+  /mcp:
+    post:
+      operationId: composioMcpCall
+      security:
+        - ComposioBearerAuth: []
+        - {}
+      summary: Call Composio MCP tools via backend proxy
+      description: >
+        Proxy for Composio MCP (tools/list, tools/call) through your backend.
+        Forwards to https://connect.composio.dev/mcp.
+        If Authorization is missing, pass user_ref to use runtime callback token.
+        Provider tools require an ACTIVE toolkit connection.
+      parameters:
+        - name: user_ref
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Required when Authorization header is not sent.
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - application/json, text/event-stream
+          example: application/json, text/event-stream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/McpRequest"
+            examples:
+              listTools:
+                value:
+                  jsonrpc: "2.0"
+                  id: 1
+                  method: tools/list
+                  params: {}
+              searchGoogleSheetsTools:
+                value:
+                  jsonrpc: "2.0"
+                  id: 2
+                  method: tools/call
+                  params:
+                    name: COMPOSIO_SEARCH_TOOLS
+                    arguments:
+                      queries:
+                        - use_case: list my google sheets spreadsheets
+                      session:
+                        generate_id: true
+              activateGoogleSheetsConnection:
+                value:
+                  jsonrpc: "2.0"
+                  id: 3
+                  method: tools/call
+                  params:
+                    name: COMPOSIO_MANAGE_CONNECTIONS
+                    arguments:
+                      toolkits:
+                        - name: googlesheets
+                          action: add
+                      session_id: high
+              listGoogleSheetsSpreadsheets:
+                value:
+                  jsonrpc: "2.0"
+                  id: 4
+                  method: tools/call
+                  params:
+                    name: COMPOSIO_MULTI_EXECUTE_TOOL
+                    arguments:
+                      tools:
+                        - tool_slug: GOOGLESHEETS_SEARCH_SPREADSHEETS
+                          arguments:
+                            query: ""
+                            max_results: 25
+                            search_type: both
+                      sync_response_to_workbench: false
+                      session_id: high
+                      current_step: LISTING_SHEETS
+                      current_step_metric: 1/1
+      responses:
+        "200":
+          description: MCP response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/McpResponse"
+            text/event-stream:
+              schema:
+                type: string
+        "400":
+          description: Invalid request
+        "401":
+          description: Unauthorized (missing Authorization and missing/unknown user_ref runtime token)
+        "500":
+          description: Upstream MCP error
+
+components:
+  schemas:
+    McpRequest:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          example: "2.0"
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: "null"
+        method:
+          type: string
+          enum: [tools/list, tools/call]
+        params:
+          oneOf:
+            - $ref: "#/components/schemas/McpToolsListParams"
+            - $ref: "#/components/schemas/McpToolsCallParams"
+      required: [method]
+      additionalProperties: true
+    McpToolsListParams:
+      type: object
+      description: Params object for MCP tools/list.
+      properties: {}
+      additionalProperties: true
+    McpToolsCallParams:
+      type: object
+      description: Params object for MCP tools/call.
+      properties:
+        name:
+          type: string
+          description: Exact COMPOSIO tool name returned by tools/list or COMPOSIO_SEARCH_TOOLS.
+        arguments:
+          type: object
+          description: Tool input object. Use this key, not params.
+          additionalProperties: true
+      required: [name, arguments]
+      additionalProperties: true
+    McpResponse:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: "null"
+        result:
+          type: object
+          additionalProperties: true
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+            message:
+              type: string
+            data:
+              type: object
+              additionalProperties: true
+          additionalProperties: true
+      additionalProperties: true
+  securitySchemes:
+    ComposioBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoices → Excel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    .drop-active {
+      border-color: #2563eb !important;
+      background: #eff6ff !important;
+    }
+
+    @keyframes pulse-bar {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .animate-pulse-slow {
+      animation: pulse-bar 1.2s ease-in-out infinite;
+    }
+
+    .inv-cell-input {
+      width: 100%;
+      min-width: 0;
+      border-radius: 0.375rem;
+      border: 1px solid rgb(226 232 240);
+      background: rgb(255 255 255);
+      padding: 0.5rem 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      color: rgb(15 23 42);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .inv-cell-input:focus {
+      outline: none;
+      border-color: rgb(37 99 235);
+      box-shadow: 0 0 0 1px rgb(37 99 235 / 0.25);
+    }
+
+    .inv-cell-input:disabled {
+      background: rgb(248 250 252);
+      color: rgb(100 116 139);
+      cursor: not-allowed;
+    }
+
+    .inv-col-highlight .inv-cell-input {
+      border-color: rgb(191 219 254);
+      background: rgb(239 246 255 / 0.85);
+    }
+
+    .inv-col-highlight .inv-cell-input:focus {
+      border-color: rgb(37 99 235);
+      background: rgb(255 255 255);
+    }
+
+    .inv-cell-textarea {
+      min-height: 2.75rem;
+      max-height: 12rem;
+      resize: vertical;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+
+    .inv-review-table {
+      table-layout: auto;
+      width: max(100%, 72rem);
+    }
+
+    .inv-review-table td {
+      vertical-align: top;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-50/80 via-white to-slate-100 -z-10"></div>
+
+  <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur-sm sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center shadow-lg shadow-brand-600/20">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-semibold text-slate-900 tracking-tight">Invoices → Excel</h1>
+          <p class="text-xs sm:text-sm text-slate-500">PDF invoices to review table and spreadsheet</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+    <section id="step-upload" class="space-y-8">
+      <section class="text-center max-w-2xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Upload PDF invoices</h2>
+        <p class="text-slate-600 text-sm mt-2">Documents are read first; Excel is created only after you confirm the
+          data below.</p>
+      </section>
+
+      <section id="sample-invoices-section"
+        class="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-sm shadow-slate-200/40 max-w-3xl mx-auto">
+        <h3 class="text-base font-semibold text-slate-700 mb-4 text-center">Try with sample invoices</h3>
+        <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-center items-stretch">
+          <button type="button" data-sample="TA0073451639.pdf"
+            class="sample-invoice-btn flex-1 min-w-[200px] px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50/80 text-left hover:bg-brand-50 hover:border-brand-300 focus:outline-none focus:ring-4 focus:ring-brand-500/25 transition disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none">
+            <span class="block text-sm font-semibold text-slate-900 tabular-nums">Sample invoice 1 (€87.43)</span>
+          </button>
+          <button type="button" data-sample="Invoice-EXLNLKTM-0002.pdf"
+            class="sample-invoice-btn flex-1 min-w-[200px] px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50/80 text-left hover:bg-brand-50 hover:border-brand-300 focus:outline-none focus:ring-4 focus:ring-brand-500/25 transition disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none">
+            <span class="block text-sm font-semibold text-slate-900 tabular-nums">Sample invoice 2 (€1&nbsp;249.00)</span>
+          </button>
+          <button type="button" data-sample="DGK000286337.PDF"
+            class="sample-invoice-btn flex-1 min-w-[200px] px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50/80 text-left hover:bg-brand-50 hover:border-brand-300 focus:outline-none focus:ring-4 focus:ring-brand-500/25 transition disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none">
+            <span class="block text-sm font-semibold text-slate-900">Sample invoice 3 (many line items)</span>
+          </button>
+        </div>
+        <p class="text-center text-xs text-slate-400 mt-4">Built-in demo PDFs — same processing as your own uploads.</p>
+      </section>
+
+      <section id="dropzone"
+        class="relative rounded-2xl border-2 border-dashed border-slate-300 bg-white p-8 sm:p-12 text-center transition-colors cursor-pointer shadow-sm hover:border-brand-400 hover:bg-brand-50/30"
+        tabindex="0" role="button" aria-label="Upload PDF files">
+        <input type="file" id="file-input" class="hidden" accept=".pdf,application/pdf" multiple />
+        <div class="mx-auto w-14 h-14 rounded-2xl bg-brand-100 flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+        </div>
+        <p class="text-slate-800 font-semibold text-lg mb-1">Drop PDF files here</p>
+        <p class="text-slate-500 text-sm mb-4">or click to choose multiple files from your computer</p>
+        <p class="text-xs text-slate-400">You can upload up to 25 files at once.</p>
+      </section>
+
+      <section id="file-list-section" class="hidden">
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wide">Uploaded files</h3>
+          <div class="flex items-center gap-2 shrink-0">
+            <span id="file-count" class="text-base sm:text-lg font-semibold text-red-600 tabular-nums"></span>
+            <button type="button" id="file-list-toggle"
+              class="p-1 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500/40 transition"
+              aria-expanded="false" aria-controls="file-list-panel" title="Show or hide file list">
+              <svg id="file-list-toggle-icon" class="w-5 h-5 transition-transform duration-200" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="file-list-panel" class="hidden">
+          <ul id="file-list" class="space-y-2"></ul>
+        </div>
+      </section>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
+        <button type="button" id="btn-convert" disabled
+          class="w-full sm:w-auto min-w-[260px] px-8 py-4 rounded-xl bg-brand-600 text-white font-semibold text-lg shadow-lg shadow-brand-600/25 hover:bg-brand-700 focus:outline-none focus:ring-4 focus:ring-brand-500/40 disabled:opacity-45 disabled:cursor-not-allowed disabled:shadow-none transition">
+          Process invoices
+        </button>
+      </div>
+
+      <div id="progress-wrap" class="hidden max-w-md mx-auto">
+        <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
+          <div id="progress-bar" class="h-full w-1/3 rounded-full bg-brand-600 animate-pulse-slow"></div>
+        </div>
+        <p id="progress-text" class="text-center text-sm text-slate-600 mt-3">Processing…</p>
+      </div>
+    </section>
+
+    <div id="alert-error" class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+    </div>
+
+    <section id="results-section" class="hidden space-y-6">
+      <div class="rounded-2xl border border-slate-200/90 bg-white shadow-md shadow-slate-200/50 overflow-hidden">
+        <div class="px-5 sm:px-8 py-6 sm:py-7 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
+          <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+            <div class="min-w-0">
+              <p class="text-xs font-semibold uppercase tracking-wider text-brand-700 mb-1">Step 2</p>
+              <h3 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Review and export</h3>
+              <p class="text-sm text-slate-600 mt-2 max-w-xl leading-relaxed">Edit fields directly in the table. Create
+                the Excel file only after review — export uses exactly what you see here.</p>
+              <p id="review-meta" class="text-xs text-slate-500 mt-3 tabular-nums"></p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+              <button type="button" id="btn-download"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-500/30 transition">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Export to Excel
+              </button>
+              <button type="button" id="btn-process-again"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-800 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 focus:outline-none focus:ring-4 focus:ring-slate-400/25 transition">
+                <svg class="w-5 h-5 shrink-0 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Process again
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <div class="max-h-[min(560px,70vh)] overflow-y-auto">
+            <table class="inv-review-table text-sm text-left border-collapse">
+              <colgroup>
+                <col style="min-width: 11rem" />
+                <col style="min-width: 7rem" />
+                <col style="min-width: 9rem" />
+                <col style="min-width: 13rem" />
+                <col style="min-width: 13rem" />
+                <col style="min-width: 6rem" />
+                <col style="min-width: 5.5rem" />
+                <col style="min-width: 7rem" />
+                <col style="min-width: 15rem" />
+              </colgroup>
+              <thead class="sticky top-0 z-10 shadow-sm">
+                <tr class="text-white text-xs uppercase tracking-wide">
+                  <th
+                    class="px-3 py-3.5 font-semibold whitespace-nowrap bg-slate-800 border-b border-slate-700/80 text-left">
+                    File</th>
+                  <th
+                    class="px-3 py-3.5 font-semibold whitespace-nowrap bg-brand-800 border-b border-brand-900/50 text-left inv-th-highlight">
+                    Date</th>
+                  <th
+                    class="px-3 py-3.5 font-semibold whitespace-nowrap bg-brand-800 border-b border-brand-900/50 text-left inv-th-highlight">
+                    Invoice no.</th>
+                  <th class="px-3 py-3.5 font-semibold bg-slate-800 border-b border-slate-700/80 text-left">Seller
+                  </th>
+                  <th class="px-3 py-3.5 font-semibold bg-slate-800 border-b border-slate-700/80 text-left">Buyer
+                  </th>
+                  <th
+                    class="px-3 py-3.5 font-semibold whitespace-nowrap bg-slate-800 border-b border-slate-700/80 text-left">
+                    ex. VAT</th>
+                  <th
+                    class="px-3 py-3.5 font-semibold whitespace-nowrap bg-slate-800 border-b border-slate-700/80 text-left">
+                    VAT</th>
+                  <th
+                    class="px-3 py-3.5 font-semibold whitespace-nowrap bg-brand-800 border-b border-brand-900/50 text-left inv-th-highlight">
+                    incl. VAT</th>
+                  <th class="px-3 py-3.5 font-semibold bg-slate-800 border-b border-slate-700/80 text-left">Notes</th>
+                </tr>
+              </thead>
+              <tbody id="preview-body" class="bg-white text-slate-800"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+
+</html>

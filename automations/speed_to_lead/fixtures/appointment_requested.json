@@ -1,0 +1,318 @@
+[
+  {
+    "lead_id": "1d1f87dd-cd85-402f-bed0-5d59bc305de8",
+    "window_start": "2026-04-08T06:00:00.000Z",
+    "window_end": "2026-04-08T14:00:00.000Z",
+    "urgency": "next-day",
+    "notes": "Esse carcer eligendi cresco deduco bardus suasoria ago."
+  },
+  {
+    "lead_id": "0a4dc27e-c2fe-46ca-b908-59c086c02ee2",
+    "window_start": "2026-04-06T06:00:00.000Z",
+    "window_end": "2026-04-06T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "cf8140f4-d830-4b55-8289-2ac424cc66f9",
+    "window_start": "2026-04-12T07:00:00.000Z",
+    "window_end": "2026-04-12T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "fb21af8a-5e35-4240-8b98-11014adde626",
+    "window_start": "2026-04-04T05:00:00.000Z",
+    "window_end": "2026-04-04T10:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "0fe9d4ab-efbd-41de-be1d-c5ee24427bda",
+    "window_start": "2026-04-09T07:00:00.000Z",
+    "window_end": "2026-04-09T12:00:00.000Z",
+    "urgency": "normal",
+    "notes": "Ater denique capto angelus tristis stips sol deduco bellum."
+  },
+  {
+    "lead_id": "dd6d5dea-03df-4e39-bb1e-423bd0ecf36e",
+    "window_start": "2026-04-18T07:00:00.000Z",
+    "window_end": "2026-04-18T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "ac8379e4-a962-4219-98c6-d65730139403",
+    "window_start": "2026-04-04T09:00:00.000Z",
+    "window_end": "2026-04-04T12:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "cbd36762-1ee1-4eaf-8999-3ff2289fe6f2",
+    "window_start": "2026-04-07T07:00:00.000Z",
+    "window_end": "2026-04-07T10:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "1d1f87dd-cd85-402f-bed0-5d59bc305de8",
+    "window_start": "2026-04-06T06:00:00.000Z",
+    "window_end": "2026-04-06T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "fb21af8a-5e35-4240-8b98-11014adde626",
+    "window_start": "2026-04-02T09:00:00.000Z",
+    "window_end": "2026-04-02T14:00:00.000Z",
+    "urgency": "same-day",
+    "notes": "Desipio vomica sustineo admiratio civis suspendo cohibeo statim quibusdam voluntarius."
+  },
+  {
+    "lead_id": "d915d811-6acf-4c1a-8c56-b311de9fd893",
+    "window_start": "2026-04-05T06:00:00.000Z",
+    "window_end": "2026-04-05T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "978e2aaa-c0c5-417c-a246-f20564cb5a83",
+    "window_start": "2026-04-06T06:00:00.000Z",
+    "window_end": "2026-04-06T14:00:00.000Z",
+    "urgency": "next-day",
+    "notes": "Termes sperno thermae usitas demum universe amo demitto."
+  },
+  {
+    "lead_id": "c6f38938-5489-425d-976d-d66d48e81347",
+    "window_start": "2026-04-08T06:00:00.000Z",
+    "window_end": "2026-04-08T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "1d1f87dd-cd85-402f-bed0-5d59bc305de8",
+    "window_start": "2026-04-09T06:00:00.000Z",
+    "window_end": "2026-04-09T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "00c26dcf-2085-48ba-a349-9f1f7a28731f",
+    "window_start": "2026-04-13T07:00:00.000Z",
+    "window_end": "2026-04-13T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "4057871c-b2e7-46c9-ad3b-a871f3b5408f",
+    "window_start": "2026-04-03T06:00:00.000Z",
+    "window_end": "2026-04-03T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "56421e2a-650d-4e45-9459-782628a3854d",
+    "window_start": "2026-04-08T07:00:00.000Z",
+    "window_end": "2026-04-08T12:00:00.000Z",
+    "urgency": "same-day",
+    "notes": "Vado est cultura verbum contra pax."
+  },
+  {
+    "lead_id": "63cbfdc1-357e-48dd-bd3c-903214b3df3e",
+    "window_start": "2026-04-05T09:00:00.000Z",
+    "window_end": "2026-04-05T13:00:00.000Z",
+    "urgency": "same-day",
+    "notes": "Fuga tergum studio umerus est surgo varius cupio."
+  },
+  {
+    "lead_id": "c13bdee1-5f4d-4f6c-b9a3-8ab99f414c05",
+    "window_start": "2026-04-11T07:00:00.000Z",
+    "window_end": "2026-04-11T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "63628265-fd5c-4515-b481-21cc3868fd3b",
+    "window_start": "2026-04-05T07:00:00.000Z",
+    "window_end": "2026-04-05T12:00:00.000Z",
+    "urgency": "normal",
+    "notes": "Animadverto quam tabesco callide basium agnitio."
+  },
+  {
+    "lead_id": "85b2cd0c-02b5-487d-8f72-21727ef779e9",
+    "window_start": "2026-04-12T07:00:00.000Z",
+    "window_end": "2026-04-12T12:00:00.000Z",
+    "urgency": "normal",
+    "notes": "Vomica auctor quaerat eaque."
+  },
+  {
+    "lead_id": "5a51d19b-84d5-41e1-bfb3-a333547d51fa",
+    "window_start": "2026-04-12T07:00:00.000Z",
+    "window_end": "2026-04-12T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "6bc25f56-7edb-42cc-9c8f-5245e13e3065",
+    "window_start": "2026-04-11T07:00:00.000Z",
+    "window_end": "2026-04-11T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "f3f15beb-37ee-4230-a2da-9ee738122c70",
+    "window_start": "2026-04-04T06:00:00.000Z",
+    "window_end": "2026-04-04T09:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "8707c787-2228-4ec1-9bdf-bc57c4126c57",
+    "window_start": "2026-04-09T06:00:00.000Z",
+    "window_end": "2026-04-09T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "fcfc11e7-fa83-4bf6-860c-1d7c86f27a5b",
+    "window_start": "2026-04-03T06:00:00.000Z",
+    "window_end": "2026-04-03T14:00:00.000Z",
+    "urgency": "next-day",
+    "notes": "Ulciscor culpo voco vos demum numquam tergum."
+  },
+  {
+    "lead_id": "56421e2a-650d-4e45-9459-782628a3854d",
+    "window_start": "2026-04-04T06:00:00.000Z",
+    "window_end": "2026-04-04T14:00:00.000Z",
+    "urgency": "next-day",
+    "notes": "Culpo casus nesciunt trado demens amaritudo cubitum auditor."
+  },
+  {
+    "lead_id": "fb21af8a-5e35-4240-8b98-11014adde626",
+    "window_start": "2026-04-09T06:00:00.000Z",
+    "window_end": "2026-04-09T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "5a51d19b-84d5-41e1-bfb3-a333547d51fa",
+    "window_start": "2026-04-04T06:00:00.000Z",
+    "window_end": "2026-04-04T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "5a51d19b-84d5-41e1-bfb3-a333547d51fa",
+    "window_start": "2026-04-07T06:00:00.000Z",
+    "window_end": "2026-04-07T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "fb21af8a-5e35-4240-8b98-11014adde626",
+    "window_start": "2026-04-02T08:00:00.000Z",
+    "window_end": "2026-04-02T12:00:00.000Z",
+    "urgency": "same-day",
+    "notes": "Aeneus cruciamentum consectetur sublime sustineo aestus cernuus tempus."
+  },
+  {
+    "lead_id": "9826f146-d411-4e56-85d4-58c19f69e458",
+    "window_start": "2026-04-03T06:00:00.000Z",
+    "window_end": "2026-04-03T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "63628265-fd5c-4515-b481-21cc3868fd3b",
+    "window_start": "2026-04-11T07:00:00.000Z",
+    "window_end": "2026-04-11T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "63cbfdc1-357e-48dd-bd3c-903214b3df3e",
+    "window_start": "2026-04-06T06:00:00.000Z",
+    "window_end": "2026-04-06T10:00:00.000Z",
+    "urgency": "same-day",
+    "notes": "Turpis suggero depraedor argumentum ultio thorax voveo."
+  },
+  {
+    "lead_id": "c13bdee1-5f4d-4f6c-b9a3-8ab99f414c05",
+    "window_start": "2026-04-11T07:00:00.000Z",
+    "window_end": "2026-04-11T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "56421e2a-650d-4e45-9459-782628a3854d",
+    "window_start": "2026-04-13T07:00:00.000Z",
+    "window_end": "2026-04-13T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "978e2aaa-c0c5-417c-a246-f20564cb5a83",
+    "window_start": "2026-04-07T06:00:00.000Z",
+    "window_end": "2026-04-07T10:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "9826f146-d411-4e56-85d4-58c19f69e458",
+    "window_start": "2026-04-03T06:00:00.000Z",
+    "window_end": "2026-04-03T14:00:00.000Z",
+    "urgency": "next-day",
+    "notes": "Pel certus adfectus comedo ubi."
+  },
+  {
+    "lead_id": "712c6b35-8673-4aa0-b338-3ef9a01b00d9",
+    "window_start": "2026-04-12T07:00:00.000Z",
+    "window_end": "2026-04-12T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "e8978e94-3f7d-47be-a8e1-ea499774fb0d",
+    "window_start": "2026-04-09T07:00:00.000Z",
+    "window_end": "2026-04-09T12:00:00.000Z",
+    "urgency": "normal",
+    "notes": "Uxor thesis cito clementia cinis delicate."
+  },
+  {
+    "lead_id": "067622d9-b52e-4a63-9000-279791652a90",
+    "window_start": "2026-04-08T07:00:00.000Z",
+    "window_end": "2026-04-08T10:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "c6f38938-5489-425d-976d-d66d48e81347",
+    "window_start": "2026-04-03T08:00:00.000Z",
+    "window_end": "2026-04-03T10:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "8cb41665-a062-4dad-b53e-95f70855a95f",
+    "window_start": "2026-04-04T09:00:00.000Z",
+    "window_end": "2026-04-04T13:00:00.000Z",
+    "urgency": "same-day",
+    "notes": "Celebrer blandior adnuo modi decor."
+  },
+  {
+    "lead_id": "3eea0a2e-0208-41cb-9c5f-bd4072dc6aa6",
+    "window_start": "2026-04-06T06:00:00.000Z",
+    "window_end": "2026-04-06T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "e8978e94-3f7d-47be-a8e1-ea499774fb0d",
+    "window_start": "2026-04-06T08:00:00.000Z",
+    "window_end": "2026-04-06T13:00:00.000Z",
+    "urgency": "same-day"
+  },
+  {
+    "lead_id": "f599d0ff-dd96-4e16-8ada-2f6aecc18c95",
+    "window_start": "2026-04-04T06:00:00.000Z",
+    "window_end": "2026-04-04T14:00:00.000Z",
+    "urgency": "next-day",
+    "notes": "Adduco commemoro solvo cognomen ascisco tepesco comes."
+  },
+  {
+    "lead_id": "4057871c-b2e7-46c9-ad3b-a871f3b5408f",
+    "window_start": "2026-04-03T06:00:00.000Z",
+    "window_end": "2026-04-03T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "6bc25f56-7edb-42cc-9c8f-5245e13e3065",
+    "window_start": "2026-04-02T06:00:00.000Z",
+    "window_end": "2026-04-02T14:00:00.000Z",
+    "urgency": "next-day"
+  },
+  {
+    "lead_id": "56421e2a-650d-4e45-9459-782628a3854d",
+    "window_start": "2026-04-15T07:00:00.000Z",
+    "window_end": "2026-04-15T12:00:00.000Z",
+    "urgency": "normal"
+  },
+  {
+    "lead_id": "067622d9-b52e-4a63-9000-279791652a90",
+    "window_start": "2026-04-06T09:00:00.000Z",
+    "window_end": "2026-04-06T11:00:00.000Z",
+    "urgency": "same-day"
+  }
+]

@@ -1,0 +1,299 @@
+openapi: 3.1.0
+info:
+  title: LeadFlow toolkit — Composio tool calls (your backend)
+  version: 0.4.13
+  description: |
+    **Custom GPT Actions — tools slice.** Three Composio-shaped POSTs (Sheets append, IG reply, IG list conversations).
+
+    **Tunnel / server URL:** Same origin as **`TOOLKIT_PUBLIC_URL`** (see **`toolkit.oauth.openapi.yaml`**).
+
+    **One domain = one Action set (ChatGPT):** Same host cannot be registered on two GPT Action configs. Prefer bundled **`toolkit.openapi.yaml`** in a single GPT.
+
+    **Auth:** **`X-API-Key`** = **`INTERNAL_API_KEY`**. One scheme only.
+    Security is global in this file; all endpoints require `X-API-Key`.
+
+    **Prerequisite:** Human must complete OAuth for this **`user_ref`** (use OAuth schema **`getOAuthConnectUrls`**, then **`listConnections`**) before tools succeed.
+
+    **Responses:** `{ "successful": boolean, "data"?: object, "error"?: string }`.
+
+servers:
+  - url: https://example.com
+    description: >-
+      Placeholder. Set Actions server URL to TOOLKIT_PUBLIC_URL. Same host cannot be used on another GPT’s Actions.
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: Tools
+    description: Composio-shaped POSTs (require X-API-Key + linked accounts)
+
+paths:
+  /v1/tools/googlesheets_append_row:
+    post:
+      tags: [Tools]
+      operationId: googlesheets_append_row
+      summary: Append values to a spreadsheet (Composio GOOGLESHEETS_SPREADSHEETS_VALUES_APPEND)
+      description: >-
+        Append **values** after last table row for **range**; Composio field names. Linked Google **user_ref** required — see request schema.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GooglesheetsSpreadsheetsValuesAppendRequest'
+      responses:
+        '200':
+          description: Success or logical failure (check `successful`)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '400':
+          description: Validation / no Google connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '401':
+          description: API key or expired Google token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '502':
+          description: Upstream Google error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+
+  /v1/tools/instagram_send_reply:
+    post:
+      tags: [Tools]
+      operationId: instagram_send_reply
+      summary: Send Instagram DM text (Composio INSTAGRAM_SEND_TEXT_MESSAGE)
+      description: >-
+        Text DM in existing thread; Composio **INSTAGRAM_SEND_TEXT_MESSAGE**. **ig_user_id** optional. Linked IG **user_ref** — see schema.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstagramSendTextMessageRequest'
+      responses:
+        '200':
+          description: Success or logical failure (check `successful`)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '400':
+          description: Validation / no Instagram connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '401':
+          description: API key or expired token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '502':
+          description: Upstream Meta error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+
+  /v1/tools/instagram_list_recent_conversations:
+    post:
+      tags: [Tools]
+      operationId: instagram_list_recent_conversations
+      summary: List Instagram DM conversations (Composio INSTAGRAM_LIST_ALL_CONVERSATIONS)
+      description: >-
+        IG DM threads; optional **messages_limit**. OAuth **user_ref** if IG not linked yet (OAuth schema).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstagramListAllConversationsRequest'
+      responses:
+        '200':
+          description: Success or logical failure (check `successful`)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '400':
+          description: Validation / no connection / cannot resolve IG user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '401':
+          description: API key or expired token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '502':
+          description: Upstream Meta error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Same as **`INTERNAL_API_KEY`**. Only scheme in this file.
+
+  schemas:
+    ToolResponse:
+      type: object
+      description: Composio-style tool result envelope.
+      required: [successful]
+      properties:
+        successful:
+          type: boolean
+        data:
+          nullable: true
+          type: object
+          additionalProperties: true
+        error:
+          type: string
+
+    ComposioValuesRow:
+      type: array
+      description: One row of cells (strings, numbers, booleans, or null for empty).
+      items:
+        nullable: true
+        oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+
+    GooglesheetsSpreadsheetsValuesAppendRequest:
+      type: object
+      description: |
+        **`user_ref`** required by this backend. Other fields match Composio **`GOOGLESHEETS_SPREADSHEETS_VALUES_APPEND`**.
+        **OAuth:** Call **`getOAuthConnectUrls`** on the OAuth Actions schema; human opens **google.connectUrl**; then **`listConnections`** before this tool.
+      required: [user_ref, spreadsheetId, range, values, valueInputOption]
+      properties:
+        user_ref:
+          type: string
+          description: |
+            Opaque key from chat — **same** as Google OAuth link and **`/v1/connections`**. Never default, placeholders, or guesses.
+        spreadsheetId:
+          type: string
+          description: |
+            Spreadsheet ID (typically ~44 chars). URL segment between **`/d/`** and **`/edit`**. Composio **`spreadsheetId`**.
+        range:
+          type: string
+          description: |
+            A1 range locating the logical table (e.g. **`Sheet1`**, **`Sheet1!A:D`**). New rows append after the last row of that table within the range. Sheet must exist.
+        values:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ComposioValuesRow'
+          description: |
+            2D array of values; each inner array is typically **one row** (majorDimension **ROWS**). Use **null** for empty cells.
+        majorDimension:
+          type: string
+          enum: [ROWS, COLUMNS]
+          description: Composio **`majorDimension`**.
+        insertDataOption:
+          type: string
+          enum: [OVERWRITE, INSERT_ROWS]
+          description: Composio **`insertDataOption`**.
+        valueInputOption:
+          type: string
+          enum: [RAW, USER_ENTERED]
+          description: Composio **`valueInputOption`** (required in Composio docs).
+        includeValuesInResponse:
+          type: boolean
+          description: Composio **`includeValuesInResponse`**.
+        responseValueRenderOption:
+          type: string
+          enum: [FORMATTED_VALUE, UNFORMATTED_VALUE, FORMULA]
+          description: Composio **`responseValueRenderOption`**.
+        responseDateTimeRenderOption:
+          type: string
+          enum: [SERIAL_NUMBER, FORMATTED_STRING]
+          description: Composio **`responseDateTimeRenderOption`**.
+      additionalProperties: false
+
+    InstagramSendTextMessageRequest:
+      type: object
+      description: |
+        **`user_ref`** required. Other fields match Composio **`INSTAGRAM_SEND_TEXT_MESSAGE`**.
+        **OAuth:** **`getOAuthConnectUrls`** → human opens **instagram.connectUrl** → **`listConnections`**.
+      required: [user_ref, text, recipient_id]
+      properties:
+        user_ref:
+          type: string
+          description: |
+            Opaque key from chat — **same** as Instagram OAuth link and **`/v1/connections`**. Never default, placeholders, or guesses.
+        text:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Message text to send (Composio **`text`**).
+        recipient_id:
+          type: string
+          minLength: 1
+          description: |
+            Recipient PSID / Instagram-scoped ID from **`instagram_list_recent_conversations`** or webhooks (Composio **`recipient_id`**).
+        ig_user_id:
+          type: string
+          minLength: 1
+          description: Instagram Business Account ID (Composio **`ig_user_id`**). Optional; server may resolve via **`/me`**.
+        graph_api_version:
+          type: string
+          description: Composio **`graph_api_version`** (e.g. **`v21.0`**). Defaults from server env if omitted.
+        reply_to_message_id:
+          type: string
+          minLength: 1
+          description: Message id (**mid**) for a threaded reply (Composio **`reply_to_message_id`**).
+      additionalProperties: false
+
+    InstagramListAllConversationsRequest:
+      type: object
+      description: |
+        **`user_ref`** required. Core fields match Composio **`INSTAGRAM_LIST_ALL_CONVERSATIONS`**;
+        **`messages_limit`** is **backend-only** convenience for nested messages.
+        **OAuth:** **`getOAuthConnectUrls`** / **instagram.connectUrl** if not yet linked.
+      required: [user_ref]
+      properties:
+        user_ref:
+          type: string
+          description: |
+            Opaque key from chat — **same** as Instagram OAuth link and **`/v1/connections`**. Never default, placeholders, or guesses.
+        after:
+          type: string
+          description: Pagination cursor (**`paging.cursors.after`**) (Composio **`after`**).
+        limit:
+          type: integer
+          minimum: 1
+          description: Maximum number of **conversations** (Composio **`limit`**). Server default **10** if omitted.
+        ig_user_id:
+          type: string
+          description: Instagram Business Account ID (Composio **`ig_user_id`**). Optional; server may resolve from token.
+        graph_api_version:
+          type: string
+          description: Composio **`graph_api_version`**.
+        messages_limit:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 8
+          description: |
+            **Not in Composio LIST_ALL_CONVERSATIONS.** Max messages embedded per thread (Graph **`messages.limit(n)`**).
+      additionalProperties: false

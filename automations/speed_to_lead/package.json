@@ -1,0 +1,26 @@
+{
+  "name": "speed-lead-fixtures",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./setup.ps1",
+    "install-memurai": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./install-memurai.ps1",
+    "generate": "node generate-fixtures.js",
+    "start": "node server.mjs",
+    "worker": "node worker-standalone.mjs",
+    "queue:snapshot": "node scripts/queue-snapshot.mjs",
+    "stress:leads": "node scripts/stress-leads.mjs",
+    "stress:dedupe": "node scripts/stress-dedupe.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "@faker-js/faker": "^9.9.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "bullmq": "^5.34.5",
+    "express": "^4.21.2",
+    "ioredis": "^5.4.2",
+    "nodemailer": "^6.9.16",
+    "twilio": "^5.4.5"
+  }
+}

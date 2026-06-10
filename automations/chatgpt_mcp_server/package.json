@@ -1,0 +1,34 @@
+{
+  "name": "chatgpt_mcp_server",
+  "version": "1.0.0",
+  "description": "HTTP MCP server for ChatGPT Connectors (Streamable HTTP at /mcp; legacy SSE also available)",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "build:stack": "npm run build && cd ../../railway_tunnel && npm run build",
+    "start": "node dist/server.js",
+    "start:tunnel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-with-ngrok.ps1",
+    "start:tunnel:window": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/open-tunnel-window.ps1",
+    "verify:local": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-local.ps1",
+    "verify:local:mcp": "node ./scripts/mcp-http-roundtrip.mjs --local",
+    "verify:public:mcp": "node ./scripts/mcp-http-roundtrip.mjs --require-public-env",
+    "verify:chatgpt": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-chatgpt-connector.ps1",
+    "run:railway-tunnel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-railway-tunnel.ps1",
+    "stop:railway-tunnel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/stop-railway-chatgpt-stack.ps1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  }
+}

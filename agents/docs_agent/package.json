@@ -1,0 +1,22 @@
+{
+  "name": "saskaitos-i-excel",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs",
+    "example:excel": "node build-example-reference.mjs",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "openai": "^6.33.0",
+    "pdfjs-dist": "^4.0.379"
+  }
+}

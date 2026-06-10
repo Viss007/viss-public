@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hub — VissAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#050508", line: "rgba(255,255,255,0.06)" },
+          fontFamily: { sans: ["DM Sans", "system-ui", "sans-serif"], mono: ["JetBrains Mono", "ui-monospace", "monospace"] },
+          gridTemplateColumns: { "portfolio-nav": "minmax(0, 1fr) auto minmax(0, 1fr)" },
+        },
+      },
+    };
+  </script>
+  <style type="text/tailwindcss">
+    .vissai-shell-brand-ai {
+      display: inline-block;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      vertical-align: baseline;
+      color: #dc2626;
+      -webkit-text-fill-color: #dc2626;
+    }
+  </style>
+</head>
+<body class="flex min-h-screen min-h-[100dvh] flex-col bg-ink text-zinc-100 antialiased selection:bg-red-500/30 selection:text-red-50">
+  <div id="hub-root" class="flex min-h-0 flex-1 flex-col">
+    <a href="#hub-main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-red-500 focus:px-4 focus:py-2 focus:text-ink focus:outline-none">Skip to content</a>
+
+    <header id="vissai-portfolio-shell-header" class="sticky top-0 z-50 shrink-0 border-b border-line bg-ink/80 backdrop-blur-xl">
+      <nav class="mx-auto grid max-w-6xl grid-cols-1 gap-y-3 px-5 py-4 text-sm font-medium text-zinc-400 md:grid-cols-portfolio-nav md:items-center md:gap-x-6 md:gap-y-0" aria-label="Primary">
+        <div class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 uppercase md:justify-end">
+          <a href="/about" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">About</a>
+          <a href="contact.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Contact</a>
+          <a href="/media" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Coaching</a>
+        </div>
+        <a href="hub.html" class="group justify-self-center whitespace-nowrap font-mono text-sm tracking-tight text-zinc-100" aria-current="page">
+          <span class="font-semibold vissai-shell-brand-ai">VissAI</span>
+        </a>
+        <div class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 uppercase md:justify-start">
+          <a href="websites.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Websites</a>
+          <a href="live-projects.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Automations</a>
+          <a href="agents.html" class="rounded-md px-3 py-1.5 transition hover:bg-white/5 hover:text-red-300">Agents</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="hub-main" class="mx-auto max-w-6xl flex-1 px-5 py-16 text-zinc-300">
+      <h1 class="font-mono text-2xl font-semibold text-zinc-100">Hub</h1>
+      <p class="mt-4 max-w-xl text-zinc-400">Browse the site — pick a section below.</p>
+      <ul class="mt-8 space-y-2 text-sm">
+        <li><a href="/about" class="text-red-400 hover:text-red-300">About</a></li>
+        <li><a href="websites.html" class="text-red-400 hover:text-red-300">Websites</a></li>
+        <li><a href="live-projects.html" class="text-red-400 hover:text-red-300">Automations</a></li>
+        <li><a href="agents.html" class="text-red-400 hover:text-red-300">Agents</a></li>
+        <li><a href="contact.html" class="text-red-400 hover:text-red-300">Contact</a></li>
+      </ul>
+    </main>
+  </div>
+
+  <script src="/__dev/client.js" defer onerror="void 0"></script>
+  <script src="js/nav-template-playground.js" defer></script>
+</body>
+</html>

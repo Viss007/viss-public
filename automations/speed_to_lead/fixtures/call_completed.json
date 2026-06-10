@@ -1,0 +1,313 @@
+[
+  {
+    "caller": "296-657-7391",
+    "duration_sec": 2052,
+    "outcome": "hangup",
+    "timestamp": "2026-03-28T10:06:13.730Z"
+  },
+  {
+    "caller": "463-116-2730",
+    "duration_sec": 727,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-29T04:39:11.024Z"
+  },
+  {
+    "caller": "442-909-5645",
+    "duration_sec": 1702,
+    "outcome": "hangup",
+    "timestamp": "2026-03-21T04:57:46.407Z"
+  },
+  {
+    "caller": "355-041-4793",
+    "duration_sec": 417,
+    "outcome": "hangup",
+    "timestamp": "2026-03-22T22:31:33.133Z"
+  },
+  {
+    "caller": "712-363-4962",
+    "duration_sec": 1139,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-18T19:33:37.433Z"
+  },
+  {
+    "caller": "898-343-8013",
+    "duration_sec": 1782,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-26T11:11:34.354Z"
+  },
+  {
+    "caller": "540-794-2594",
+    "duration_sec": 1122,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-19T01:29:24.103Z"
+  },
+  {
+    "caller": "432-272-1364",
+    "duration_sec": 2110,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-28T13:42:42.014Z"
+  },
+  {
+    "caller": "240-528-7249",
+    "duration_sec": 952,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-28T15:59:56.920Z"
+  },
+  {
+    "caller": "374-550-4324",
+    "duration_sec": 591,
+    "outcome": "qualified",
+    "timestamp": "2026-03-22T03:42:13.247Z",
+    "transcript": "Despecto coniecto sed sunt labore. Suppellex dicta supellex charisma callide."
+  },
+  {
+    "caller": "820-825-2126",
+    "duration_sec": 424,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-23T19:48:30.322Z"
+  },
+  {
+    "caller": "060-856-9030",
+    "duration_sec": 500,
+    "outcome": "qualified",
+    "timestamp": "2026-03-22T16:46:47.924Z"
+  },
+  {
+    "caller": "081-243-0504",
+    "duration_sec": 1911,
+    "outcome": "qualified",
+    "timestamp": "2026-03-24T22:54:36.861Z",
+    "transcript": "Toties ea sub."
+  },
+  {
+    "caller": "745-603-7492",
+    "duration_sec": 518,
+    "outcome": "qualified",
+    "timestamp": "2026-03-31T14:33:50.574Z",
+    "transcript": "Celer voluptate culpa atavus conspergo tergum sonitus aggero suasoria."
+  },
+  {
+    "caller": "528-402-8967",
+    "duration_sec": 1261,
+    "outcome": "hangup",
+    "timestamp": "2026-03-28T01:52:44.100Z"
+  },
+  {
+    "caller": "389-168-7355",
+    "duration_sec": 2167,
+    "outcome": "qualified",
+    "timestamp": "2026-03-24T18:14:36.299Z",
+    "transcript": "Crustulum combibo thesaurus textor ademptio beatus sulum acer ab vitae. Excepturi aedificium thalassinus."
+  },
+  {
+    "caller": "229-797-7063",
+    "duration_sec": 2096,
+    "outcome": "qualified",
+    "timestamp": "2026-03-20T13:10:24.826Z"
+  },
+  {
+    "caller": "141-704-2334",
+    "duration_sec": 1312,
+    "outcome": "hangup",
+    "timestamp": "2026-03-29T07:33:38.534Z"
+  },
+  {
+    "caller": "181-783-0052",
+    "duration_sec": 155,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-24T15:45:26.561Z"
+  },
+  {
+    "caller": "652-285-3056",
+    "duration_sec": 1365,
+    "outcome": "qualified",
+    "timestamp": "2026-03-24T05:14:23.595Z",
+    "transcript": "Deinde vobis depromo clam perspiciatis vaco. Cubitum calamitas eius."
+  },
+  {
+    "caller": "308-786-8334",
+    "duration_sec": 1717,
+    "outcome": "hangup",
+    "timestamp": "2026-03-26T07:26:53.791Z"
+  },
+  {
+    "caller": "865-741-0721",
+    "duration_sec": 1267,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-24T20:22:36.683Z"
+  },
+  {
+    "caller": "411-253-2121",
+    "duration_sec": 17,
+    "outcome": "qualified",
+    "timestamp": "2026-03-28T06:40:46.731Z",
+    "transcript": "Autem reiciendis magni vomito. Arbitro complectus thermae thymum suscipio. Creo tergo absorbeo."
+  },
+  {
+    "caller": "793-276-3727",
+    "duration_sec": 418,
+    "outcome": "hangup",
+    "timestamp": "2026-03-19T08:50:09.686Z"
+  },
+  {
+    "caller": "299-014-1952",
+    "duration_sec": 31,
+    "outcome": "hangup",
+    "timestamp": "2026-03-25T11:55:26.668Z"
+  },
+  {
+    "caller": "428-223-6495",
+    "duration_sec": 1294,
+    "outcome": "qualified",
+    "timestamp": "2026-03-29T16:12:45.245Z",
+    "transcript": "Ancilla conservo uxor totus suffoco tenetur deficio. Vero crapula sollicito templum animadverto amiculum aveho ultra arto."
+  },
+  {
+    "caller": "000-109-6049",
+    "duration_sec": 2104,
+    "outcome": "qualified",
+    "timestamp": "2026-03-21T16:51:48.707Z"
+  },
+  {
+    "caller": "126-022-5219",
+    "duration_sec": 1043,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-20T00:21:39.356Z"
+  },
+  {
+    "caller": "144-005-8574",
+    "duration_sec": 1852,
+    "outcome": "hangup",
+    "timestamp": "2026-03-31T08:45:14.726Z"
+  },
+  {
+    "caller": "466-257-7626",
+    "duration_sec": 92,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-23T05:43:19.105Z"
+  },
+  {
+    "caller": "184-006-9721",
+    "duration_sec": 2017,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-29T15:04:16.456Z"
+  },
+  {
+    "caller": "515-792-7017",
+    "duration_sec": 2215,
+    "outcome": "qualified",
+    "timestamp": "2026-03-28T04:56:35.177Z",
+    "transcript": "Soleo comes certus voluptate adficio consectetur nihil contego. Approbo deficio amita ante cubitum conitor atqui adimpleo vero voluntarius."
+  },
+  {
+    "caller": "291-642-3370",
+    "duration_sec": 34,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-19T08:46:05.676Z"
+  },
+  {
+    "caller": "820-220-6572",
+    "duration_sec": 1524,
+    "outcome": "hangup",
+    "timestamp": "2026-04-01T08:10:39.950Z"
+  },
+  {
+    "caller": "457-091-5200",
+    "duration_sec": 822,
+    "outcome": "hangup",
+    "timestamp": "2026-03-24T14:53:26.498Z"
+  },
+  {
+    "caller": "720-105-6387",
+    "duration_sec": 1666,
+    "outcome": "qualified",
+    "timestamp": "2026-03-31T19:01:02.821Z",
+    "transcript": "Curia consectetur adhuc umerus tripudio. Demergo bardus valde virga talus contabesco. Alo congregatio solitudo ad verbera virtus conduco tener substantia praesentium."
+  },
+  {
+    "caller": "015-290-7064",
+    "duration_sec": 1220,
+    "outcome": "qualified",
+    "timestamp": "2026-04-01T14:00:01.065Z"
+  },
+  {
+    "caller": "009-159-9825",
+    "duration_sec": 613,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-27T01:49:41.572Z"
+  },
+  {
+    "caller": "933-356-7808",
+    "duration_sec": 2387,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-20T06:46:42.130Z"
+  },
+  {
+    "caller": "689-345-6165",
+    "duration_sec": 1269,
+    "outcome": "hangup",
+    "timestamp": "2026-03-19T01:24:53.675Z"
+  },
+  {
+    "caller": "993-626-9188",
+    "duration_sec": 1287,
+    "outcome": "qualified",
+    "timestamp": "2026-03-30T11:11:03.064Z",
+    "transcript": "Demo cetera pax nulla circumvenio tristis. Coma terebro cerno collum."
+  },
+  {
+    "caller": "885-316-3150",
+    "duration_sec": 2371,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-22T13:50:56.953Z"
+  },
+  {
+    "caller": "096-001-1149",
+    "duration_sec": 2119,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-24T23:40:39.225Z"
+  },
+  {
+    "caller": "113-835-5272",
+    "duration_sec": 490,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-21T01:26:26.847Z"
+  },
+  {
+    "caller": "313-643-3996",
+    "duration_sec": 632,
+    "outcome": "hangup",
+    "timestamp": "2026-03-30T03:11:50.986Z"
+  },
+  {
+    "caller": "184-556-8363",
+    "duration_sec": 81,
+    "outcome": "hangup",
+    "timestamp": "2026-03-21T23:43:56.047Z"
+  },
+  {
+    "caller": "878-994-4847",
+    "duration_sec": 354,
+    "outcome": "hangup",
+    "timestamp": "2026-03-20T11:13:36.605Z"
+  },
+  {
+    "caller": "227-103-8923",
+    "duration_sec": 2269,
+    "outcome": "qualified",
+    "timestamp": "2026-03-29T16:45:20.701Z",
+    "transcript": "Vivo dolor spoliatio cernuus."
+  },
+  {
+    "caller": "758-974-6868",
+    "duration_sec": 144,
+    "outcome": "qualified",
+    "timestamp": "2026-03-24T13:14:48.020Z"
+  },
+  {
+    "caller": "848-934-0797",
+    "duration_sec": 1149,
+    "outcome": "voicemail",
+    "timestamp": "2026-03-30T07:10:32.332Z"
+  }
+]

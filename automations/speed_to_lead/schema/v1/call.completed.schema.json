@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "speed-lead://v1/call.completed",
+  "title": "call.completed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "caller",
+    "duration_sec",
+    "outcome",
+    "timestamp"
+  ],
+  "properties": {
+    "caller": {
+      "type": "string",
+      "minLength": 1
+    },
+    "duration_sec": {
+      "type": "number",
+      "minimum": 0
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "qualified",
+        "voicemail",
+        "hangup"
+      ]
+    },
+    "transcript": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

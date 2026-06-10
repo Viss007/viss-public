@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "speed-lead://v1/lead.submitted",
+  "title": "lead.submitted",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "phone",
+    "service",
+    "timestamp"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phone": {
+      "type": "string",
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "service": {
+      "type": "string",
+      "minLength": 1
+    },
+    "budget": {
+      "type": "number"
+    },
+    "utm_source": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

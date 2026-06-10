@@ -1,0 +1,404 @@
+openapi: 3.1.0
+info:
+  title: LeadFlow — ChatGPT MCP bridge
+  version: 1.0.11
+  description: |
+    **Production / OAuth variant.** Same operations as **`openapi-custom-gpt.yaml`**, but declares **`LeadFlowOAuth`**. Default **`npm run start:tunnel`** still emits the **no-OAuth** paste file. For OAuth, after the tunnel is up: **`node scripts/write-openapi-for-chatgpt.mjs https://YOUR_NGROK_HTTPS_ORIGIN openapi-custom-gpt.oauth.yaml`**, then paste **`openapi-for-chatgpt-COPY-PASTE.yaml`** and configure GPT Action **Authentication** (OAuth) to match your IdP.
+
+    Replace **`YOUR_IDP_DOMAIN`** in **`components.securitySchemes`** with your authorization server.
+
+    **Ports:** this MCP listens on **2091** by default. Do **not** use **`127.0.0.1:8811`** in `servers.url` — that is Cursor memory (8811), not this server.
+
+    **Lead ingestion:** POST **`/process-lead`** with JSON — a first-class Action operation (no JSON-RPC). **`/mcp`** remains Streamable HTTP MCP for tools.
+
+    JSON-RPC 2.0 POST to `/mcp` (Streamable HTTP MCP).
+
+    **Custom GPT Actions:** preferred method arguments field is **`inputJson`** (a JSON string object). The server parses **`inputJson` → `params`**. Alternate object field **`rpcInput`** is also supported, but some wrappers strip object kwargs.
+
+    **First `initialize`:** `inputJson` must encode protocolVersion, capabilities, clientInfo. The JSON response includes **`result._meta.mcpSessionId`**. **Later calls:** add **`mcpSessionId`** (same string) on the JSON body so the server can treat the session like **`Mcp-Session-Id`** (Actions often cannot forward that header). Optional **`mcpProtocolVersion`** mirrors **`Mcp-Protocol-Version`**.
+
+    HTTP headers (**`Accept`**, **`Mcp-Session-Id`**, **`Mcp-Protocol-Version`**) are not declared here — GPT **Instructions** if your client can set them. Other MCP clients may POST standard JSON-RPC with **`params`**; this server accepts that too.
+
+servers:
+  - url: https://placeholder.invalid
+    description: Overwritten by npm run start:tunnel -> openapi-for-chatgpt-COPY-PASTE.yaml
+
+paths:
+  /process-lead:
+    post:
+      operationId: processLead
+      summary: Submit a lead (LeadFlow)
+      description: |
+        Normalized REST entry point for buyers using the GPT. Accepts contact + context fields; returns a stable **`leadId`** and receipt time.
+        Extend server-side to forward into your CRM, Sheets, or webhook.
+      security:
+        - LeadFlowOAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessLeadRequest'
+            examples:
+              chat:
+                summary: Typical chat capture
+                value:
+                  name: Alex Buyer
+                  email: alex@example.com
+                  company: Example Co
+                  message: Interested in a demo next week.
+                  source: chatgpt
+              minimal:
+                summary: Email-only
+                value:
+                  email: prospect@example.com
+                  source: chatgpt
+      responses:
+        '200':
+          description: Lead accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessLeadResponse'
+        '400':
+          description: Invalid body (e.g. missing contact fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+
+  /mcp:
+    post:
+      operationId: callMcp
+      summary: Send one MCP JSON-RPC request
+      description: 'POST JSON-RPC body. Use inputJson for params; add mcpSessionId from initialize result._meta after handshake. Server maps body fields to headers when needed.'
+      security:
+        - LeadFlowOAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+            examples:
+              initialize:
+                summary: First call — full inputJson required
+                value:
+                  jsonrpc: "2.0"
+                  id: "init-1"
+                  method: "initialize"
+                  inputJson: '{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"OpenAI ChatGPT","version":"1.0"}}'
+              listTools:
+                summary: After initialize — pass mcpSessionId on the body (or use Mcp-Session-Id header)
+                value:
+                  jsonrpc: "2.0"
+                  id: "tools-1"
+                  method: "tools/list"
+                  inputJson: "{}"
+                  mcpSessionId: "paste-from-initialize-result._meta.mcpSessionId"
+              ping:
+                summary: Optional heartbeat after session exists
+                value:
+                  jsonrpc: "2.0"
+                  id: 2
+                  method: "ping"
+                  inputJson: "{}"
+              callEcho:
+                summary: Call tool echo
+                value:
+                  jsonrpc: "2.0"
+                  id: "call-1"
+                  method: "tools/call"
+                  inputJson: '{"name":"echo","arguments":{"text":"hello"}}'
+      responses:
+        '200':
+          description: JSON-RPC success (application/json) or error object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcEnvelope'
+        '202':
+          description: Accepted (notifications only)
+        '400':
+          description: Bad request (e.g. missing initialize, bad session)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcErrorResponse'
+        '406':
+          description: Not Acceptable — add Accept header with both application/json and text/event-stream
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcErrorResponse'
+        '415':
+          description: Unsupported media type — use Content-Type application/json
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcErrorResponse'
+
+components:
+  securitySchemes:
+    LeadFlowOAuth:
+      type: oauth2
+      description: >
+        Replace with your OAuth 2.0 authorization server. ChatGPT uses the authorization code flow;
+        align these URLs with what you configure in the GPT Action **Authentication** settings.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://YOUR_IDP_DOMAIN/oauth/authorize
+          tokenUrl: https://YOUR_IDP_DOMAIN/oauth/token
+          refreshUrl: https://YOUR_IDP_DOMAIN/oauth/token
+          scopes:
+            openid: OpenID Connect
+            email: Email address
+            profile: Basic profile
+
+  schemas:
+    ProcessLeadRequest:
+      type: object
+      description: >
+        At least one of **name**, **email**, or **phone** should be present so the lead is actionable.
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        company:
+          type: string
+        message:
+          type: string
+          description: Free-text intent or transcript summary from the GPT.
+        source:
+          type: string
+          description: Attribution label (e.g. chatgpt, landing, referral).
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Optional structured fields for routing rules / CRM mapping.
+      additionalProperties: true
+
+    ProcessLeadResponse:
+      type: object
+      required:
+        - ok
+        - leadId
+        - receivedAt
+      properties:
+        ok:
+          type: boolean
+          const: true
+        leadId:
+          type: string
+          format: uuid
+        receivedAt:
+          type: string
+          format: date-time
+        echo:
+          description: Echo of accepted fields (PII — log only per your privacy policy).
+          type: object
+          additionalProperties: true
+
+    ErrorBody:
+      type: object
+      required:
+        - ok
+        - error
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+
+    JsonRpcRequest:
+      type: object
+      description: >
+        JSON-RPC request. Custom GPT Actions should prefer **inputJson** (JSON string object) for method
+        arguments to avoid wrapper kwarg filtering. Server maps **inputJson** (and **rpcInput** / **mcpParams**)
+        to JSON-RPC **params**. Standard MCP clients may send **params** directly.
+      required:
+        - jsonrpc
+        - method
+      properties:
+        jsonrpc:
+          type: string
+          const: "2.0"
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: "null"
+        method:
+          type: string
+          description: MCP method name (e.g. initialize, tools/list, tools/call, ping).
+        inputJson:
+          description: >-
+            Stringified JSON object for method arguments.
+            Example: {"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"OpenAI ChatGPT","version":"1.0"}}
+          type: string
+        mcpSessionId:
+          description: After initialize, same value as result._meta.mcpSessionId (Custom GPT when Mcp-Session-Id header is not forwarded).
+          type: string
+        mcpProtocolVersion:
+          description: Optional. Same as negotiated protocol (e.g. 2025-03-26) when Mcp-Protocol-Version header cannot be set.
+          type: string
+        rpcInput:
+          description: Optional object form for method arguments (maps to params server-side).
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+
+    JsonRpcEnvelope:
+      description: Either a success (result) or error (error) JSON-RPC object
+      oneOf:
+        - $ref: '#/components/schemas/JsonRpcSuccessResponse'
+        - $ref: '#/components/schemas/JsonRpcErrorResponse'
+
+    JsonRpcSuccessResponse:
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - result
+      properties:
+        jsonrpc:
+          type: string
+          const: "2.0"
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: "null"
+        result:
+          description: Method result — shape varies
+          oneOf:
+            - $ref: '#/components/schemas/InitializeResult'
+            - $ref: '#/components/schemas/ListToolsResult'
+            - $ref: '#/components/schemas/CallToolResult'
+            - type: object
+              additionalProperties: true
+            - type: array
+              items:
+                type: object
+                additionalProperties: true
+            - type: string
+            - type: boolean
+            - type: number
+            - type: "null"
+      additionalProperties: true
+
+    JsonRpcErrorResponse:
+      type: object
+      required:
+        - jsonrpc
+        - id
+        - error
+      properties:
+        jsonrpc:
+          type: string
+          const: "2.0"
+        id:
+          oneOf:
+            - type: string
+            - type: integer
+            - type: "null"
+        error:
+          $ref: '#/components/schemas/JsonRpcError'
+      additionalProperties: true
+
+    JsonRpcError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data: {}
+      additionalProperties: true
+
+    InitializeResult:
+      type: object
+      additionalProperties: true
+      properties:
+        protocolVersion:
+          type: string
+        capabilities:
+          type: object
+          additionalProperties: true
+        serverInfo:
+          type: object
+          additionalProperties: true
+          properties:
+            name:
+              type: string
+            version:
+              type: string
+
+    Tool:
+      type: object
+      additionalProperties: true
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        inputSchema:
+          type: object
+          additionalProperties: true
+
+    ListToolsResult:
+      type: object
+      additionalProperties: true
+      required:
+        - tools
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+        nextCursor:
+          type: string
+
+    ContentItem:
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          type: string
+        text:
+          type: string
+        data:
+          type: string
+        mimeType:
+          type: string
+        uri:
+          type: string
+
+    CallToolResult:
+      type: object
+      additionalProperties: true
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentItem'
+        isError:
+          type: boolean

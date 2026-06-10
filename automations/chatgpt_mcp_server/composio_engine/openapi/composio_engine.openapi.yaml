@@ -1,0 +1,268 @@
+openapi: 3.1.0
+info:
+  title: Composio Engine (Router-Only)
+  version: 0.1.0
+  description: GPT-facing glue backend for BYO Composio onboarding and routing.
+servers:
+  - url: https://example.com
+security:
+  - ApiKeyAuth: []
+paths:
+  /v1/health:
+    get:
+      operationId: healthCheck
+      security: []
+      summary: Health and mode status
+      responses:
+        "200":
+          description: Service health payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  service:
+                    type: string
+                  mode:
+                    type: string
+                  publicBase:
+                    type: string
+                  onboardingBaseUrl:
+                    type: string
+  /v1/onboarding/status:
+    get:
+      operationId: onboardingStatus
+      summary: Check provider connection status
+      parameters:
+        - name: user_ref
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [google_sheets, instagram]
+      responses:
+        "200":
+          description: Current connection state
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  user_ref:
+                    type: string
+                  provider:
+                    type: string
+                  needs_composio_account:
+                    type: boolean
+                  provider_connected:
+                    type: boolean
+                  connected:
+                    type: boolean
+                  updatedAt:
+                    type: [string, "null"]
+                  composioUpdatedAt:
+                    type: [string, "null"]
+        "400":
+          description: Bad query parameters
+        "401":
+          description: Missing or invalid API key
+  /v1/onboarding/connect_url:
+    get:
+      operationId: onboardingConnectUrl
+      summary: Build browser connect URL
+      parameters:
+        - name: user_ref
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [google_sheets, instagram]
+      responses:
+        "200":
+          description: Browser URL for Composio onboarding
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  user_ref:
+                    type: string
+                  provider:
+                    type: string
+                  connectUrl:
+                    type: string
+                  providerConnectUrl:
+                    type: string
+                  signupUrl:
+                    type: string
+                  note:
+                    type: string
+        "400":
+          description: Bad query parameters
+        "401":
+          description: Missing or invalid API key
+  /v1/onboarding/callback:
+    get:
+      operationId: onboardingCallback
+      security: []
+      summary: Browser callback from Composio
+      parameters:
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Connection stored and browser can close
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Invalid callback state
+  /v1/oauth/composio/start:
+    get:
+      operationId: composioOauthStart
+      summary: Build Composio OAuth URL with runtime PKCE
+      parameters:
+        - name: user_ref
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: provider
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [google_sheets, instagram]
+      responses:
+        "200":
+          description: Runtime authorization URL and callback target
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  user_ref:
+                    type: string
+                  provider:
+                    type: string
+                  authorizeUrl:
+                    type: string
+                  launchUrl:
+                    type: string
+                  callbackUrl:
+                    type: string
+                  state:
+                    type: string
+        "400":
+          description: Bad query parameters
+        "401":
+          description: Missing or invalid API key
+  /v1/oauth/composio/launch:
+    get:
+      operationId: composioOauthLaunch
+      security: []
+      summary: Branded OAuth launch page with instant redirect
+      parameters:
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Branded launch page that redirects to authorization
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Invalid or expired state
+  /v1/oauth/composio/callback:
+    get:
+      operationId: composioOauthCallback
+      security: []
+      summary: Receive Composio OAuth callback into backend runtime
+      parameters:
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: error
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OAuth callback received and runtime state updated
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Invalid callback request
+  /v1/tools/execute:
+    post:
+      operationId: executeTool
+      summary: Route tool call after connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_ref, provider, tool]
+              properties:
+                user_ref:
+                  type: string
+                provider:
+                  type: string
+                  enum: [google_sheets, instagram]
+                tool:
+                  type: string
+                input:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Routed execution envelope
+        "400":
+          description: Invalid request body
+        "401":
+          description: Missing or invalid API key
+        "409":
+          description: Provider not connected
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

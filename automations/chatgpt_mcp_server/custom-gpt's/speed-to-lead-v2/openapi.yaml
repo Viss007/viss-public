@@ -1,0 +1,358 @@
+openapi: 3.0.3
+info:
+  title: Viss Speed-to-Lead Demo API
+  description: >
+    Mock demo API for Custom GPT Actions — inbox message → CRM row → email draft.
+    Simulation only; not production CRM/email. Optional `idempotency_key` on each POST
+    returns the same JSON when replayed **within the same logical operation** (scoped per endpoint).
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8787
+    description: Local dev
+
+paths:
+  /health:
+    get:
+      operationId: health
+      summary: Liveness check
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /start_session:
+    post:
+      operationId: start_session
+      summary: Create a new demo session
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartSessionRequest"
+      responses:
+        "200":
+          description: Session created (or idempotent replay)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartSessionResponse"
+        "400":
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ingest_message:
+    post:
+      operationId: ingest_message
+      summary: Store an inbound message for a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IngestMessageRequest"
+      responses:
+        "200":
+          description: Message stored (or idempotent replay)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IngestMessageResponse"
+        "400":
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /create_crm_lead:
+    post:
+      operationId: create_crm_lead
+      summary: Create a CRM-style lead row
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCrmLeadRequest"
+      responses:
+        "200":
+          description: Lead created (or idempotent replay)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCrmLeadResponse"
+        "400":
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Session or message not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /create_email_draft:
+    post:
+      operationId: create_email_draft
+      summary: Render and store an email draft for a lead
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEmailDraftRequest"
+      responses:
+        "200":
+          description: Draft created (or idempotent replay)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateEmailDraftResponse"
+        "400":
+          description: Invalid body or unknown template_id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Lead not found for session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /session/{session_id}:
+    get:
+      operationId: get_session
+      summary: Fetch session with messages, leads, and drafts
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Session snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionSnapshotResponse"
+        "404":
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [ok, error]
+      properties:
+        ok:
+          type: boolean
+          enum: [false]
+        error:
+          type: string
+
+    HealthResponse:
+      type: object
+      required: [ok]
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+
+    IdempotencyKey:
+      type: string
+      description: >
+        Optional. When provided on a POST, the server stores the successful response keyed by
+        endpoint scope + this value; identical replays return the stored JSON without inserting again.
+
+    StartSessionRequest:
+      type: object
+      properties:
+        idempotency_key:
+          $ref: "#/components/schemas/IdempotencyKey"
+
+    StartSessionResponse:
+      type: object
+      required: [ok, session_id, demo_mode]
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+        session_id:
+          type: string
+          example: sess_abc123xyz
+        demo_mode:
+          type: boolean
+          enum: [true]
+
+    IngestMessageRequest:
+      type: object
+      required: [session_id, raw_text]
+      properties:
+        session_id:
+          type: string
+        raw_text:
+          type: string
+          minLength: 1
+        source:
+          type: string
+          default: dm
+          description: Channel label (e.g. dm, email)
+        idempotency_key:
+          $ref: "#/components/schemas/IdempotencyKey"
+
+    IngestMessageResponse:
+      type: object
+      required: [ok, session_id, message_id, next_suggested_action]
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+        session_id:
+          type: string
+        message_id:
+          type: string
+        next_suggested_action:
+          type: string
+          enum: [create_crm_lead]
+
+    Urgency:
+      type: string
+      enum: [low, medium, high]
+
+    NextStep:
+      type: string
+      enum: [call, demo, info, pricing, support]
+
+    LeadFields:
+      type: object
+      required: [need_summary, urgency, next_step]
+      properties:
+        full_name:
+          type: string
+          nullable: true
+        company:
+          type: string
+          nullable: true
+        email:
+          type: string
+          format: email
+          nullable: true
+        need_summary:
+          type: string
+          minLength: 1
+        urgency:
+          $ref: "#/components/schemas/Urgency"
+        next_step:
+          $ref: "#/components/schemas/NextStep"
+
+    CreateCrmLeadRequest:
+      type: object
+      required: [session_id, lead_fields]
+      properties:
+        session_id:
+          type: string
+        message_id:
+          type: string
+          description: Optional FK to a message in this session
+        lead_fields:
+          $ref: "#/components/schemas/LeadFields"
+        idempotency_key:
+          $ref: "#/components/schemas/IdempotencyKey"
+
+    CreateCrmLeadResponse:
+      type: object
+      required: [ok, session_id, lead_id, next_suggested_action]
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+        session_id:
+          type: string
+        lead_id:
+          type: string
+        next_suggested_action:
+          type: string
+          enum: [create_email_draft]
+
+    CreateEmailDraftRequest:
+      type: object
+      required: [session_id, lead_id]
+      properties:
+        session_id:
+          type: string
+        lead_id:
+          type: string
+        template_id:
+          type: string
+          default: speed_to_lead_v1
+          enum: [speed_to_lead_v1]
+        idempotency_key:
+          $ref: "#/components/schemas/IdempotencyKey"
+
+    CreateEmailDraftResponse:
+      type: object
+      required: [ok, session_id, lead_id, draft_id, subject, body]
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+        session_id:
+          type: string
+        lead_id:
+          type: string
+        draft_id:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
+
+    SessionSnapshotResponse:
+      type: object
+      required: [ok, session, messages, leads, drafts]
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+        session:
+          type: object
+          additionalProperties: true
+        messages:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        leads:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        drafts:
+          type: array
+          items:
+            type: object
+            additionalProperties: true

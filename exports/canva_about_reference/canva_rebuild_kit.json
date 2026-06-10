@@ -1,0 +1,60 @@
+{
+  "purpose": "Paste/copy into Canva text boxes; fonts exist in Canva (Google fonts DM Sans, JetBrains Mono). No HTML→native Canva import exists.",
+  "colors_hex": {
+    "background_page": "#050508",
+    "section_panel": "#0c0e12",
+    "border_line": "rgba(255,255,255,0.06)",
+    "label_cyan": "#06b6d4",
+    "mono_accent": "#22d3ee",
+    "body_muted": "#a1a1aa",
+    "heading_white": "#ffffff",
+    "strong_light": "#e4e4e7",
+    "card_gradient_top": "rgba(255,255,255,0.04)"
+  },
+  "fonts_canva": {
+    "headings_body": "DM Sans",
+    "labels_numbers": "JetBrains Mono"
+  },
+  "blocks": [
+    {
+      "style_hint": "mono JetBrains slightly larger than small label; It's + to think differently red (~#ef4444); TIME white (#ffffff)",
+      "text": "It's TIME to think differently"
+    },
+    {
+      "style_hint": "16:9 frame; two horizontal mono lines: VIDEO then GENERATING — same zinc-400, tracking 0.2em, subtle pulse on both",
+      "text": "VIDEO\nGENERATING"
+    },
+    {
+      "style_hint": "mono JetBrains: line mostly red (~#ef4444); word ONLY in heading_white (#ffffff) like lane card body",
+      "text": "Delivering experiences Not ONLY product's"
+    },
+    {
+      "style_hint": "large bold white; pipe | red accent; after pipe: outer vertical flip scaleY(-1) on whole Clear outcomes block, inside RTL + per-glyph scaleX(-1); Canva flip group vertically then per-letter horizontal if matching; sr-only unchanged",
+      "text": "Focused lanes | Clear outcomes"
+    },
+    {
+      "style_hint": "On live About page this tile is a single link to /media (same as hub nav COACHING)",
+      "card": "01",
+      "title": "COACHING",
+      "body": "Video, images, and music—from prompts or uploads to polished clips and stems in repeatable flows. Multimedia pipelines built for speed—not scattered tools"
+    },
+    {
+      "style_hint": "On live About page this tile matches hub WEBSITES: href + data-nav-template-playground (script sets URL from meta / default localhost:8000)",
+      "card": "02",
+      "title": "WEBSITES",
+      "body": "Custom websites and landing pages built around your offer—fast loads, clear layout, and messaging that matches how you sell—not generic templates"
+    },
+    {
+      "style_hint": "On live About page this tile links to live-projects.html (same as hub nav AUTOMATIONS)",
+      "card": "03",
+      "title": "AUTOMATIONS",
+      "body": "Production demos—invoice, speed-to-lead, plus online booking via the template playground—expand panels when you want proof."
+    },
+    {
+      "style_hint": "On live About page this tile links to agents.html (same as hub nav AGENTS)",
+      "card": "04",
+      "title": "AGENTS",
+      "body": "Digital worker that can remember prior work, understand instructions and use tools to complete given tasks autonomously"
+    }
+  ]
+}
