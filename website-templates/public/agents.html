@@ -70,17 +70,29 @@
           <h2 class="font-mono text-sm font-medium uppercase tracking-[0.14em] text-red-500/90">Documentation agent</h2>
           <p class="mt-2 text-sm leading-relaxed text-zinc-400">Invoice PDF → AI reads fields → you approve → Excel. Use Chrome or Brave in the frame below.</p>
         </div>
-        <div class="demo-showcase__video-wrap">
-          <video data-demo-video controls playsinline preload="metadata" hidden></video>
-          <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
-        </div>
-        <div class="demo-showcase__live" data-demo-live-panel>
-          <button type="button" class="demo-showcase__live-toggle" data-demo-live-toggle aria-expanded="true" aria-label="Collapse live demo">
-            <span class="demo-showcase__live-chevron" aria-hidden="true"></span>
-            <span>Try it live</span>
-          </button>
-          <div class="demo-showcase__iframe-wrap" data-demo-iframe-wrap>
-            <iframe data-demo-iframe loading="lazy" allow="clipboard-write"></iframe>
+        <div class="demo-showcase__panels">
+          <div class="demo-showcase__panel" data-demo-panel="video">
+            <button type="button" class="demo-showcase__panel-toggle" data-demo-panel-toggle aria-expanded="true" aria-label="Collapse walkthrough video">
+              <span class="demo-showcase__chevron" aria-hidden="true"></span>
+              <span>Watch walkthrough</span>
+            </button>
+            <div class="demo-showcase__panel-body" data-demo-panel-body>
+              <div class="demo-showcase__video-wrap">
+                <video data-demo-video controls playsinline preload="metadata" hidden></video>
+                <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-showcase__panel" data-demo-panel="live">
+            <button type="button" class="demo-showcase__panel-toggle" data-demo-panel-toggle aria-expanded="true" aria-label="Collapse live demo">
+              <span class="demo-showcase__chevron" aria-hidden="true"></span>
+              <span>Try it live</span>
+            </button>
+            <div class="demo-showcase__panel-body" data-demo-panel-body>
+              <div class="demo-showcase__iframe-wrap">
+                <iframe data-demo-iframe loading="lazy" allow="clipboard-write"></iframe>
+              </div>
+            </div>
           </div>
         </div>
         <div class="demo-showcase__foot">

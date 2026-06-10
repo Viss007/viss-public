@@ -69,17 +69,29 @@
           <h2 class="font-mono text-sm font-medium uppercase tracking-[0.14em] text-red-500/90">Speed to lead</h2>
           <p class="mt-2 text-sm leading-relaxed text-zinc-400">Webhook in → queue → notify the team. Optional Gmail when OAuth is wired.</p>
         </div>
-        <div class="demo-showcase__video-wrap">
-          <video data-demo-video controls playsinline preload="metadata" hidden></video>
-          <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
-        </div>
-        <div class="demo-showcase__live" data-demo-live-panel>
-          <button type="button" class="demo-showcase__live-toggle" data-demo-live-toggle aria-expanded="true" aria-label="Collapse live demo">
-            <span class="demo-showcase__live-chevron" aria-hidden="true"></span>
-            <span>Try it live</span>
-          </button>
-          <div class="demo-showcase__iframe-wrap" data-demo-iframe-wrap>
-            <iframe data-demo-iframe loading="lazy"></iframe>
+        <div class="demo-showcase__panels">
+          <div class="demo-showcase__panel" data-demo-panel="video">
+            <button type="button" class="demo-showcase__panel-toggle" data-demo-panel-toggle aria-expanded="true" aria-label="Collapse walkthrough video">
+              <span class="demo-showcase__chevron" aria-hidden="true"></span>
+              <span>Watch walkthrough</span>
+            </button>
+            <div class="demo-showcase__panel-body" data-demo-panel-body>
+              <div class="demo-showcase__video-wrap">
+                <video data-demo-video controls playsinline preload="metadata" hidden></video>
+                <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-showcase__panel" data-demo-panel="live">
+            <button type="button" class="demo-showcase__panel-toggle" data-demo-panel-toggle aria-expanded="true" aria-label="Collapse live demo">
+              <span class="demo-showcase__chevron" aria-hidden="true"></span>
+              <span>Try it live</span>
+            </button>
+            <div class="demo-showcase__panel-body" data-demo-panel-body>
+              <div class="demo-showcase__iframe-wrap">
+                <iframe data-demo-iframe loading="lazy"></iframe>
+              </div>
+            </div>
           </div>
         </div>
         <div class="demo-showcase__foot">
@@ -91,6 +103,7 @@
       <section
         class="demo-showcase mt-10"
         data-demo-showcase
+        data-demo-id="chatgpt-connector"
         data-demo-title="ChatGPT connector"
         data-video-src="/videos/demos/chatgpt-connector.mp4"
         data-github="https://github.com/Viss007/viss-public/tree/main/automations/chatgpt_mcp_server"
@@ -100,9 +113,19 @@
           <h2 class="font-mono text-sm font-medium uppercase tracking-[0.14em] text-red-500/90">ChatGPT connector</h2>
           <p class="mt-2 text-sm leading-relaxed text-zinc-400">Backend for Custom GPT Actions — hooks ChatGPT to your tools. API connector; devs clone the repo and point Actions at the tunnel URL.</p>
         </div>
-        <div class="demo-showcase__video-wrap">
-          <video data-demo-video controls playsinline preload="metadata" hidden></video>
-          <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
+        <div class="demo-showcase__panels">
+          <div class="demo-showcase__panel" data-demo-panel="video">
+            <button type="button" class="demo-showcase__panel-toggle" data-demo-panel-toggle aria-expanded="true" aria-label="Collapse walkthrough video">
+              <span class="demo-showcase__chevron" aria-hidden="true"></span>
+              <span>Watch walkthrough</span>
+            </button>
+            <div class="demo-showcase__panel-body" data-demo-panel-body>
+              <div class="demo-showcase__video-wrap">
+                <video data-demo-video controls playsinline preload="metadata" hidden></video>
+                <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="demo-showcase__foot">
           <span data-demo-status class="demo-showcase__status">Checking connector…</span>

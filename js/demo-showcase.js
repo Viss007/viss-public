@@ -1,31 +1,45 @@
-/** Portfolio demo blocks: video + collapsible live iframe + health + GitHub. */
+/** Portfolio demo blocks: collapsible video + live iframe panels, health, GitHub. */
 (function () {
   var origin = window.location.origin || "http://127.0.0.1:3333";
 
-  function wireLivePanel(section) {
-    var iframeSrc = section.getAttribute("data-iframe-src");
-    var toggle = section.querySelector("[data-demo-live-toggle]");
-    var iframeWrap = section.querySelector("[data-demo-iframe-wrap]");
-    var iframeEl = section.querySelector("[data-demo-iframe]");
-    if (!toggle || !iframeWrap || !iframeEl || !iframeSrc) return;
+  function demoId(section) {
+    return section.getAttribute("data-demo-id") || section.getAttribute("data-demo-title") || "demo";
+  }
 
-    var demoId = section.getAttribute("data-demo-id") || section.getAttribute("data-demo-title") || "demo";
-    var storageKey = "vissai-demo-live-collapsed:" + demoId;
-    var iframeLoaded = false;
-
-    function loadIframe() {
-      if (iframeLoaded) return;
-      var url = iframeSrc.indexOf("http") === 0 ? iframeSrc : origin + iframeSrc;
-      iframeEl.src = url;
-      iframeEl.title = section.getAttribute("data-demo-title") || "Live demo";
-      iframeLoaded = true;
+  function readCollapsed(storageKey, legacyKey) {
+    try {
+      var v = localStorage.getItem(storageKey);
+      if (v === "1" || v === "0") return v === "1";
+      if (legacyKey) {
+        var legacy = localStorage.getItem(legacyKey);
+        if (legacy === "1" || legacy === "0") return legacy === "1";
+      }
+    } catch (e) {
+      /* ignore */
     }
+    return false;
+  }
+
+  function wireCollapsiblePanel(section, panel) {
+    var panelName = panel.getAttribute("data-demo-panel");
+    var toggle = panel.querySelector("[data-demo-panel-toggle]");
+    var body = panel.querySelector("[data-demo-panel-body]");
+    if (!toggle || !body || !panelName) return;
+
+    var id = demoId(section);
+    var storageKey = "vissai-demo-panel:" + id + ":" + panelName;
+    var legacyKey =
+      panelName === "live" ? "vissai-demo-live-collapsed:" + id : null;
 
     function setCollapsed(collapsed, persist) {
-      section.classList.toggle("is-live-collapsed", collapsed);
+      panel.classList.toggle("is-collapsed", collapsed);
       toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
-      toggle.setAttribute("aria-label", (collapsed ? "Expand" : "Collapse") + " live demo");
-      if (!collapsed) loadIframe();
+      var label =
+        panelName === "video" ? " walkthrough video" : " live demo";
+      toggle.setAttribute(
+        "aria-label",
+        (collapsed ? "Expand" : "Collapse") + label
+      );
       if (persist !== false) {
         try {
           localStorage.setItem(storageKey, collapsed ? "1" : "0");
@@ -33,20 +47,39 @@
           /* ignore */
         }
       }
+      if (!collapsed) {
+        panel.dispatchEvent(
+          new CustomEvent("demo-panel-expand", { bubbles: false })
+        );
+      }
     }
 
     toggle.addEventListener("click", function () {
       setCollapsed(toggle.getAttribute("aria-expanded") === "true");
     });
 
-    var startCollapsed = false;
-    try {
-      startCollapsed = localStorage.getItem(storageKey) === "1";
-    } catch (e) {
-      /* ignore */
+    setCollapsed(readCollapsed(storageKey, legacyKey), false);
+  }
+
+  function wireLiveIframe(section) {
+    var iframeSrc = section.getAttribute("data-iframe-src");
+    var iframeEl = section.querySelector("[data-demo-iframe]");
+    var livePanel = section.querySelector('[data-demo-panel="live"]');
+    if (!iframeSrc || !iframeEl || !livePanel) return;
+
+    var loaded = false;
+    livePanel.addEventListener("demo-panel-expand", function () {
+      if (loaded) return;
+      var url =
+        iframeSrc.indexOf("http") === 0 ? iframeSrc : origin + iframeSrc;
+      iframeEl.src = url;
+      iframeEl.title = section.getAttribute("data-demo-title") || "Live demo";
+      loaded = true;
+    });
+
+    if (!livePanel.classList.contains("is-collapsed")) {
+      livePanel.dispatchEvent(new CustomEvent("demo-panel-expand"));
     }
-    setCollapsed(startCollapsed, false);
-    if (!startCollapsed) loadIframe();
   }
 
   function wireSection(section) {
@@ -58,7 +91,10 @@
     var statusEl = section.querySelector("[data-demo-status]");
     var githubEl = section.querySelector("[data-demo-github]");
 
-    wireLivePanel(section);
+    section.querySelectorAll("[data-demo-panel]").forEach(function (panel) {
+      wireCollapsiblePanel(section, panel);
+    });
+    wireLiveIframe(section);
 
     if (githubEl && github) {
       githubEl.href = github;
@@ -74,10 +110,15 @@
     }
 
     if (videoEl && videoSrc) {
-      var fullVideo = videoSrc.indexOf("http") === 0 ? videoSrc : origin + videoSrc;
-      showPlaceholder("Demo walkthrough video — recorded via cloud agent, landing here soon.");
+      var fullVideo =
+        videoSrc.indexOf("http") === 0 ? videoSrc : origin + videoSrc;
+      showPlaceholder(
+        "Demo walkthrough video — recorded via cloud agent, landing here soon."
+      );
       videoEl.addEventListener("error", function () {
-        showPlaceholder("Demo walkthrough video — recorded via cloud agent, landing here soon.");
+        showPlaceholder(
+          "Demo walkthrough video — recorded via cloud agent, landing here soon."
+        );
       });
       videoEl.addEventListener("loadeddata", function () {
         if (placeholderEl) placeholderEl.hidden = true;
@@ -86,7 +127,9 @@
       videoEl.src = fullVideo;
       videoEl.load();
     } else if (placeholderEl) {
-      showPlaceholder("Demo walkthrough video — recorded via cloud agent, landing here soon.");
+      showPlaceholder(
+        "Demo walkthrough video — recorded via cloud agent, landing here soon."
+      );
     }
 
     if (!statusEl || !healthPath) return;
@@ -99,7 +142,9 @@
       })
       .then(function (x) {
         if (x.ok && x.j && x.j.ok) {
-          statusEl.textContent = "Live — expand the frame below to try it";
+          statusEl.textContent = section.getAttribute("data-iframe-src")
+            ? "Live — expand panels below to watch or try it"
+            : "Connector online";
           statusEl.className = "demo-showcase__status is-live";
         } else {
           statusEl.textContent = "Demo starting — refresh in a moment";
