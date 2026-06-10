@@ -101,6 +101,9 @@
       githubEl.hidden = false;
     }
 
+    var landingSoonMsg =
+      "Demo walkthrough video — recorded via cloud agent, landing here soon.";
+
     function showPlaceholder(msg) {
       if (placeholderEl) {
         placeholderEl.textContent = msg;
@@ -109,27 +112,40 @@
       if (videoEl) videoEl.hidden = true;
     }
 
+    function revealVideo() {
+      if (placeholderEl) placeholderEl.hidden = true;
+      if (videoEl) videoEl.hidden = false;
+    }
+
     if (videoEl && videoSrc) {
       var fullVideo =
         videoSrc.indexOf("http") === 0 ? videoSrc : origin + videoSrc;
-      showPlaceholder(
-        "Demo walkthrough video — recorded via cloud agent, landing here soon."
-      );
+      var demoTitle =
+        section.getAttribute("data-demo-title") || "Demo walkthrough";
+
+      showPlaceholder("Checking walkthrough video…");
       videoEl.addEventListener("error", function () {
-        showPlaceholder(
-          "Demo walkthrough video — recorded via cloud agent, landing here soon."
-        );
+        showPlaceholder(landingSoonMsg);
       });
-      videoEl.addEventListener("loadeddata", function () {
-        if (placeholderEl) placeholderEl.hidden = true;
-        videoEl.hidden = false;
-      });
-      videoEl.src = fullVideo;
-      videoEl.load();
+      videoEl.addEventListener("loadeddata", revealVideo);
+
+      fetch(fullVideo, { method: "HEAD", credentials: "same-origin" })
+        .then(function (r) {
+          if (!r.ok) {
+            showPlaceholder(landingSoonMsg);
+            return;
+          }
+          showPlaceholder("Loading walkthrough…");
+          videoEl.preload = "auto";
+          videoEl.title = demoTitle;
+          videoEl.src = fullVideo;
+          videoEl.load();
+        })
+        .catch(function () {
+          showPlaceholder(landingSoonMsg);
+        });
     } else if (placeholderEl) {
-      showPlaceholder(
-        "Demo walkthrough video — recorded via cloud agent, landing here soon."
-      );
+      showPlaceholder(landingSoonMsg);
     }
 
     if (!statusEl) return;
