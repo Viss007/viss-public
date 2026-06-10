@@ -101,9 +101,38 @@
         </div>
       </section>
 
-      <aside class="demo-showcase-aside">
-        <strong class="text-zinc-300">Slack agent</strong> — workspace bot for DMs and @mentions. No browser demo; proof is messaging the bot in Slack when tokens are configured.
-      </aside>
+      <section
+        class="demo-showcase mt-10"
+        data-demo-showcase
+        data-demo-id="slack-agent"
+        data-demo-title="Slack agent — walkthrough"
+        data-video-src="/videos/demos/slack-agent.mp4"
+        data-github="https://github.com/Viss007/viss-public/tree/main/agents/slack_agent"
+        data-demo-status-text="Slack bot — walkthrough video landing soon; live proof is DM or @mention in your workspace."
+      >
+        <div class="demo-showcase__head">
+          <h2 class="font-mono text-sm font-medium uppercase tracking-[0.14em] text-red-500/90">Slack agent</h2>
+          <p class="mt-2 text-sm leading-relaxed text-zinc-400">Workspace bot for DMs and @mentions — no browser iframe; you talk to it in Slack when tokens are configured.</p>
+        </div>
+        <div class="demo-showcase__panels">
+          <div class="demo-showcase__panel" data-demo-panel="video">
+            <button type="button" class="demo-showcase__panel-toggle" data-demo-panel-toggle aria-expanded="true" aria-label="Collapse walkthrough video">
+              <span class="demo-showcase__chevron" aria-hidden="true"></span>
+              <span>Watch walkthrough</span>
+            </button>
+            <div class="demo-showcase__panel-body" data-demo-panel-body>
+              <div class="demo-showcase__video-wrap">
+                <video data-demo-video controls playsinline preload="metadata" hidden></video>
+                <div class="demo-showcase__video-placeholder" data-demo-video-placeholder></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-showcase__foot">
+          <span data-demo-status class="demo-showcase__status">Checking demo…</span>
+          <a data-demo-github class="demo-showcase__github" href="#" target="_blank" rel="noopener noreferrer" hidden>Source on GitHub →</a>
+        </div>
+      </section>
     </div>
   </main>
 

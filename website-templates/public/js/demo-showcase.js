@@ -132,7 +132,13 @@
       );
     }
 
-    if (!statusEl || !healthPath) return;
+    if (!statusEl) return;
+
+    var staticStatus = section.getAttribute("data-demo-status-text");
+    if (!healthPath) {
+      if (staticStatus) statusEl.textContent = staticStatus;
+      return;
+    }
 
     fetch(origin + healthPath, { credentials: "same-origin" })
       .then(function (r) {
