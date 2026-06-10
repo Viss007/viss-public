@@ -1,18 +1,63 @@
-You are on Cursor Cloud VM. Repo: Viss007/viss-public. App lives in agents/docs_agent (not a separate repo).
+You are re-recording ONE demo video on Cursor Cloud. Repo: Viss007/viss-public. App folder: agents/docs_agent (not a separate repo).
 
-Before start: Dashboard → Cloud Agents → Secrets → set OPENAI_API_KEY (install reads it via start.sh).
+Do NOT set up the full portfolio stack on :3333 unless health on :3000 fails and only a minimal fix is needed.
 
-Phase A — run the app:
-1) Wait for environment install (npm ci in agents/docs_agent).
-2) Start docs-agent terminal or run: cd agents/docs_agent && ./start.sh
-3) curl -s http://127.0.0.1:3000/health — must return OK.
+=== SECRETS (required for live extraction on camera) ===
+Before start: Cursor Dashboard → Cloud Agents → Secrets → OPENAI_API_KEY must be set.
+start.sh writes it into agents/docs_agent/.env on first boot. Never paste keys in chat.
 
-Phase B — record demo (~60–90s) with embedded browser + screen capture:
-1) Open http://127.0.0.1:3000/
-2) Click a sample invoice button (fixtures on disk).
-3) Run process — wait for the table.
-4) Download Excel — show the file landed.
+=== PHASE A — run docs-agent only (:3000) ===
+1) Wait for environment install (.cursor/environment.json runs npm ci in agents/docs_agent).
+2) Start: cd agents/docs_agent && chmod +x start.sh && ./start.sh
+   (or use the docs-agent terminal from environment.json)
+3) Pre-check (30s max):
+   curl -s http://127.0.0.1:3000/health → {"ok":true} or equivalent.
 
-Save screen recording as docs-agent-demo.mp4 artifact. Operator will place it at videos/demos/docs-agent.mp4 on the portfolio.
+=== BANNED footage (do not record, do not save) ===
+- http://127.0.0.1:3333/agents.html or any hire-me portfolio chrome (nav, hero, demo-showcase cards).
+- Home / hub / about / teams / live-projects / Automations tab walkthrough.
+- speed-to-lead hello-world or slack-agent focus.
+- Half-screen browser — maximize Chrome to full display (1920×1080 or VM default) BEFORE recording.
+- Any filename/path other than website-templates/public/videos/demos/docs-agent.mp4.
 
-Rules: No secrets in chat. No Gmail OAuth unless operator asks. Demo only — no mass send.
+=== REQUIRED deliverable ===
+- Length: 60–90 seconds (max 95s).
+- Resolution: 1920×1080 or VM fullscreen default.
+- Path: website-templates/public/videos/demos/docs-agent.mp4
+- Target UI: http://127.0.0.1:3000/ ONLY — Invoices → Excel app (no portfolio iframe).
+
+Employer story (voice-over or on-screen captions — plain English):
+"Invoice PDFs in, AI reads the fields, you review in a table, then export Excel — rules-first, human approval before export."
+
+=== RECORDING SCRIPT — UI beats (computer use + fullscreen browser) ===
+
+0:00–0:08 — Open http://127.0.0.1:3000/ ONLY. Fullscreen Chrome. Pause on app header: upload / sample invoices section.
+
+0:08–0:18 — Click "Sample invoice 1 (€87.43)" under Try with sample invoices. Confirm file selected / Process button enabled.
+
+0:18–0:45 — Click "Process invoices". Wait for progress → "Review and export" table (seller, buyer, amounts visible). If OPENAI_API_KEY missing, still record click path and narrate that live extraction needs operator secret.
+
+0:45–0:75 — Optionally edit one cell (e.g. Notes) to show human-in-the-loop. Click "Export to Excel". Confirm download started (browser download tray or file in ~/Downloads).
+
+0:75–0:90 — End on completed review table with export done. Stay inside :3000 app — no portfolio pages.
+
+Save screen capture as exact path:
+  website-templates/public/videos/demos/docs-agent.mp4
+Create videos/demos/ if missing.
+
+Verify playback after save:
+  curl -sI http://127.0.0.1:3333/videos/demos/docs-agent.mp4
+  (optional if :3333 stack up) or ffprobe the file locally.
+
+=== GIT (viss-public) ===
+git add website-templates/public/videos/demos/docs-agent.mp4
+git commit -m "Add docs-agent demo walkthrough video (port 3000 app only)."
+git push origin main
+
+=== END REPORT ===
+Return: file size, duration (seconds), commit hash, and 3 bullets:
+(1) what ran on :3000,
+(2) whether sample → process → table → Excel succeeded,
+(3) confirm recording shows invoice app only (no portfolio chrome).
+
+Rules: no .env or API keys in chat. No Gmail OAuth. Demo only — no mass send.
