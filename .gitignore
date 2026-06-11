@@ -1,5 +1,6 @@
 video-export/
 node_modules/
+scripts/node_modules/
 .npm-cache/
 .env
 .env.local
