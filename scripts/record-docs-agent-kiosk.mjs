@@ -1,7 +1,7 @@
 /**
- * Docs-agent demo: Playwright viewport video only (no desktop, no browser chrome, no Cursor watermark).
+ * Docs-agent demo: borderless app window (fullscreen from frame 1) + ffmpeg cursor.
  */
-import { spawnSync } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import { chromium } from "playwright";
 import fs from "fs";
 import path from "path";
@@ -13,80 +13,157 @@ const OUT = path.join(
   ROOT,
   "website-templates/public/videos/demos/docs-agent.mp4"
 );
-const VIDEO_DIR = "/tmp/docs-agent-viewport-video";
+const RAW = "/tmp/docs-agent-cursor-raw.mp4";
 const APP_URL = "http://127.0.0.1:3000/";
-const VIEWPORT = { width: 1920, height: 1080 };
+const DISPLAY = process.env.DISPLAY || ":1";
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+async function polishedClick(page, locator) {
+  await locator.scrollIntoViewIfNeeded();
+  const box = await locator.boundingBox();
+  if (!box) {
+    await locator.click();
+    return;
+  }
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  await page.mouse.move(x, y, { steps: 28 });
+  await sleep(350);
+  await page.mouse.down();
+  await sleep(90);
+  await page.mouse.up();
+  await sleep(250);
+}
+
+async function polishedFill(page, locator, text) {
+  await polishedClick(page, locator);
+  await locator.fill("");
+  await sleep(200);
+  await locator.type(text, { delay: 55 });
+  await sleep(400);
+}
+
+function fullscreenAppWindow() {
+  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "chromium", "windowactivate"]);
+  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "chromium", "key", "--clearmodifiers", "F11"]);
+  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "google-chrome", "windowactivate"]);
+  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "google-chrome", "key", "--clearmodifiers", "F11"]);
+}
+
 async function main() {
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
-  fs.rmSync(VIDEO_DIR, { recursive: true, force: true });
-  fs.mkdirSync(VIDEO_DIR, { recursive: true });
+  spawnSync("pkill", ["-f", "chromium.*127.0.0.1:3000"]);
+  spawnSync("pkill", ["-f", "chrome.*127.0.0.1:3000"]);
+  await sleep(400);
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    viewport: VIEWPORT,
-    recordVideo: { dir: VIDEO_DIR, size: VIEWPORT },
+  const browser = await chromium.launch({
+    headless: false,
+    args: [
+      "--no-sandbox",
+      `--app=${APP_URL}`,
+      "--window-position=0,0",
+      "--window-size=1920,1080",
+      "--disable-infobars",
+      "--no-first-run",
+    ],
   });
-  const page = await context.newPage();
+
+  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   await page.goto(APP_URL, { waitUntil: "networkidle" });
-  await sleep(2800);
+  fullscreenAppWindow();
+  await sleep(1500);
 
-  await page.getByRole("button", { name: /Sample invoice 1/i }).click();
-  await sleep(2200);
-
-  const processBtn = page.getByRole("button", { name: /Process invoices/i });
-  await processBtn.waitFor({ state: "visible" });
-  await processBtn.click();
-  await page.getByText("Review and export", { timeout: 120000 }).waitFor();
-  await page.locator("#results-section").scrollIntoViewIfNeeded();
-  await sleep(3200);
-
-  const notes = page.locator("#preview-body textarea").last();
-  if (await notes.count()) {
-    await notes.click();
-    await notes.fill("Approved for export");
-    await sleep(2000);
-  }
-
-  const downloadPromise = page
-    .waitForEvent("download", { timeout: 30000 })
-    .catch(() => null);
-  await page.getByRole("button", { name: /Export to Excel/i }).click();
-  await downloadPromise;
-  await sleep(3500);
-
-  const video = page.video();
-  await context.close();
-  await browser.close();
-
-  const webm = await video.path();
-  const convert = spawnSync(
+  const ff = spawn(
     "ffmpeg",
     [
       "-y",
+      "-f",
+      "x11grab",
+      "-draw_mouse",
+      "1",
+      "-video_size",
+      "1920x1080",
+      "-framerate",
+      "30",
       "-i",
-      webm,
+      `${DISPLAY}+0,60`,
       "-c:v",
       "libx264",
       "-preset",
       "fast",
       "-crf",
-      "20",
+      "19",
+      "-pix_fmt",
+      "yuv420p",
+      RAW,
+    ],
+    { stdio: ["pipe", "ignore", "pipe"] }
+  );
+
+  await sleep(800);
+  await sleep(1800);
+
+  await polishedClick(
+    page,
+    page.getByRole("button", { name: /Sample invoice 1/i })
+  );
+  await sleep(1800);
+
+  await polishedClick(
+    page,
+    page.getByRole("button", { name: /Process invoices/i })
+  );
+  await page.getByText("Review and export", { timeout: 120000 }).waitFor();
+  await page.locator("#results-section").scrollIntoViewIfNeeded();
+  await sleep(2800);
+
+  const notes = page.locator("#preview-body textarea").last();
+  if (await notes.count()) {
+    await polishedFill(page, notes, "Approved for export");
+  }
+
+  const downloadPromise = page
+    .waitForEvent("download", { timeout: 30000 })
+    .catch(() => null);
+  await polishedClick(
+    page,
+    page.getByRole("button", { name: /Export to Excel/i })
+  );
+  await downloadPromise;
+  await sleep(3200);
+
+  await browser.close();
+
+  ff.stdin.write("q");
+  await new Promise((resolve) => ff.on("close", resolve));
+
+  if (!fs.existsSync(RAW) || fs.statSync(RAW).size < 10000) {
+    throw new Error("ffmpeg capture failed");
+  }
+
+  spawnSync(
+    "ffmpeg",
+    [
+      "-y",
+      "-i",
+      RAW,
+      "-c:v",
+      "libx264",
+      "-preset",
+      "fast",
+      "-crf",
+      "19",
       "-pix_fmt",
       "yuv420p",
       "-movflags",
       "+faststart",
       OUT,
     ],
-    { encoding: "utf8" }
+    { stdio: "inherit" }
   );
-  if (convert.status !== 0) {
-    throw new Error(convert.stderr || "ffmpeg convert failed");
-  }
 
   const probe = spawnSync(
     "ffprobe",
