@@ -17,12 +17,16 @@ Health: `curl -s http://127.0.0.1:3000/health`
 
 ## Record this flow
 
-1. Open the app in the browser.
-2. Click a **sample invoice** button (fixtures on disk).
-3. Run **process** — wait for the table.
-4. **Download Excel** — show the file landed.
+**Full screen on http://127.0.0.1:3000/ only** — never record hire-me portfolio (3333/agents.html).
+
+1. Open the app — title must read **Invoices → Excel**.
+2. Click **Sample invoice 1 (€87.43)**.
+3. **Process invoices** — wait for the review table.
+4. **Export to Excel** — show the file landed.
 
 Optional: drag-drop a PDF instead of the sample.
+
+Executor prompt: `docs/cloud-agent-docs-agent-video-prompt.txt` in repo root.
 
 ## Env (minimum)
 

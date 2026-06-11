@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/hub-footer.css">
+  <link rel="stylesheet" href="css/demo-showcase.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,9 +23,6 @@
             sans: ["DM Sans", "system-ui", "sans-serif"],
             mono: ["JetBrains Mono", "ui-monospace", "monospace"],
           },
-          boxShadow: {
-            glow: "0 0 80px -20px rgba(239,68,68,0.25)",
-          },
           gridTemplateColumns: {
             "portfolio-nav": "minmax(0, 1fr) auto minmax(0, 1fr)",
           },
@@ -33,32 +31,15 @@
     };
   </script>
   <style type="text/tailwindcss">
-    @layer utilities {
-      .text-balance { text-wrap: balance; }
-    }
+    @layer utilities { .text-balance { text-wrap: balance; } }
     .vissai-shell-brand-ai {
-      display: inline-block;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      line-height: 1.25;
-      vertical-align: baseline;
       color: #dc2626;
+      font-weight: 600;
       -webkit-text-fill-color: #dc2626;
     }
   </style>
-  <style>
-    /* Sticky footer: plain CSS so layout holds even if JIT misses arbitrary utilities */
-    html {
-      min-height: 100dvh;
-    }
-    body {
-      min-height: 100dvh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-    }
-  </style>
 </head>
-<body class="bg-ink text-zinc-100 antialiased selection:bg-red-500/30 selection:text-red-50">
+<body class="grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-ink text-zinc-100 antialiased selection:bg-red-500/30 selection:text-red-50">
   <a href="#contact-main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-red-500 focus:px-4 focus:py-2 focus:text-ink focus:outline-none">Skip to contact</a>
 
   <header class="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-xl">
@@ -79,23 +60,25 @@
     </nav>
   </header>
 
-  <main id="contact-main" class="min-h-0">
-    <section class="relative flex h-full min-h-0 flex-col overflow-hidden border-b border-line py-20 md:py-28">
-      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(239,68,68,0.08),transparent)]"></div>
-      <div class="relative mx-auto max-w-6xl px-5">
-        <p class="font-mono text-xs font-medium uppercase tracking-[0.22em] text-red-500/90">Contact</p>
-        <div class="mt-10 rounded-3xl border border-line bg-gradient-to-br from-red-500/[0.07] via-transparent to-transparent p-10 md:p-14">
-          <h1 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">Work with me</h1>
-          <p class="mt-6 text-lg text-zinc-300">I'm currently open for select automation projects.</p>
-          <p class="mt-4 max-w-xl leading-relaxed text-zinc-400">
-            If you have repetitive manual work that costs your team time, I can help you automate it.
+  <main id="contact-main" class="flex min-h-0 flex-1 flex-col border-b border-line bg-panel/40">
+    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-5 py-16 md:py-24">
+      <p class="font-mono text-base font-medium uppercase tracking-[0.22em] text-red-500/90">Contact</p>
+
+      <section class="demo-showcase mt-10 w-full max-w-md" aria-label="Contact details">
+        <div class="px-8 py-10 text-center">
+          <p class="font-mono text-xs font-medium uppercase tracking-[0.16em] text-red-500/90">Email</p>
+          <a href="mailto:vimantas1@gmail.com?subject=Hello%20from%20VissAI" class="mt-4 inline-block text-2xl font-semibold tracking-tight text-white transition hover:text-red-200">vimantas1@gmail.com</a>
+          <p class="mt-5 text-sm text-zinc-400">Šiauliai · remote LT/EU</p>
+          <p class="mt-8 text-sm text-zinc-500">
+            <a href="/about" class="text-red-400/90 transition hover:text-red-300">About</a>
+            <span class="mx-2 text-zinc-600" aria-hidden="true">·</span>
+            <a href="agents.html" class="text-red-400/90 transition hover:text-red-300">Demos</a>
+            <span class="mx-2 text-zinc-600" aria-hidden="true">·</span>
+            <a href="/media" class="text-red-400/90 transition hover:text-red-300">Coaching</a>
           </p>
-          <div class="mt-8">
-            <a href="mailto:vimantas1@gmail.com" class="inline-flex items-center justify-center rounded-xl border border-red-500/40 bg-red-500 px-6 py-3 text-sm font-semibold text-ink shadow-glow transition hover:bg-red-400">Email me at vimantas1@gmail.com</a>
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <footer id="vissai-hub-footer-stripe" class="border-t border-line vissai-hub-footer--collapsible is-collapsed">

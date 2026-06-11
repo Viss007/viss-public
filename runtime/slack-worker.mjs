@@ -23,7 +23,8 @@ export async function startSlackWorker() {
     log("skipped — no agents/slack_agent/.env");
     return;
   }
-  dotenv.config({ path: ENV_PATH, override: true });
+  // Do not override OPENAI_API_KEY — docs_agent loads first in stack.mjs.
+  dotenv.config({ path: ENV_PATH, override: false });
 
   const botToken = process.env.SLACK_BOT_TOKEN?.trim();
   const appToken = process.env.SLACK_APP_TOKEN?.trim();
