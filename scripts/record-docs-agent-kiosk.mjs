@@ -46,11 +46,34 @@ async function polishedFill(page, locator, text) {
   await sleep(400);
 }
 
-function fullscreenAppWindow() {
-  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "chromium", "windowactivate"]);
-  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "chromium", "key", "--clearmodifiers", "F11"]);
-  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "google-chrome", "windowactivate"]);
-  spawnSync("xdotool", ["search", "--onlyvisible", "--class", "google-chrome", "key", "--clearmodifiers", "F11"]);
+function focusAppWindow() {
+  for (const cls of ["chromium", "google-chrome"]) {
+    spawnSync("xdotool", [
+      "search",
+      "--onlyvisible",
+      "--class",
+      cls,
+      "windowmove",
+      "0",
+      "0",
+    ]);
+    spawnSync("xdotool", [
+      "search",
+      "--onlyvisible",
+      "--class",
+      cls,
+      "windowsize",
+      "1920",
+      "1080",
+    ]);
+    spawnSync("xdotool", [
+      "search",
+      "--onlyvisible",
+      "--class",
+      cls,
+      "windowactivate",
+    ]);
+  }
 }
 
 async function main() {
@@ -73,8 +96,8 @@ async function main() {
 
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   await page.goto(APP_URL, { waitUntil: "networkidle" });
-  fullscreenAppWindow();
-  await sleep(1500);
+  focusAppWindow();
+  await sleep(1200);
 
   const ff = spawn(
     "ffmpeg",
@@ -89,7 +112,7 @@ async function main() {
       "-framerate",
       "30",
       "-i",
-      `${DISPLAY}+0,60`,
+      `${DISPLAY}+0,0`,
       "-c:v",
       "libx264",
       "-preset",
