@@ -33,20 +33,23 @@ async function main() {
   });
   const page = await context.newPage();
   await page.goto(APP_URL, { waitUntil: "networkidle" });
-  await sleep(2000);
+  await sleep(2800);
 
   await page.getByRole("button", { name: /Sample invoice 1/i }).click();
-  await sleep(1800);
-
-  await page.getByRole("button", { name: /Process invoices/i }).click();
-  await page.getByText("Review and export", { timeout: 120000 }).waitFor();
   await sleep(2200);
+
+  const processBtn = page.getByRole("button", { name: /Process invoices/i });
+  await processBtn.waitFor({ state: "visible" });
+  await processBtn.click();
+  await page.getByText("Review and export", { timeout: 120000 }).waitFor();
+  await page.locator("#results-section").scrollIntoViewIfNeeded();
+  await sleep(3200);
 
   const notes = page.locator("#preview-body textarea").last();
   if (await notes.count()) {
     await notes.click();
-    await notes.fill("demo");
-    await sleep(1500);
+    await notes.fill("Approved for export");
+    await sleep(2000);
   }
 
   const downloadPromise = page
@@ -54,7 +57,7 @@ async function main() {
     .catch(() => null);
   await page.getByRole("button", { name: /Export to Excel/i }).click();
   await downloadPromise;
-  await sleep(2500);
+  await sleep(3500);
 
   const video = page.video();
   await context.close();
